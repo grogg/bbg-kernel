@@ -167,7 +167,11 @@ static int tsens_tz_degC_to_code(int degC, int sensor_num)
 	return code;
 }
 
+<<<<<<< HEAD:drivers/thermal/msm8x60_tsens.c
 static void tsens8x60_get_temp(int sensor_num, unsigned long *temp)
+=======
+static void tsens8960_get_temp(int sensor_num, unsigned long *temp)
+>>>>>>> 7d1f547... thermal: msm8960_tsens: Read TSENS temperature:drivers/thermal/msm8960_tsens.c
 {
 	unsigned int code;
 
@@ -182,11 +186,14 @@ static void tsens8x60_get_temp(int sensor_num, unsigned long *temp)
 	code = readl_relaxed(TSENS_S0_STATUS_ADDR +
 			(sensor_num << TSENS_STATUS_ADDR_OFFSET));
 	*temp = tsens_tz_code_to_degC(code, sensor_num);
+<<<<<<< HEAD:drivers/thermal/msm8x60_tsens.c
 	tsens_log_count++;
 	if ((tsens_log_count % 20) == 0) {
 		pr_warn("TSENS: Current CPU Temperature is: %lu\n", *temp);
 		tsens_log_count = 0;
 	}
+=======
+>>>>>>> 7d1f547... thermal: msm8960_tsens: Read TSENS temperature:drivers/thermal/msm8960_tsens.c
 }
 
 static int tsens_tz_get_temp(struct thermal_zone_device *thermal,
@@ -194,24 +201,38 @@ static int tsens_tz_get_temp(struct thermal_zone_device *thermal,
 {
 	struct tsens_tm_device_sensor *tm_sensor = thermal->devdata;
 
+<<<<<<< HEAD:drivers/thermal/msm8x60_tsens.c
 	if (!tm_sensor || tm_sensor->mode != THERMAL_DEVICE_ENABLED || !temp) {
 		pr_err("TSENS: TZ get temp failed!\n");
 		return -EINVAL;
 	}
 
 	tsens8x60_get_temp(tm_sensor->sensor_num, temp);
+=======
+	if (!tm_sensor || tm_sensor->mode != THERMAL_DEVICE_ENABLED || !temp)
+		return -EINVAL;
+
+	tsens8960_get_temp(tm_sensor->sensor_num, temp);
+>>>>>>> 7d1f547... thermal: msm8960_tsens: Read TSENS temperature:drivers/thermal/msm8960_tsens.c
 
 	return 0;
 }
 
 int tsens_get_temp(struct tsens_device *device, unsigned long *temp)
 {
+<<<<<<< HEAD:drivers/thermal/msm8x60_tsens.c
 	if (!tmdev) {
 		pr_err("TSENS: get temp failed!\n");
 		return -ENODEV;
 	}
 
 	tsens8x60_get_temp(device->sensor_num, temp);
+=======
+	if (!tmdev)
+		return -ENODEV;
+
+	tsens8960_get_temp(device->sensor_num, temp);
+>>>>>>> 7d1f547... thermal: msm8960_tsens: Read TSENS temperature:drivers/thermal/msm8960_tsens.c
 
 	return 0;
 }
