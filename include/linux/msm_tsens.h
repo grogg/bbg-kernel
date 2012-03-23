@@ -21,7 +21,6 @@
 enum platform_type {
 	MSM_8660 = 0,
 	MSM_8960,
-	MSM_9615 = MSM_8960,
 	MSM_TYPE
 };
 
