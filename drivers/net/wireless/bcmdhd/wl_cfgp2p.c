@@ -688,11 +688,16 @@ wl_cfgp2p_escan(struct wl_priv *wl, struct net_device *dev, u16 active,
 
 	for (i = 0; i < num_chans; i++) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		eparams->params.channel_list[i] = htodchanspec(channels[i]);
 =======
 		if (i <= (sizeof(eparams->params.channel_list) / sizeof(int)))
 			eparams->params.channel_list[i] = htodchanspec(channels[i]);
 >>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
+=======
+		if (i <= (sizeof(eparams->params.channel_list) / sizeof(int)))
+			eparams->params.channel_list[i] = htodchanspec(channels[i]);
+>>>>>>> d1b4149... drivers: bcmdhd: fix array subscript is above array bounds in wl_cfgp2p.c:759
 	}
 	eparams->version = htod32(ESCAN_REQ_VERSION);
 	eparams->action =  htod16(action);
