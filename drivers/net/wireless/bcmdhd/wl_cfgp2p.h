@@ -116,10 +116,14 @@ enum wl_cfgp2p_status {
 #define wl_clr_p2p_status(wl, stat) ((!(wl)->p2p_supported) ? 0 : clear_bit(WLP2P_STATUS_ ## stat, \
 									&(wl)->p2p->status))
 <<<<<<< HEAD
+<<<<<<< HEAD
 #define wl_chg_p2p_status(wl, stat) ((!(wl)->p2p_supported) ? 0: change_bit(WLP2P_STATUS_ ## stat, \
 =======
 #define wl_chg_p2p_status(wl, stat) ((!(wl)->p2p_supported) ? 0 : change_bit(WLP2P_STATUS_ ## stat, \
 >>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
+=======
+#define wl_chg_p2p_status(wl, stat) ((!(wl)->p2p_supported) ? 0 : change_bit(WLP2P_STATUS_ ## stat, \
+>>>>>>> 57a4dc4... bcmdhd: just fix a space fail :) came up when merging cherry picks.
 									&(wl)->p2p->status))
 #define p2p_on(wl) ((wl)->p2p->on)
 #define p2p_scan(wl) ((wl)->p2p->scan)
