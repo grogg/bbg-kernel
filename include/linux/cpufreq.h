@@ -32,6 +32,7 @@ extern uint32_t cmdline_maxkhz, cmdline_minkhz;
 extern char cmdline_gov[16];
 /* check_khz function for cmdline khz parameters */
 extern uint32_t acpu_check_khz_value(unsigned long khz);
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 >>>>>>> cd3c919... cmdline_khz: move check_khz function to cpufreq.h
@@ -40,6 +41,8 @@ extern uint32_t acpu_check_khz_value(unsigned long khz);
 /* Badass gpu state detection */
 extern bool gpu_busy_state;
 #endif
+=======
+>>>>>>> cd3c919... cmdline_khz: move check_khz function to cpufreq.h
 
 >>>>>>> 2795e80... badass: add gpucontrol / gpubusy bypass
 /*********************************************************************
