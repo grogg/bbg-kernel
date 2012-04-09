@@ -46,8 +46,11 @@ struct cy8c_i2c_platform_data {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 extern void sweep2unlock_setdev(struct input_dev * input_device);
 =======
+=======
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 /* Sweep2Wake */
 extern void sweep2wake_setdev(struct input_dev * input_device);

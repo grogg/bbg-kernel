@@ -170,7 +170,11 @@ static int gpio_event_probe(struct platform_device *pdev)
 		input_dev->event = gpio_input_event;
 		ip->input_devs->dev[i] = input_dev;
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Sweep2unlock */
+=======
+#ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 =======
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 >>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
@@ -179,7 +183,11 @@ static int gpio_event_probe(struct platform_device *pdev)
 			printk(KERN_INFO "[sweep2unlock]: set device %s\n", input_dev->name);
 		}
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/* Sweep2unlock */
+=======
+#endif
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 =======
 #endif
 >>>>>>> b66ea6d... sweep2wake: Add Kconfig entry

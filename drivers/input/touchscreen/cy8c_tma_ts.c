@@ -25,6 +25,12 @@
 #include <linux/slab.h>
 #include <linux/gpio.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
+#include <linux/wakelock.h>
+#endif
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 =======
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 #include <linux/wakelock.h>
@@ -80,10 +86,13 @@ static int cy8c_reset_baseline(void);
 static DEFINE_MUTEX(cy8c_mutex);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Sweep to unlock */
 bool lck_reverse = false, lck_count = true;
 static struct input_dev * sweep2unlock_pwrdev;
 =======
+=======
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 bool scr_suspended = false, exec_count = true, barrier[2] = {false, false};
 static struct input_dev * sweep2wake_pwrdev;
@@ -117,7 +126,11 @@ void sweep2unlock_pwrtrigger(void) {
 	return;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* Sweep2Unlock */
+=======
+#endif
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 =======
 #endif
 >>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
@@ -764,8 +777,14 @@ static irqreturn_t cy8c_ts_irq_thread(int irq, void *ptr)
 	struct cy8c_ts_data *ts = ptr;
 	uint8_t buf[32] = {0}, loop_i, loop_j;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int prevx = 0;
 
+=======
+#ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
+	int prevx = 0, nextx = 0;
+#endif
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 =======
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 	int prevx = 0, nextx = 0;
@@ -989,7 +1008,10 @@ static irqreturn_t cy8c_ts_irq_thread(int irq, void *ptr)
 					ts->pre_finger_data[1] = finger_data[0][1];
 				}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 				if ((ts->finger_count == 1) && (scr_suspended == true)) {
 					prevx = 240;
@@ -1053,6 +1075,9 @@ static irqreturn_t cy8c_ts_irq_thread(int irq, void *ptr)
 					}
 				}
 #endif
+<<<<<<< HEAD
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
+=======
 >>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 			}
 		}
@@ -1088,7 +1113,10 @@ static irqreturn_t cy8c_ts_irq_thread(int irq, void *ptr)
 		input_report_key(ts->input_dev, BTN_TOUCH, (ts->finger_count > 0)?1:0);
 		input_sync(ts->input_dev);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 		 /* if finger released, reset count & barriers */
 		if (((ts->finger_count > 0)?1:0) == 0) {
@@ -1097,6 +1125,9 @@ static irqreturn_t cy8c_ts_irq_thread(int irq, void *ptr)
 			barrier[1] = false;
 		}
 #endif
+<<<<<<< HEAD
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
+=======
 >>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 	}
 
@@ -1295,11 +1326,17 @@ static int cy8c_ts_remove(struct i2c_client *client)
 static int cy8c_ts_suspend(struct i2c_client *client, pm_message_t mesg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 	scr_suspended = true;
 	wake_lock(&sweep2wake_wake_lock);
 #else
+<<<<<<< HEAD
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
+=======
 >>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 	struct cy8c_ts_data *ts = i2c_get_clientdata(client);
 	uint8_t buf[2] = {0};
@@ -1338,11 +1375,17 @@ static int cy8c_ts_suspend(struct i2c_client *client, pm_message_t mesg)
 static int cy8c_ts_resume(struct i2c_client *client)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 	scr_suspended = false;
 	wake_unlock(&sweep2wake_wake_lock);
 #else
+<<<<<<< HEAD
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
+=======
 >>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 	struct cy8c_ts_data *ts = i2c_get_clientdata(client);
 	uint8_t buf[2] = {0};
@@ -1413,7 +1456,13 @@ static int __devinit cy8c_ts_init(void)
 {
 	printk(KERN_INFO "%s: enter\n", __func__);
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+#ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
+	wake_lock_init(&sweep2wake_wake_lock, WAKE_LOCK_SUSPEND, "sweep2wake");
+#endif
+>>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 =======
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 	wake_lock_init(&sweep2wake_wake_lock, WAKE_LOCK_SUSPEND, "sweep2wake");
