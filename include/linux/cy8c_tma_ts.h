@@ -54,6 +54,10 @@ extern void sweep2unlock_setdev(struct input_dev * input_device);
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 /* Sweep2Wake */
 extern void sweep2wake_setdev(struct input_dev * input_device);
+<<<<<<< HEAD
+=======
+extern void sweep2wake_setleddev(struct led_classdev * led_dev);
+>>>>>>> 1d34c7f... sweep2wake: enable dynamic button_backlight
 #endif
 
 >>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
