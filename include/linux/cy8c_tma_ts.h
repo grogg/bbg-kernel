@@ -55,6 +55,10 @@ extern void sweep2unlock_setdev(struct input_dev * input_device);
 /* Sweep2Wake */
 extern void sweep2wake_setdev(struct input_dev * input_device);
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+extern void sweep2wake_setleddev(struct led_classdev * led_dev);
+>>>>>>> 1d34c7f... sweep2wake: enable dynamic button_backlight
 =======
 extern void sweep2wake_setleddev(struct led_classdev * led_dev);
 >>>>>>> 1d34c7f... sweep2wake: enable dynamic button_backlight

@@ -41,6 +41,10 @@
 #include <linux/leds-pm8058.h>
 #endif
 
+#ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
+#include <linux/leds-pm8058.h>
+#endif
+
 #define CY8C_I2C_RETRY_TIMES 10
 
 struct cy8c_ts_data {
@@ -99,10 +103,17 @@ static struct input_dev * sweep2unlock_pwrdev;
 >>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 <<<<<<< HEAD
+<<<<<<< HEAD
 bool scr_suspended = false, exec_count = true, barrier[2] = {false, false};
 static struct input_dev * sweep2wake_pwrdev;
 static struct wake_lock sweep2wake_wake_lock;
 >>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
+=======
+bool s2w_switch = true, scr_suspended = false, exec_count = true;
+bool led_exec_count = false, barrier[2] = {false, false};
+static struct input_dev * sweep2wake_pwrdev;
+static struct led_classdev * sweep2wake_leddev;
+>>>>>>> 1d34c7f... sweep2wake: enable dynamic button_backlight
 =======
 bool s2w_switch = true, scr_suspended = false, exec_count = true;
 bool led_exec_count = false, barrier[2] = {false, false};
@@ -1050,9 +1061,12 @@ static irqreturn_t cy8c_ts_irq_thread(int irq, void *ptr)
 					    (finger_data[loop_i][0] < nextx) &&
 					    (finger_data[loop_i][1] > 950))) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 						prevx = 580;
 						nextx = 920;
 =======
+=======
+>>>>>>> 1d34c7f... sweep2wake: enable dynamic button_backlight
 						if (led_exec_count) {
 							pm8058_drvx_led_brightness_set(sweep2wake_leddev, 255);
 							printk(KERN_INFO "[cmdline_s2w]: activated button_backlight");
@@ -1166,6 +1180,9 @@ static irqreturn_t cy8c_ts_irq_thread(int irq, void *ptr)
 				pm8058_drvx_led_brightness_set(sweep2wake_leddev, 0);
 				printk(KERN_INFO "[cmdline_s2w]: deactivated button_backlight");
 			}
+<<<<<<< HEAD
+>>>>>>> 1d34c7f... sweep2wake: enable dynamic button_backlight
+=======
 >>>>>>> 1d34c7f... sweep2wake: enable dynamic button_backlight
 			exec_count = true;
 			led_exec_count = true;
