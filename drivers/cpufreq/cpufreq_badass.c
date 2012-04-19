@@ -43,6 +43,7 @@
 #define MAX_FREQUENCY_UP_THRESHOLD		(100)
 #define MIN_FREQUENCY_DOWN_DIFFERENTIAL		(1)
 
+<<<<<<< HEAD
 /* Phase configurables */
 #define BADASS_MAX_IDLE_COUNTER			160
 #define BADASS_PHASE_2_PERCENT			80
@@ -61,6 +62,8 @@ bool gpu_busy_state;
 #endif
 
 
+=======
+>>>>>>> 310fe50... cpufreq: initial badass commit
 /*
  * The polling frequency of this governor depends on the capability of
  * the processor. Default polling frequency is 1000 times the transition
@@ -147,9 +150,12 @@ static struct bds_tuners {
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE
 	unsigned int two_phase_freq;
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 	unsigned int three_phase_freq;
 #endif
+=======
+>>>>>>> 310fe50... cpufreq: initial badass commit
 } bds_tuners_ins = {
 	.up_threshold = DEF_FREQUENCY_UP_THRESHOLD,
 	.sampling_down_factor = DEF_SAMPLING_DOWN_FACTOR,
@@ -159,9 +165,12 @@ static struct bds_tuners {
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE
 	.two_phase_freq = 0,
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 	.three_phase_freq = 0,
 #endif
+=======
+>>>>>>> 310fe50... cpufreq: initial badass commit
 };
 
 static inline cputime64_t get_cpu_idle_time_jiffy(unsigned int cpu,
@@ -325,9 +334,12 @@ show_one(ignore_nice_load, ignore_nice);
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE
 show_one(two_phase_freq, two_phase_freq);
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 show_one(three_phase_freq, three_phase_freq);
 #endif
+=======
+>>>>>>> 310fe50... cpufreq: initial badass commit
 
 static ssize_t show_powersave_bias
 (struct kobject *kobj, struct attribute *attr, char *buf)
@@ -362,6 +374,7 @@ static ssize_t store_two_phase_freq(struct kobject *a, struct attribute *b,
 	return count;
 }
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 static ssize_t store_three_phase_freq(struct kobject *a, struct attribute *b,
 				   const char *buf, size_t count)
@@ -377,6 +390,8 @@ static ssize_t store_three_phase_freq(struct kobject *a, struct attribute *b,
 	return count;
 }
 #endif
+=======
+>>>>>>> 310fe50... cpufreq: initial badass commit
 
 static ssize_t store_io_is_busy(struct kobject *a, struct attribute *b,
 				   const char *buf, size_t count)
@@ -561,9 +576,12 @@ define_one_global_rw(powersave_bias);
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE
 define_one_global_rw(two_phase_freq);
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 define_one_global_rw(three_phase_freq);
 #endif
+=======
+>>>>>>> 310fe50... cpufreq: initial badass commit
 
 static struct attribute *bds_attributes[] = {
 	&sampling_rate_min.attr,
@@ -577,9 +595,12 @@ static struct attribute *bds_attributes[] = {
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE
 	&two_phase_freq.attr,
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 	&three_phase_freq.attr,
 #endif
+=======
+>>>>>>> 310fe50... cpufreq: initial badass commit
 	NULL
 };
 
@@ -609,6 +630,7 @@ int set_two_phase_freq_badass(int cpufreq)
 }
 #endif
 
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 int set_three_phase_freq_badass(int cpufreq)
 {
@@ -617,6 +639,8 @@ int set_three_phase_freq_badass(int cpufreq)
 }
 #endif
 
+=======
+>>>>>>> 310fe50... cpufreq: initial badass commit
 static void bds_check_cpu(struct cpu_bds_info_s *this_bds_info)
 {
 	unsigned int max_load_freq;
@@ -626,11 +650,14 @@ static void bds_check_cpu(struct cpu_bds_info_s *this_bds_info)
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE
 	static unsigned int phase = 0;
 	static unsigned int counter = 0;
+<<<<<<< HEAD
 	unsigned int new_phase_max = 0;
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
 	static unsigned int gpu_busy_counter = 0;
 	static unsigned int gpu_busy_phase = 0;
 #endif
+=======
+>>>>>>> 310fe50... cpufreq: initial badass commit
 #endif
 
 	this_bds_info->freq_lo = 0;
@@ -725,6 +752,7 @@ static void bds_check_cpu(struct cpu_bds_info_s *this_bds_info)
 				bds_tuners_ins.sampling_down_factor;
 		bds_freq_increase(policy, policy->max);
 #else
+<<<<<<< HEAD
 		if (counter < BADASS_MAX_IDLE_COUNTER) {
 			counter++;
 			if (counter > BADASS_SEMI_BUSY_THRESHOLD) {
@@ -773,6 +801,18 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 			}
 			bds_freq_increase(policy, new_phase_max);
 #endif
+=======
+		if (counter < 5) {
+			counter++;
+			if (counter > 2) {
+				/* change to busy phase */
+				phase = 1;
+			}
+		}
+		if (bds_tuners_ins.two_phase_freq != 0 && phase == 0) {
+			/* idle phase */
+			bds_freq_increase(policy, bds_tuners_ins.two_phase_freq);
+>>>>>>> 310fe50... cpufreq: initial badass commit
 		} else {
 			/* busy phase */
 			if (policy->cur < policy->max)
@@ -785,15 +825,20 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 	}
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE
 	if (counter > 0) {
+<<<<<<< HEAD
 		if (counter > BADASS_DECREASE_IDLE_COUNTER)
 			counter -= BADASS_DECREASE_IDLE_COUNTER;
 		else if (counter > 0)
 			counter--;
+=======
+		counter--;
+>>>>>>> 310fe50... cpufreq: initial badass commit
 		if (counter == 0) {
 			/* change to idle phase */
 			phase = 0;
 		}
 	}
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
 	if (gpu_busy_counter > 0) {
 		if (gpu_busy_counter > BADASS_DECREASE_GPU_IDLE_COUNTER)
@@ -806,6 +851,8 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 		}
 	}
 #endif
+=======
+>>>>>>> 310fe50... cpufreq: initial badass commit
 #endif
 
 	/* Check for frequency decrease */
