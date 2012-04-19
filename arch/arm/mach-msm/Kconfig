@@ -1527,14 +1527,6 @@ config MSM_CPU_FREQ_MIN
 
 endif # CPU_FREQ_MSM
 
-config MSM_CPU_FREQ_ONDEMAND_MAX
-        int "Max"
-        default 384000
-
-config MSM_CPU_FREQ_ONDEMAND_MIN
-        int "Min"
-        default 245760
-
 config MSM_CPU_AVS
 	bool "Enable software controlled Adaptive Voltage Scaling (AVS)"
 	depends on (ARCH_MSM_SCORPION && QSD_SVS)
