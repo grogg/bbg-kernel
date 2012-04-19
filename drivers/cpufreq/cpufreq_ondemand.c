@@ -469,9 +469,21 @@ static ssize_t store_ignore_nice_load(struct kobject *a, struct attribute *b,
 static ssize_t store_powersave_bias(struct kobject *a, struct attribute *b,
 				    const char *buf, size_t count)
 {
+<<<<<<< HEAD
 	unsigned int input;
 	int ret;
 	ret = sscanf(buf, "%u", &input);
+=======
+	int input  = 0;
+	int bypass = 0;
+	int ret, cpu, reenable_timer, j;
+	struct cpu_dbs_info_s *dbs_info;
+
+	struct cpumask cpus_timer_done;
+	cpumask_clear(&cpus_timer_done);
+
+	ret = sscanf(buf, "%d", &input);
+>>>>>>> cde3282... msm: cpufreq: Fix store_powersave_bias to account for sync' CPUs.
 
 	if (ret != 1)
 		return -EINVAL;
@@ -480,7 +492,81 @@ static ssize_t store_powersave_bias(struct kobject *a, struct attribute *b,
 		input = 1000;
 
 	dbs_tuners_ins.powersave_bias = input;
+<<<<<<< HEAD
 	ondemand_powersave_bias_init();
+=======
+	if (!bypass) {
+		if (reenable_timer) {
+			/* reinstate dbs timer */
+			for_each_online_cpu(cpu) {
+				if (lock_policy_rwsem_write(cpu) < 0)
+					continue;
+
+				dbs_info = &per_cpu(od_cpu_dbs_info, cpu);
+
+				for_each_cpu(j, &cpus_timer_done) {
+					if (!dbs_info->cur_policy) {
+						printk(KERN_ERR
+						"%s Dbs policy is NULL\n",
+						 __func__);
+						goto skip_this_cpu;
+					}
+					if (cpumask_test_cpu(j, dbs_info->
+							cur_policy->cpus))
+						goto skip_this_cpu;
+				}
+
+				cpumask_set_cpu(cpu, &cpus_timer_done);
+				if (dbs_info->cur_policy) {
+					/* restart dbs timer */
+					dbs_timer_init(dbs_info);
+				}
+skip_this_cpu:
+				unlock_policy_rwsem_write(cpu);
+			}
+		}
+		ondemand_powersave_bias_init();
+	} else {
+		/* running at maximum or minimum frequencies; cancel
+		   dbs timer as periodic load sampling is not necessary */
+		for_each_online_cpu(cpu) {
+			if (lock_policy_rwsem_write(cpu) < 0)
+				continue;
+
+			dbs_info = &per_cpu(od_cpu_dbs_info, cpu);
+
+			for_each_cpu(j, &cpus_timer_done) {
+				if (!dbs_info->cur_policy) {
+					printk(KERN_ERR
+					"%s Dbs policy is NULL\n",
+					 __func__);
+					goto skip_this_cpu_bypass;
+				}
+				if (cpumask_test_cpu(j, dbs_info->
+							cur_policy->cpus))
+					goto skip_this_cpu_bypass;
+			}
+
+			cpumask_set_cpu(cpu, &cpus_timer_done);
+
+			if (dbs_info->cur_policy) {
+				/* cpu using ondemand, cancel dbs timer */
+				mutex_lock(&dbs_info->timer_mutex);
+				dbs_timer_exit(dbs_info);
+
+				ondemand_powersave_bias_setspeed(
+					dbs_info->cur_policy,
+					NULL,
+					input);
+
+				mutex_unlock(&dbs_info->timer_mutex);
+			}
+skip_this_cpu_bypass:
+			unlock_policy_rwsem_write(cpu);
+		}
+	}
+
+>>>>>>> cde3282... msm: cpufreq: Fix store_powersave_bias to account for sync' CPUs.
 	return count;
 }
 
