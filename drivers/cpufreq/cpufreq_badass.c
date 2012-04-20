@@ -796,6 +796,7 @@ static void bds_check_cpu(struct cpu_bds_info_s *this_bds_info)
 #else
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (counter < BADASS_MAX_IDLE_COUNTER) {
 			counter++;
 			if (counter > BADASS_SEMI_BUSY_THRESHOLD) {
@@ -849,13 +850,16 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 =======
 		if (counter < 16) {
 >>>>>>> 4cd1857... badass: tweak 2-phase and add 3-phase
+=======
+		if (counter < 160) {
+>>>>>>> 4c8289c... badass: don't jump through phases too quickly
 			counter++;
-			if ((counter > 8) && (counter < 13)) {
+			if (counter > 80) {
 				/* change to semi-busy phase (3) */
 				phase = 1;
 			}
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
-			if ((counter > 12)) {
+			if (counter > 130) {
 				/* change to busy phase (full) */
 				phase = 2;
 			}
@@ -887,6 +891,7 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 	if (counter > 0) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (counter > BADASS_DECREASE_IDLE_COUNTER)
 			counter -= BADASS_DECREASE_IDLE_COUNTER;
 		else if (counter > 0)
@@ -899,6 +904,12 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 		if (counter < 0)
 			counter=0;
 >>>>>>> 4cd1857... badass: tweak 2-phase and add 3-phase
+=======
+		if (counter > 10)
+			counter-=10;
+		else if (counter > 0)
+			counter--;
+>>>>>>> 4c8289c... badass: don't jump through phases too quickly
 		if (counter == 0) {
 			/* change to idle phase */
 			phase = 0;
