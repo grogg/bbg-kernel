@@ -693,6 +693,7 @@ static void bds_check_cpu(struct cpu_bds_info_s *this_bds_info)
 	static unsigned int phase = 0;
 	static unsigned int counter = 0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned int new_phase_max = 0;
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
 	static unsigned int gpu_busy_counter = 0;
@@ -700,6 +701,9 @@ static void bds_check_cpu(struct cpu_bds_info_s *this_bds_info)
 #endif
 =======
 >>>>>>> 310fe50... cpufreq: initial badass commit
+=======
+	unsigned int new_phase_max = 0;
+>>>>>>> 2f2a6cd... badass: fix 2phase/3phase for different clock speeds than defaults
 #endif
 
 	this_bds_info->freq_lo = 0;
@@ -867,14 +871,28 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 		}
 		if (bds_tuners_ins.two_phase_freq != 0 && phase == 0) {
 			/* idle phase */
+<<<<<<< HEAD
 			bds_freq_increase(policy, bds_tuners_ins.two_phase_freq);
 <<<<<<< HEAD
 >>>>>>> 310fe50... cpufreq: initial badass commit
 =======
+=======
+			if (bds_tuners_ins.two_phase_freq > (policy->max*80/100)) {
+				new_phase_max = (policy->max*80/100);
+			} else {
+				new_phase_max = bds_tuners_ins.two_phase_freq;
+			}
+			bds_freq_increase(policy, new_phase_max);
+>>>>>>> 2f2a6cd... badass: fix 2phase/3phase for different clock speeds than defaults
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 		} else if (bds_tuners_ins.three_phase_freq != 0 && phase == 1) {
 			/* semi-busy phase */
-			bds_freq_increase(policy, bds_tuners_ins.three_phase_freq);
+			if (bds_tuners_ins.three_phase_freq > (policy->max*90/100)) {
+				new_phase_max = (policy->max*90/100);
+			} else {
+				new_phase_max = bds_tuners_ins.three_phase_freq;
+			}
+			bds_freq_increase(policy, new_phase_max);
 #endif
 >>>>>>> 4cd1857... badass: tweak 2-phase and add 3-phase
 		} else {
