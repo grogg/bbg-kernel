@@ -33,7 +33,15 @@ extern char cmdline_gov[16];
 /* check_khz function for cmdline khz parameters */
 extern uint32_t acpu_check_khz_value(unsigned long khz);
 
+<<<<<<< HEAD
 >>>>>>> cd3c919... cmdline_khz: move check_khz function to cpufreq.h
+=======
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
+/* Badass gpu state detection */
+extern bool gpu_busy_state;
+#endif
+
+>>>>>>> 2795e80... badass: add gpucontrol / gpubusy bypass
 /*********************************************************************
  *                     CPUFREQ NOTIFIER INTERFACE                    *
  *********************************************************************/
