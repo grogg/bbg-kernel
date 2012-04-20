@@ -471,6 +471,10 @@ retry:
 	/* in case we had outstanding data */
 	if (!desc->length)
 		clear_bit(WDM_READ, &desc->flags);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 3d0ff5c... patch: pyramid wwe updates
 	rv = cntr;
 
 err:
