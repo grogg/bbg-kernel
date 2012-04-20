@@ -347,11 +347,17 @@ show_one(ignore_nice_load, ignore_nice);
 show_one(two_phase_freq, two_phase_freq);
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 show_one(three_phase_freq, three_phase_freq);
 #endif
 =======
 >>>>>>> 310fe50... cpufreq: initial badass commit
+=======
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
+show_one(three_phase_freq, three_phase_freq);
+#endif
+>>>>>>> 4cd1857... badass: tweak 2-phase and add 3-phase
 
 static ssize_t show_powersave_bias
 (struct kobject *kobj, struct attribute *attr, char *buf)
@@ -387,6 +393,9 @@ static ssize_t store_two_phase_freq(struct kobject *a, struct attribute *b,
 }
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 4cd1857... badass: tweak 2-phase and add 3-phase
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 static ssize_t store_three_phase_freq(struct kobject *a, struct attribute *b,
 				   const char *buf, size_t count)
@@ -402,8 +411,11 @@ static ssize_t store_three_phase_freq(struct kobject *a, struct attribute *b,
 	return count;
 }
 #endif
+<<<<<<< HEAD
 =======
 >>>>>>> 310fe50... cpufreq: initial badass commit
+=======
+>>>>>>> 4cd1857... badass: tweak 2-phase and add 3-phase
 
 static ssize_t store_io_is_busy(struct kobject *a, struct attribute *b,
 				   const char *buf, size_t count)
@@ -589,11 +601,17 @@ define_one_global_rw(powersave_bias);
 define_one_global_rw(two_phase_freq);
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 define_one_global_rw(three_phase_freq);
 #endif
 =======
 >>>>>>> 310fe50... cpufreq: initial badass commit
+=======
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
+define_one_global_rw(three_phase_freq);
+#endif
+>>>>>>> 4cd1857... badass: tweak 2-phase and add 3-phase
 
 static struct attribute *bds_attributes[] = {
 	&sampling_rate_min.attr,
@@ -608,11 +626,17 @@ static struct attribute *bds_attributes[] = {
 	&two_phase_freq.attr,
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 	&three_phase_freq.attr,
 #endif
 =======
 >>>>>>> 310fe50... cpufreq: initial badass commit
+=======
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
+	&three_phase_freq.attr,
+#endif
+>>>>>>> 4cd1857... badass: tweak 2-phase and add 3-phase
 	NULL
 };
 
@@ -771,6 +795,7 @@ static void bds_check_cpu(struct cpu_bds_info_s *this_bds_info)
 		bds_freq_increase(policy, policy->max);
 #else
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (counter < BADASS_MAX_IDLE_COUNTER) {
 			counter++;
 			if (counter > BADASS_SEMI_BUSY_THRESHOLD) {
@@ -821,16 +846,33 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 #endif
 =======
 		if (counter < 5) {
+=======
+		if (counter < 16) {
+>>>>>>> 4cd1857... badass: tweak 2-phase and add 3-phase
 			counter++;
-			if (counter > 2) {
-				/* change to busy phase */
+			if ((counter > 8) && (counter < 13)) {
+				/* change to semi-busy phase (3) */
 				phase = 1;
 			}
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
+			if ((counter > 12)) {
+				/* change to busy phase (full) */
+				phase = 2;
+			}
+#endif
 		}
 		if (bds_tuners_ins.two_phase_freq != 0 && phase == 0) {
 			/* idle phase */
 			bds_freq_increase(policy, bds_tuners_ins.two_phase_freq);
+<<<<<<< HEAD
 >>>>>>> 310fe50... cpufreq: initial badass commit
+=======
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
+		} else if (bds_tuners_ins.three_phase_freq != 0 && phase == 1) {
+			/* semi-busy phase */
+			bds_freq_increase(policy, bds_tuners_ins.three_phase_freq);
+#endif
+>>>>>>> 4cd1857... badass: tweak 2-phase and add 3-phase
 		} else {
 			/* busy phase */
 			if (policy->cur < policy->max)
@@ -844,6 +886,7 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE
 	if (counter > 0) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (counter > BADASS_DECREASE_IDLE_COUNTER)
 			counter -= BADASS_DECREASE_IDLE_COUNTER;
 		else if (counter > 0)
@@ -851,6 +894,11 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 =======
 		counter--;
 >>>>>>> 310fe50... cpufreq: initial badass commit
+=======
+		counter-=2;
+		if (counter < 0)
+			counter=0;
+>>>>>>> 4cd1857... badass: tweak 2-phase and add 3-phase
 		if (counter == 0) {
 			/* change to idle phase */
 			phase = 0;
