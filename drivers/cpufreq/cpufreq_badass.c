@@ -910,6 +910,7 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (counter > BADASS_DECREASE_IDLE_COUNTER)
 			counter -= BADASS_DECREASE_IDLE_COUNTER;
 		else if (counter > 0)
@@ -925,6 +926,10 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 =======
 		if (counter > 10)
 			counter-=10;
+=======
+		if (counter > 14)
+			counter-=14;
+>>>>>>> b657199... badass: drop back to idle faster
 		else if (counter > 0)
 			counter--;
 >>>>>>> 4c8289c... badass: don't jump through phases too quickly
