@@ -67,12 +67,21 @@ bool gpu_busy_state;
 >>>>>>> 310fe50... cpufreq: initial badass commit
 =======
 /* Phase configurables */
-#define BADASS_PHASE_2_PERCENT 80
-#define BADASS_PHASE_3_PERCENT 90
-#define BADASS_MAX_IDLE_COUNTER 160
-#define BADASS_SEMI_BUSY_THRESHOLD 80
-#define BADASS_BUSY_THRESHOLD 130
-#define BADASS_DECREASE_IDLE_COUNTER 14
+#define BADASS_MAX_IDLE_COUNTER			160
+#define BADASS_PHASE_2_PERCENT			80
+#define BADASS_PHASE_3_PERCENT			90
+#define BADASS_SEMI_BUSY_THRESHOLD		80
+#define BADASS_BUSY_THRESHOLD			130
+#define BADASS_DECREASE_IDLE_COUNTER		14
+
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
+bool gpu_busy_state;
+#define BADASS_GPU_MAX_IDLE_COUNTER		100
+#define BADASS_GPU_COUNTER_INCREASE		2
+#define BADASS_GPU_SEMI_BUSY_THRESHOLD		70
+#define BADASS_GPU_BUSY_THRESHOLD		90
+#define BADASS_DECREASE_GPU_IDLE_COUNTER	1
+#endif
 
 
 >>>>>>> 1649216... badass: make values configurable at the top
@@ -715,7 +724,14 @@ static void bds_check_cpu(struct cpu_bds_info_s *this_bds_info)
 >>>>>>> 310fe50... cpufreq: initial badass commit
 =======
 	unsigned int new_phase_max = 0;
+<<<<<<< HEAD
 >>>>>>> 2f2a6cd... badass: fix 2phase/3phase for different clock speeds than defaults
+=======
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
+	static unsigned int gpu_busy_counter = 0;
+	static unsigned int gpu_busy_phase = 0;
+#endif
+>>>>>>> 2795e80... badass: add gpucontrol / gpubusy bypass
 #endif
 
 	this_bds_info->freq_lo = 0;
@@ -885,7 +901,24 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 			}
 #endif
 		}
-		if (bds_tuners_ins.two_phase_freq != 0 && phase == 0) {
+
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
+		if ((gpu_busy_counter < BADASS_GPU_MAX_IDLE_COUNTER) &&
+		    (gpu_busy_state == true)) {
+			gpu_busy_counter += BADASS_GPU_COUNTER_INCREASE;
+			if (gpu_busy_counter > BADASS_GPU_SEMI_BUSY_THRESHOLD) {
+				/* change to semi-busy phase (3) */
+				gpu_busy_phase = 1;
+			}
+			if (gpu_busy_counter > BADASS_GPU_BUSY_THRESHOLD) {
+				/* change to busy phase (full) */
+				gpu_busy_phase = 2;
+			}
+		}
+printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_busy_counter, gpu_busy_phase);
+#endif
+
+		if ((bds_tuners_ins.two_phase_freq != 0 && ((phase == 0) || (gpu_busy_phase == 0)))) {
 			/* idle phase */
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -906,7 +939,7 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 			bds_freq_increase(policy, new_phase_max);
 >>>>>>> 2f2a6cd... badass: fix 2phase/3phase for different clock speeds than defaults
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
-		} else if (bds_tuners_ins.three_phase_freq != 0 && phase == 1) {
+		} else if ((bds_tuners_ins.three_phase_freq != 0 && ((phase == 1) || (gpu_busy_phase == 1)))) {
 			/* semi-busy phase */
 			if (bds_tuners_ins.three_phase_freq > (policy->max*BADASS_PHASE_3_PERCENT/100)) {
 				new_phase_max = (policy->max*BADASS_PHASE_3_PERCENT/100);
@@ -965,6 +998,9 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 		}
 	}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 2795e80... badass: add gpucontrol / gpubusy bypass
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
 	if (gpu_busy_counter > 0) {
 		if (gpu_busy_counter > BADASS_DECREASE_GPU_IDLE_COUNTER)
@@ -977,8 +1013,11 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 		}
 	}
 #endif
+<<<<<<< HEAD
 =======
 >>>>>>> 310fe50... cpufreq: initial badass commit
+=======
+>>>>>>> 2795e80... badass: add gpucontrol / gpubusy bypass
 #endif
 
 	/* Check for frequency decrease */
