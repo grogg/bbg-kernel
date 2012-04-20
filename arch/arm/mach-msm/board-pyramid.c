@@ -6219,11 +6219,15 @@ static void __init msm8x60_init(struct msm_board_data *board_data)
 #endif
 =======
 #elif defined(CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE)
-	set_two_phase_freq_badass(918000);
+	set_two_phase_freq_badass(CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE_FREQ);
 #endif
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
+<<<<<<< HEAD
 	set_three_phase_freq_badass(1134000);
 >>>>>>> 310fe50... cpufreq: initial badass commit
+=======
+	set_three_phase_freq_badass(CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE_FREQ);
+>>>>>>> 419786a... badass: make 2/3 phase frequencies configurable in the config
 #endif
 
 	msm8x60_init_tlmm();
