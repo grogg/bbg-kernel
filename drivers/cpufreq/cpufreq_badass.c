@@ -151,11 +151,17 @@ static struct bds_tuners {
 	unsigned int two_phase_freq;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 	unsigned int three_phase_freq;
 #endif
 =======
 >>>>>>> 310fe50... cpufreq: initial badass commit
+=======
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
+	unsigned int three_phase_freq;
+#endif
+>>>>>>> 099c689... badass: add 3-phase properties and functions
 } bds_tuners_ins = {
 	.up_threshold = DEF_FREQUENCY_UP_THRESHOLD,
 	.sampling_down_factor = DEF_SAMPLING_DOWN_FACTOR,
@@ -166,11 +172,17 @@ static struct bds_tuners {
 	.two_phase_freq = 0,
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 	.three_phase_freq = 0,
 #endif
 =======
 >>>>>>> 310fe50... cpufreq: initial badass commit
+=======
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
+	.three_phase_freq = 0,
+#endif
+>>>>>>> 099c689... badass: add 3-phase properties and functions
 };
 
 static inline cputime64_t get_cpu_idle_time_jiffy(unsigned int cpu,
@@ -631,6 +643,9 @@ int set_two_phase_freq_badass(int cpufreq)
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 099c689... badass: add 3-phase properties and functions
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 int set_three_phase_freq_badass(int cpufreq)
 {
@@ -639,8 +654,11 @@ int set_three_phase_freq_badass(int cpufreq)
 }
 #endif
 
+<<<<<<< HEAD
 =======
 >>>>>>> 310fe50... cpufreq: initial badass commit
+=======
+>>>>>>> 099c689... badass: add 3-phase properties and functions
 static void bds_check_cpu(struct cpu_bds_info_s *this_bds_info)
 {
 	unsigned int max_load_freq;
