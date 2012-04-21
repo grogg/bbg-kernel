@@ -901,6 +901,12 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 			}
 #endif
 		}
+/*
+ * Debug output for cpu control. Still needed for finetuning.
+ *
+ *		printk(KERN_INFO "badass: cpu_phase: '%i' |	\
+ *			 busy_counter: '%i'", phase, counter);
+ */
 
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
 		if ((gpu_busy_counter < BADASS_GPU_MAX_IDLE_COUNTER) &&
@@ -918,8 +924,8 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 /*
  * Debug output for gpu control. Still needed for finetuning.
  *
- *		printk(KERN_INFO "badass: gpu_busy_phase: '%i' |
- *			 gpu_busy_counter: '%i' | busy? '%s'", gpu_busy_phase,
+ *		printk(KERN_INFO "badass: gpu_busy_phase: '%i' |			\
+ *			 gpu_busy_counter: '%i' | busy? '%s'", gpu_busy_phase,		\
  *			 gpu_busy_counter, (gpu_busy_state)?"true":"false");
  */
 #endif
