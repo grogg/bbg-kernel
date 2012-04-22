@@ -1015,8 +1015,8 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 >>>>>>> 2795e80... badass: add gpucontrol / gpubusy bypass
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
 	if (gpu_busy_counter > 0) {
-		if (gpu_busy_counter > (BADASS_DECREASE_GPU_IDLE_COUNTER - (BADASS_DECREASE_GPU_IDLE_COUNTER*15/100)))
-			gpu_busy_counter -= BADASS_DECREASE_GPU_IDLE_COUNTER*2;
+		if (gpu_busy_counter > (BADASS_GPU_MAX_IDLE_COUNTER - (BADASS_GPU_MAX_IDLE_COUNTER*12/100)))
+			gpu_busy_counter -= BADASS_DECREASE_GPU_IDLE_COUNTER*4;
 		else if (gpu_busy_counter > BADASS_DECREASE_GPU_IDLE_COUNTER)
 			gpu_busy_counter -= BADASS_DECREASE_GPU_IDLE_COUNTER;
 		else if (gpu_busy_counter > 0)
