@@ -49,8 +49,8 @@
 #define BADASS_MAX_IDLE_COUNTER			160
 #define BADASS_PHASE_2_PERCENT			80
 #define BADASS_PHASE_3_PERCENT			90
-#define BADASS_SEMI_BUSY_THRESHOLD		80
-#define BADASS_SEMI_BUSY_CLR_THRESHOLD		10
+#define BADASS_SEMI_BUSY_THRESHOLD		14
+#define BADASS_SEMI_BUSY_CLR_THRESHOLD		6
 #define BADASS_BUSY_THRESHOLD			130
 #define BADASS_BUSY_CLR_THRESHOLD		100
 #define BADASS_DECREASE_IDLE_COUNTER		14
@@ -890,8 +890,15 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 >>>>>>> 4c8289c... badass: don't jump through phases too quickly
 =======
 		if (counter < BADASS_MAX_IDLE_COUNTER) {
+<<<<<<< HEAD
 >>>>>>> 1649216... badass: make values configurable at the top
 			counter++;
+=======
+			if ((counter < BADASS_SEMI_BUSY_THRESHOLD) && (phase == 0))
+				counter += 4;
+			else
+				counter++;
+>>>>>>> 39fd672... badass: make default setting more performance oriented
 			if ((counter > BADASS_SEMI_BUSY_THRESHOLD) && (phase < 1)) {
 				/* change to semi-busy phase (3) */
 				phase = 1;
