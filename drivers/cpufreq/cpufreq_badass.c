@@ -50,7 +50,9 @@
 #define BADASS_PHASE_2_PERCENT			80
 #define BADASS_PHASE_3_PERCENT			90
 #define BADASS_SEMI_BUSY_THRESHOLD		80
+#define BADASS_SEMI_BUSY_CLR_THRESHOLD		10
 #define BADASS_BUSY_THRESHOLD			130
+#define BADASS_BUSY_CLR_THRESHOLD		100
 #define BADASS_DECREASE_IDLE_COUNTER		14
 
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
@@ -890,12 +892,12 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 		if (counter < BADASS_MAX_IDLE_COUNTER) {
 >>>>>>> 1649216... badass: make values configurable at the top
 			counter++;
-			if (counter > BADASS_SEMI_BUSY_THRESHOLD) {
+			if ((counter > BADASS_SEMI_BUSY_THRESHOLD) && (phase < 1)) {
 				/* change to semi-busy phase (3) */
 				phase = 1;
 			}
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
-			if (counter > BADASS_BUSY_THRESHOLD) {
+			if ((counter > BADASS_BUSY_THRESHOLD) && (phase < 2)) {
 				/* change to busy phase (full) */
 				phase = 2;
 			}
@@ -978,6 +980,7 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (counter > BADASS_DECREASE_IDLE_COUNTER)
 			counter -= BADASS_DECREASE_IDLE_COUNTER;
 		else if (counter > 0)
@@ -1005,6 +1008,19 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 			counter--;
 >>>>>>> 4c8289c... badass: don't jump through phases too quickly
 		if (counter == 0) {
+=======
+		if (counter >= BADASS_DECREASE_IDLE_COUNTER)
+			counter -= BADASS_DECREASE_IDLE_COUNTER;
+		if ((counter > 0) && (counter < BADASS_DECREASE_IDLE_COUNTER))
+			counter--;
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
+		if ((counter < BADASS_BUSY_CLR_THRESHOLD) && (phase > 1)) {
+			/* change to semi busy phase */
+			phase = 1;
+		}
+#endif
+		if ((counter < BADASS_SEMI_BUSY_CLR_THRESHOLD) && (phase > 0)) {
+>>>>>>> df048a4... badass: add clear thresholds to avoid jumping through frequencies too much
 			/* change to idle phase */
 			phase = 0;
 		}
