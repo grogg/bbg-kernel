@@ -46,22 +46,22 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 /* Phase configurables */
-#define BADASS_MAX_IDLE_COUNTER			160
-#define BADASS_PHASE_2_PERCENT			80
-#define BADASS_PHASE_3_PERCENT			90
-#define BADASS_SEMI_BUSY_THRESHOLD		14
-#define BADASS_SEMI_BUSY_CLR_THRESHOLD		6
-#define BADASS_BUSY_THRESHOLD			130
-#define BADASS_BUSY_CLR_THRESHOLD		100
-#define BADASS_DECREASE_IDLE_COUNTER		14
+#define MAX_IDLE_COUNTER			160
+#define PHASE_2_PERCENT				80
+#define PHASE_3_PERCENT				90
+#define SEMI_BUSY_THRESHOLD			14
+#define SEMI_BUSY_CLR_THRESHOLD			6
+#define BUSY_THRESHOLD				130
+#define BUSY_CLR_THRESHOLD			100
+#define DECREASE_IDLE_COUNTER			14
 
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
 bool gpu_busy_state;
-#define BADASS_GPU_MAX_IDLE_COUNTER		800
-#define BADASS_GPU_COUNTER_INCREASE		4
-#define BADASS_GPU_SEMI_BUSY_THRESHOLD		100
-#define BADASS_GPU_BUSY_THRESHOLD		500
-#define BADASS_DECREASE_GPU_IDLE_COUNTER	2
+#define GPU_MAX_IDLE_COUNTER			800
+#define GPU_COUNTER_INCREASE			4
+#define GPU_SEMI_BUSY_THRESHOLD			100
+#define GPU_BUSY_THRESHOLD			500
+#define DECREASE_GPU_IDLE_COUNTER		2
 #endif
 
 
@@ -197,15 +197,15 @@ static struct bds_tuners {
 	.powersave_bias = 0,
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE
 	.two_phase_freq = 0,
-	.semi_busy_threshold = BADASS_SEMI_BUSY_THRESHOLD,
-	.semi_busy_clr_threshold = BADASS_SEMI_BUSY_CLR_THRESHOLD,
+	.semi_busy_threshold = SEMI_BUSY_THRESHOLD,
+	.semi_busy_clr_threshold = SEMI_BUSY_CLR_THRESHOLD,
 #endif
 <<<<<<< HEAD
 <<<<<<< HEAD
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 	.three_phase_freq = 0,
-	.busy_threshold = BADASS_BUSY_THRESHOLD,
-	.busy_clr_threshold = BADASS_BUSY_CLR_THRESHOLD,
+	.busy_threshold = BUSY_THRESHOLD,
+	.busy_clr_threshold = BUSY_CLR_THRESHOLD,
 #endif
 =======
 >>>>>>> 310fe50... cpufreq: initial badass commit
@@ -663,7 +663,7 @@ static ssize_t store_busy_threshold(struct kobject *a, struct attribute *b,
 	int ret;
 	ret = sscanf(buf, "%u", &input);
 
-	if (ret != 1 || input > BADASS_MAX_IDLE_COUNTER ||
+	if (ret != 1 || input > MAX_IDLE_COUNTER ||
 			input <= 0 || input < bds_tuners_ins.semi_busy_threshold ||
 			input > bds_tuners_ins.busy_clr_threshold) {
 		return -EINVAL;
@@ -914,6 +914,7 @@ static void bds_check_cpu(struct cpu_bds_info_s *this_bds_info)
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (counter < BADASS_MAX_IDLE_COUNTER) {
 			counter++;
 			if (counter > BADASS_SEMI_BUSY_THRESHOLD) {
@@ -982,11 +983,19 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 				counter++;
 >>>>>>> 39fd672... badass: make default setting more performance oriented
 			if ((counter > BADASS_SEMI_BUSY_THRESHOLD) && (phase < 1)) {
+=======
+		if (counter < MAX_IDLE_COUNTER) {
+			if ((counter < bds_tuners_ins.semi_busy_threshold) && (phase == 0))
+				counter += 4;
+			else
+				counter++;
+			if ((counter > bds_tuners_ins.semi_busy_threshold) && (phase < 1)) {
+>>>>>>> 4e3b91e... badass: replace defines with properties, remove obsolete BADASS_ from defines
 				/* change to semi-busy phase (3) */
 				phase = 1;
 			}
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
-			if ((counter > BADASS_BUSY_THRESHOLD) && (phase < 2)) {
+			if ((counter > bds_tuners_ins.busy_threshold) && (phase < 2)) {
 				/* change to busy phase (full) */
 				phase = 2;
 			}
@@ -1000,14 +1009,14 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
  */
 
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
-		if ((gpu_busy_counter < BADASS_GPU_MAX_IDLE_COUNTER) &&
+		if ((gpu_busy_counter < GPU_MAX_IDLE_COUNTER) &&
 		    (gpu_busy_state == true)) {
-			gpu_busy_counter += BADASS_GPU_COUNTER_INCREASE;
-			if (gpu_busy_counter > BADASS_GPU_SEMI_BUSY_THRESHOLD) {
+			gpu_busy_counter += GPU_COUNTER_INCREASE;
+			if (gpu_busy_counter > GPU_SEMI_BUSY_THRESHOLD) {
 				/* change to semi-busy phase (3) */
 				gpu_busy_phase = 1;
 			}
-			if (gpu_busy_counter > BADASS_GPU_BUSY_THRESHOLD) {
+			if (gpu_busy_counter > GPU_BUSY_THRESHOLD) {
 				/* change to busy phase (full) */
 				gpu_busy_phase = 2;
 			}
@@ -1025,6 +1034,7 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 			/* idle phase */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			bds_freq_increase(policy, bds_tuners_ins.two_phase_freq);
 <<<<<<< HEAD
 >>>>>>> 310fe50... cpufreq: initial badass commit
@@ -1036,6 +1046,10 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 			if (bds_tuners_ins.two_phase_freq > (policy->max*BADASS_PHASE_2_PERCENT/100)) {
 				new_phase_max = (policy->max*BADASS_PHASE_2_PERCENT/100);
 >>>>>>> 1649216... badass: make values configurable at the top
+=======
+			if (bds_tuners_ins.two_phase_freq > (policy->max*PHASE_2_PERCENT/100)) {
+				new_phase_max = (policy->max*PHASE_2_PERCENT/100);
+>>>>>>> 4e3b91e... badass: replace defines with properties, remove obsolete BADASS_ from defines
 			} else {
 				new_phase_max = bds_tuners_ins.two_phase_freq;
 			}
@@ -1044,8 +1058,8 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 		} else if ((bds_tuners_ins.three_phase_freq != 0 && ((phase == 1) || (gpu_busy_phase == 1)))) {
 			/* semi-busy phase */
-			if (bds_tuners_ins.three_phase_freq > (policy->max*BADASS_PHASE_3_PERCENT/100)) {
-				new_phase_max = (policy->max*BADASS_PHASE_3_PERCENT/100);
+			if (bds_tuners_ins.three_phase_freq > (policy->max*PHASE_3_PERCENT/100)) {
+				new_phase_max = (policy->max*PHASE_3_PERCENT/100);
 			} else {
 				new_phase_max = bds_tuners_ins.three_phase_freq;
 			}
@@ -1064,6 +1078,7 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 	}
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE
 	if (counter > 0) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1101,15 +1116,24 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 		if (counter >= BADASS_DECREASE_IDLE_COUNTER)
 			counter -= BADASS_DECREASE_IDLE_COUNTER;
 		if ((counter > 0) && (counter < BADASS_DECREASE_IDLE_COUNTER))
+=======
+		if (counter >= DECREASE_IDLE_COUNTER)
+			counter -= DECREASE_IDLE_COUNTER;
+		if ((counter > 0) && (counter < DECREASE_IDLE_COUNTER))
+>>>>>>> 4e3b91e... badass: replace defines with properties, remove obsolete BADASS_ from defines
 			counter--;
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
-		if ((counter < BADASS_BUSY_CLR_THRESHOLD) && (phase > 1)) {
+		if ((counter < bds_tuners_ins.busy_clr_threshold) && (phase > 1)) {
 			/* change to semi busy phase */
 			phase = 1;
 		}
 #endif
+<<<<<<< HEAD
 		if ((counter < BADASS_SEMI_BUSY_CLR_THRESHOLD) && (phase > 0)) {
 >>>>>>> df048a4... badass: add clear thresholds to avoid jumping through frequencies too much
+=======
+		if ((counter < bds_tuners_ins.semi_busy_clr_threshold) && (phase > 0)) {
+>>>>>>> 4e3b91e... badass: replace defines with properties, remove obsolete BADASS_ from defines
 			/* change to idle phase */
 			phase = 0;
 		}
@@ -1120,10 +1144,10 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 >>>>>>> 2795e80... badass: add gpucontrol / gpubusy bypass
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
 	if (gpu_busy_counter > 0) {
-		if (gpu_busy_counter > (BADASS_GPU_MAX_IDLE_COUNTER - (BADASS_GPU_MAX_IDLE_COUNTER*12/100)))
-			gpu_busy_counter -= BADASS_DECREASE_GPU_IDLE_COUNTER*4;
-		else if (gpu_busy_counter > BADASS_DECREASE_GPU_IDLE_COUNTER)
-			gpu_busy_counter -= BADASS_DECREASE_GPU_IDLE_COUNTER;
+		if (gpu_busy_counter > (GPU_MAX_IDLE_COUNTER - (GPU_MAX_IDLE_COUNTER*12/100)))
+			gpu_busy_counter -= DECREASE_GPU_IDLE_COUNTER*4;
+		else if (gpu_busy_counter > DECREASE_GPU_IDLE_COUNTER)
+			gpu_busy_counter -= DECREASE_GPU_IDLE_COUNTER;
 		else if (gpu_busy_counter > 0)
 			gpu_busy_counter--;
 		if (gpu_busy_counter == 0) {
