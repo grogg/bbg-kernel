@@ -58,10 +58,12 @@
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
 bool gpu_busy_state;
 #define GPU_MAX_IDLE_COUNTER			800
-#define GPU_COUNTER_INCREASE			4
-#define GPU_SEMI_BUSY_THRESHOLD			100
-#define GPU_BUSY_THRESHOLD			500
-#define DECREASE_GPU_IDLE_COUNTER		2
+#define GPU_COUNTER_INCREASE			8
+#define GPU_SEMI_BUSY_THRESHOLD			240
+#define GPU_SEMI_BUSY_CLR_THRESHOLD		150
+#define GPU_BUSY_THRESHOLD			700
+#define GPU_BUSY_CLR_THRESHOLD			450
+#define DECREASE_GPU_IDLE_COUNTER		4
 #endif
 
 
@@ -915,6 +917,7 @@ static void bds_check_cpu(struct cpu_bds_info_s *this_bds_info)
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (counter < BADASS_MAX_IDLE_COUNTER) {
 			counter++;
 			if (counter > BADASS_SEMI_BUSY_THRESHOLD) {
@@ -984,6 +987,11 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 >>>>>>> 39fd672... badass: make default setting more performance oriented
 			if ((counter > BADASS_SEMI_BUSY_THRESHOLD) && (phase < 1)) {
 =======
+=======
+		if (counter < 0)
+			counter = 0;
+
+>>>>>>> cf61a8a... badass: gpucontrol: use gpu clear thresholds + minor cleanup
 		if (counter < MAX_IDLE_COUNTER) {
 			if ((counter < bds_tuners_ins.semi_busy_threshold) && (phase == 0))
 				counter += 4;
@@ -1009,16 +1017,26 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
  */
 
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
+		if (gpu_busy_counter < 0)
+			gpu_busy_counter = 0;
+
 		if ((gpu_busy_counter < GPU_MAX_IDLE_COUNTER) &&
 		    (gpu_busy_state == true)) {
 			gpu_busy_counter += GPU_COUNTER_INCREASE;
-			if (gpu_busy_counter > GPU_SEMI_BUSY_THRESHOLD) {
+			if ((gpu_busy_counter > GPU_SEMI_BUSY_THRESHOLD) && (gpu_busy_phase < 1)) {
 				/* change to semi-busy phase (3) */
 				gpu_busy_phase = 1;
 			}
-			if (gpu_busy_counter > GPU_BUSY_THRESHOLD) {
+			if ((gpu_busy_counter > GPU_BUSY_THRESHOLD) && (gpu_busy_phase < 2)) {
 				/* change to busy phase (full) */
 				gpu_busy_phase = 2;
+			}
+		} else if (gpu_busy_state == false) {
+			if (gpu_busy_counter > 0) {
+				if ((gpu_busy_phase >= 1) && (gpu_busy_counter >= (DECREASE_GPU_IDLE_COUNTER/2)))
+					gpu_busy_counter -= (DECREASE_GPU_IDLE_COUNTER/2);
+				if ((gpu_busy_phase > 1) && (gpu_busy_counter >= DECREASE_GPU_IDLE_COUNTER))
+					gpu_busy_counter -= DECREASE_GPU_IDLE_COUNTER;
 			}
 		}
 /*
@@ -1056,7 +1074,7 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 			bds_freq_increase(policy, new_phase_max);
 >>>>>>> 2f2a6cd... badass: fix 2phase/3phase for different clock speeds than defaults
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
-		} else if ((bds_tuners_ins.three_phase_freq != 0 && ((phase == 1) || (gpu_busy_phase == 1)))) {
+		} else if (bds_tuners_ins.three_phase_freq != 0 && ((phase == 1) || (gpu_busy_phase == 1))) {
 			/* semi-busy phase */
 			if (bds_tuners_ins.three_phase_freq > (policy->max*PHASE_3_PERCENT/100)) {
 				new_phase_max = (policy->max*PHASE_3_PERCENT/100);
@@ -1122,6 +1140,7 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 		if ((counter > 0) && (counter < DECREASE_IDLE_COUNTER))
 >>>>>>> 4e3b91e... badass: replace defines with properties, remove obsolete BADASS_ from defines
 			counter--;
+
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
 		if ((counter < bds_tuners_ins.busy_clr_threshold) && (phase > 1)) {
 			/* change to semi busy phase */
@@ -1144,13 +1163,18 @@ printk(KERN_INFO "badass: gpu_busy_counter: '%i' | gpu_busy_phase: '%i'", gpu_bu
 >>>>>>> 2795e80... badass: add gpucontrol / gpubusy bypass
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
 	if (gpu_busy_counter > 0) {
-		if (gpu_busy_counter > (GPU_MAX_IDLE_COUNTER - (GPU_MAX_IDLE_COUNTER*12/100)))
-			gpu_busy_counter -= DECREASE_GPU_IDLE_COUNTER*4;
+		if (gpu_busy_counter > (GPU_MAX_IDLE_COUNTER - (GPU_MAX_IDLE_COUNTER*10/100)))
+			gpu_busy_counter -= DECREASE_GPU_IDLE_COUNTER*25;
 		else if (gpu_busy_counter > DECREASE_GPU_IDLE_COUNTER)
 			gpu_busy_counter -= DECREASE_GPU_IDLE_COUNTER;
 		else if (gpu_busy_counter > 0)
 			gpu_busy_counter--;
-		if (gpu_busy_counter == 0) {
+
+		if ((gpu_busy_counter < GPU_BUSY_CLR_THRESHOLD) && (gpu_busy_phase > 1)) {
+			/* change to semi-busy phase */
+			gpu_busy_phase = 1;
+		}
+		if ((gpu_busy_counter < GPU_SEMI_BUSY_CLR_THRESHOLD) && (gpu_busy_phase > 0)) {
 			/* change to idle phase */
 			gpu_busy_phase = 0;
 		}
