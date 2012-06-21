@@ -30,6 +30,7 @@
 #include <linux/cpumask.h>
 #include <asm-generic/cputime.h>
 #include <linux/hrtimer.h>
+<<<<<<< HEAD
 #include <linux/delay.h>
 
 #define MPDEC_TAG                       "[MPDEC]: "
@@ -38,6 +39,12 @@
 #define MSM_MPDEC_PAUSE                 10000
 #define MSM_MPDEC_IDLE_FREQ             486000
 
+=======
+
+#define MPDEC_TAG "[MPDEC]: "
+#define MSM_MPDEC_DELAY 400
+
+>>>>>>> 6141f3d... mach-msm: mpdecision: add load based decision making
 enum {
 	MSM_MPDEC_DISABLED = 0,
 	MSM_MPDEC_IDLE,
@@ -70,6 +77,7 @@ static struct msm_mpdec_tuners {
 	.idle_freq = MSM_MPDEC_IDLE_FREQ,
 };
 
+<<<<<<< HEAD
 static unsigned int NwNs_Threshold[4] = {35, 0, 0, 5};
 static unsigned int TwTs_Threshold[4] = {250, 0, 0, 250};
 
@@ -214,17 +222,130 @@ out:
 				msecs_to_jiffies(msm_mpdec_tuners_ins.delay));
 	return;
 }
+=======
+static struct delayed_work msm_mpdec_work;
+static DEFINE_SPINLOCK(msm_cpu_lock);
+
+bool scroff_single_core = true;
+>>>>>>> 6141f3d... mach-msm: mpdecision: add load based decision making
+
+static unsigned int NwNs_Threshold[4] = {20, 0, 0, 5};
+static unsigned int TwTs_Threshold[4] = {250, 0, 0, 250};
+extern unsigned int get_rq_info(void);
+
+static int mp_decision(void)
+{
+	static bool first_call = true;
+	int new_state = MSM_MPDEC_IDLE;
+	int nr_cpu_online;
+	int index;
+	unsigned int rq_depth;
+	static cputime64_t total_time = 0;
+	static cputime64_t last_time;
+	cputime64_t current_time;
+	cputime64_t this_time = 0;
+
+	current_time = ktime_to_ms(ktime_get());
+	if (first_call) {
+		first_call = false;
+	} else {
+		this_time = current_time - last_time;
+	}
+	total_time += this_time;
+
+	rq_depth = get_rq_info();
+	nr_cpu_online = num_online_cpus();
+
+	if (nr_cpu_online) {
+		index = (nr_cpu_online - 1) * 2;
+		if ((nr_cpu_online < 2) && (rq_depth >= NwNs_Threshold[index])) {
+			if (total_time >= TwTs_Threshold[index]) {
+				new_state = MSM_MPDEC_UP;
+			}
+		} else if (rq_depth <= NwNs_Threshold[index+1]) {
+			if (total_time >= TwTs_Threshold[index+1] ) {
+				new_state = MSM_MPDEC_DOWN;
+			}
+		} else {
+			new_state = MSM_MPDEC_IDLE;
+			total_time = 0;
+		}
+	} else {
+		total_time = 0;
+	}
+
+	if (new_state != MSM_MPDEC_IDLE) {
+		total_time = 0;
+	}
+
+	last_time = ktime_to_ms(ktime_get());
+
+	return new_state;
+}
+
+static void msm_mpdec_work_thread(struct work_struct *work)
+{
+	int ret = 0;
+	unsigned int cpu = nr_cpu_ids;
+	unsigned long flags = 0;
+
+	if (per_cpu(msm_mpdec_suspend, (CONFIG_NR_CPUS - 1)).device_suspended == true)
+		goto out;
+
+	spin_lock_irqsave(&msm_cpu_lock, flags);
+
+	ret = mp_decision();
+	switch (ret) {
+	case MSM_MPDEC_DISABLED:
+	case MSM_MPDEC_IDLE:
+		break;
+	case MSM_MPDEC_DOWN:
+		cpu = (CONFIG_NR_CPUS - 1);
+		if ((cpu < nr_cpu_ids) && (cpu_online(cpu))) {
+			cpu_down(cpu);
+			pr_info(MPDEC_TAG"CPU[%d] 1->0 | Mask=[%d%d]\n",
+					cpu, cpu_online(0), cpu_online(1));
+		}
+		break;
+	case MSM_MPDEC_UP:
+		cpu = (CONFIG_NR_CPUS - 1);
+		if ((cpu < nr_cpu_ids) && (!cpu_online(cpu))) {
+			cpu_up(cpu);
+			pr_info(MPDEC_TAG"CPU[%d] 0->1 | Mask=[%d%d]\n",
+					cpu, cpu_online(0), cpu_online(1));
+		}
+		break;
+	default:
+		pr_err(MPDEC_TAG"%s: invalid mpdec hotplug state %d\n",
+		       __func__, ret);
+	}
+
+	spin_unlock_irqrestore(&msm_cpu_lock, flags);
+
+out:
+	schedule_delayed_work(&msm_mpdec_work,
+			msecs_to_jiffies(MSM_MPDEC_DELAY));
+	return;
+}
 
 static void msm_mpdec_early_suspend(struct early_suspend *h)
 {
 	int cpu = 0;
 	for_each_possible_cpu(cpu) {
+<<<<<<< HEAD
 		mutex_lock(&per_cpu(msm_mpdec_cpudata, cpu).suspend_mutex);
 		if (((cpu >= (CONFIG_NR_CPUS - 1)) && (num_online_cpus() > 1)) && (msm_mpdec_tuners_ins.scroff_single_core)) {
 			cpu_down(cpu);
 			pr_info(MPDEC_TAG"Screen -> off. Suspended CPU%d | Mask=[%d%d]\n",
 					cpu, cpu_online(0), cpu_online(1));
 			per_cpu(msm_mpdec_cpudata, cpu).online = false;
+=======
+		mutex_lock(&per_cpu(msm_mpdec_suspend, cpu).suspend_mutex);
+		if (((cpu >= (CONFIG_NR_CPUS - 1)) && (num_online_cpus() > 1)) && (scroff_single_core)) {
+			pr_info(MPDEC_TAG"Screen -> off. Suspending CPU%d", cpu);
+			cpu_down(cpu);
+			per_cpu(msm_mpdec_suspend, cpu).device_suspended = true;
+>>>>>>> 6141f3d... mach-msm: mpdecision: add load based decision making
 		}
 		per_cpu(msm_mpdec_cpudata, cpu).device_suspended = true;
 		mutex_unlock(&per_cpu(msm_mpdec_cpudata, cpu).suspend_mutex);
@@ -240,11 +361,17 @@ static void msm_mpdec_late_resume(struct early_suspend *h)
 			/* Always enable cpus when screen comes online.
 			 * This boosts the wakeup process.
 			 */
+<<<<<<< HEAD
 			cpu_up(cpu);
 			per_cpu(msm_mpdec_cpudata, cpu).on_time = ktime_to_ms(ktime_get());
 			per_cpu(msm_mpdec_cpudata, cpu).online = true;
 			pr_info(MPDEC_TAG"Screen -> on. Hot plugged CPU%d | Mask=[%d%d]\n",
 					cpu, cpu_online(0), cpu_online(1));
+=======
+			pr_info(MPDEC_TAG"Screen -> on. Hot plugging CPU%d", cpu);
+			cpu_up(cpu);
+			per_cpu(msm_mpdec_suspend, cpu).device_suspended = false;
+>>>>>>> 6141f3d... mach-msm: mpdecision: add load based decision making
 		}
 		per_cpu(msm_mpdec_cpudata, cpu).device_suspended = false;
 		mutex_unlock(&per_cpu(msm_mpdec_cpudata, cpu).suspend_mutex);
@@ -547,6 +674,7 @@ static int __init msm_mpdec(void)
 	}
 
 	INIT_DELAYED_WORK(&msm_mpdec_work, msm_mpdec_work_thread);
+<<<<<<< HEAD
 	if (state != MSM_MPDEC_DISABLED)
 		schedule_delayed_work(&msm_mpdec_work, 0);
 
@@ -562,6 +690,12 @@ static int __init msm_mpdec(void)
 	} else
 		pr_warn(MPDEC_TAG"sysfs: ERROR, could not create sysfs kobj");
 
+=======
+	schedule_delayed_work(&msm_mpdec_work, 0);
+
+	register_early_suspend(&msm_mpdec_early_suspend_handler);
+
+>>>>>>> 6141f3d... mach-msm: mpdecision: add load based decision making
 	pr_info(MPDEC_TAG"%s init complete.", __func__);
 
 	return err;
