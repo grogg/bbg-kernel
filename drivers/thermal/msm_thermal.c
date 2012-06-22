@@ -181,6 +181,19 @@ static int __init msm_thermal_init(void)
 
 	schedule_delayed_work(&check_temp_work, 0);
 
+<<<<<<< HEAD
+=======
+	msm_thermal_kobject = kobject_create_and_add("msm_thermal", kernel_kobj);
+	if (msm_thermal_kobject) {
+		rc = sysfs_create_group(msm_thermal_kobject,
+							&msm_thermal_attr_group);
+		if (rc) {
+			pr_warn("msm_thermal: sysfs: ERROR, could not create sysfs group");
+		}
+	} else
+		pr_warn("msm_thermal: sysfs: ERROR, could not create sysfs kobj");
+
+>>>>>>> 8c4971c... msm_thermal: move sysfs to /sys/kernel/msm_thermal/conf/
 	return ret;
 }
 fs_initcall(msm_thermal_init);
