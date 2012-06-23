@@ -22,7 +22,11 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
+<<<<<<< HEAD
  * $Id: dhd_linux.c 288104 2011-10-06 01:54:08Z $
+=======
+ * $Id: dhd_linux.c 291449 2011-10-22 12:16:26Z $
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 #include <typedefs.h>
@@ -42,12 +46,15 @@
 #include <linux/ethtool.h>
 #include <linux/fcntl.h>
 #include <linux/fs.h>
+<<<<<<< HEAD
 /* HTC_CSP_START */
 #include <linux/ioprio.h>
 #ifdef CONFIG_PERFLOCK
 #include <mach/perflock.h>
 #endif
 /* HTC_CSP_END */
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #include <asm/uaccess.h>
 #include <asm/unaligned.h>
@@ -73,6 +80,7 @@
 #include <proto/bt_amp_hci.h>
 #include <dhd_bta.h>
 
+<<<<<<< HEAD
 extern int bcm_chip_is_4330b1;
 extern int bcm_chip_is_4330;
 /* HTC_CSP_START */
@@ -86,6 +94,8 @@ dhd_pub_t *priv_dhdp = NULL;
 static int module_insert = 0;
 int module_remove = 0; 
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #ifdef WLMEDIA_HTSF
 #include <linux/time.h>
 #include <htsf.h>
@@ -116,7 +126,10 @@ static histo_t vi_d1, vi_d2, vi_d3, vi_d4;
 extern bool ap_cfg_running;
 extern bool ap_fw_loaded;
 #endif
+<<<<<<< HEAD
 bool wifi_fail_retry = false;
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 /* enable HOSTIP cache update from the host side when an eth0:N is up */
 #define AOE_IP_ALIAS_SUPPORT 1
@@ -129,7 +142,10 @@ bool wifi_fail_retry = false;
 #include <wl_android.h>
 
 #ifdef ARP_OFFLOAD_SUPPORT
+<<<<<<< HEAD
 void aoe_update_host_ipv4_table(dhd_pub_t *dhd_pub, u32 ipa, bool add);
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 static int dhd_device_event(struct notifier_block *this,
 	unsigned long event,
 	void *ptr);
@@ -272,10 +288,16 @@ typedef struct dhd_info {
 #if defined(CONFIG_HAS_WAKELOCK) && (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27))
 	struct wake_lock wl_wifi;   /* Wifi wakelock */
 	struct wake_lock wl_rxwake; /* Wifi rx wakelock */
+<<<<<<< HEAD
 	struct wake_lock wl_htc; 	/* HTC timeout wakelock */
 #endif
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 25)) && 1
+=======
+#endif
+
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 25))
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	/* net_device interface lock, prevent race conditions among net_dev interface
 	 * calls and wifi_on or wifi_off
 	 */
@@ -295,18 +317,24 @@ typedef struct dhd_info {
 #ifdef CONFIG_HAS_EARLYSUSPEND
 	struct early_suspend early_suspend;
 #endif /* CONFIG_HAS_EARLYSUSPEND */
+<<<<<<< HEAD
 #ifdef ARP_OFFLOAD_SUPPORT
 	u32 pend_ipaddr;
 #endif /* ARP_OFFLOAD_SUPPORT */
     bool dhd_force_exit; 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 } dhd_info_t;
 
 /* Definitions to provide path to the firmware and nvram
  * example nvram_path[MOD_PARAM_PATHLEN]="/projects/wlan/nvram.txt"
  */
 char firmware_path[MOD_PARAM_PATHLEN];
+<<<<<<< HEAD
 char fwb1_path[MOD_PARAM_PATHLEN];
 char fwb2_path[MOD_PARAM_PATHLEN];
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 char nvram_path[MOD_PARAM_PATHLEN];
 
 extern int wl_control_wl_start(struct net_device *dev);
@@ -325,8 +353,11 @@ module_param(dhd_msg_level, int, 0);
 
 /* load firmware and/or nvram values from the filesystem */
 module_param_string(firmware_path, firmware_path, MOD_PARAM_PATHLEN, 0660);
+<<<<<<< HEAD
 module_param_string(fwb1_path, fwb1_path, MOD_PARAM_PATHLEN, 0);
 module_param_string(fwb2_path, fwb2_path, MOD_PARAM_PATHLEN, 0);
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 module_param_string(nvram_path, nvram_path, MOD_PARAM_PATHLEN, 0);
 
 /* Watchdog interval */
@@ -335,7 +366,11 @@ module_param(dhd_watchdog_ms, uint, 0);
 
 #if defined(DHD_DEBUG)
 /* Console poll interval */
+<<<<<<< HEAD
 uint dhd_console_ms = 250;
+=======
+uint dhd_console_ms = 0;
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 module_param(dhd_console_ms, uint, 0644);
 #endif /* defined(DHD_DEBUG) */
 
@@ -357,7 +392,11 @@ module_param(dhd_pkt_filter_init, uint, 0);
 
 /* Pkt filter mode control */
 uint dhd_master_mode = TRUE;
+<<<<<<< HEAD
 module_param(dhd_master_mode, uint, 1);
+=======
+module_param(dhd_master_mode, uint, 0);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #ifdef DHDTHREAD
 /* Watchdog thread priority, -1 to use kernel timer */
@@ -373,11 +412,15 @@ extern int dhd_dongle_memsize;
 module_param(dhd_dongle_memsize, int, 0);
 #endif /* DHDTHREAD */
 /* Control fw roaming */
+<<<<<<< HEAD
 #ifdef CUSTOMER_HW2
 uint dhd_roam_disable = 0;
 #else
 uint dhd_roam_disable = 1;
 #endif
+=======
+uint dhd_roam_disable = 0;
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 /* Control radio state */
 uint dhd_radio_up = 1;
@@ -507,25 +550,40 @@ static int dhd_toe_set(dhd_info_t *dhd, int idx, uint32 toe_ol);
 static int dhd_wl_host_event(dhd_info_t *dhd, int *ifidx, void *pktdata,
                              wl_event_msg_t *event_ptr, void **data_ptr);
 
+<<<<<<< HEAD
 #define WLC_HT_TKIP_RESTRICT    0x02    /* restrict HT with WEP  */ 
 #define WLC_HT_WEP_RESTRICT     0x01    /* restrict HT with TKIP */
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) && defined(CONFIG_PM_SLEEP)
 static int dhd_sleep_pm_callback(struct notifier_block *nfb, unsigned long action, void *ignored)
 {
 	int ret = NOTIFY_DONE;
 
 #if (LINUX_VERSION_CODE <= KERNEL_VERSION(2, 6, 39))
+<<<<<<< HEAD
 	switch (action)	{
 		case PM_HIBERNATION_PREPARE:
 		case PM_SUSPEND_PREPARE:
 			dhd_mmc_suspend = TRUE;
 		ret = NOTIFY_OK;
+=======
+	switch (action) {
+		case PM_HIBERNATION_PREPARE:
+		case PM_SUSPEND_PREPARE:
+			dhd_mmc_suspend = TRUE;
+			ret = NOTIFY_OK;
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		break;
 		case PM_POST_HIBERNATION:
 		case PM_POST_SUSPEND:
 			dhd_mmc_suspend = FALSE;
+<<<<<<< HEAD
 		ret = NOTIFY_OK;
+=======
+			ret = NOTIFY_OK;
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		break;
 	}
 	smp_mb();
@@ -560,6 +618,7 @@ static void dhd_set_packet_filter(int value, dhd_pub_t *dhd)
 }
 
 #if defined(CONFIG_HAS_EARLYSUSPEND)
+<<<<<<< HEAD
 /* HTC_CSP_START */
 /* void wl_iw_set_screen_off(int off); */
 void wl_android_set_screen_off(int off);
@@ -585,10 +644,20 @@ static int dhd_set_suspend(int value, dhd_pub_t *dhd)
 #ifdef CUSTOMER_HW2
 //	uint roamvar = 1;
 #endif /* CUSTOMER_HW2 */
+=======
+static int dhd_set_suspend(int value, dhd_pub_t *dhd)
+{
+	int power_mode = PM_MAX;
+	/* wl_pkt_filter_enable_t	enable_parm; */
+	char iovbuf[32];
+	int bcn_li_dtim = 3;
+	uint roamvar = 1;
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	DHD_TRACE(("%s: enter, value = %d in_suspend=%d\n",
 		__FUNCTION__, value, dhd->in_suspend));
 
+<<<<<<< HEAD
 /* HTC_CSP_START */
 	/* indicate wl_iw screen off */
 	wl_android_set_screen_off(is_screen_off);
@@ -634,10 +703,39 @@ static int dhd_set_suspend(int value, dhd_pub_t *dhd)
 				dhdhtc_update_wifi_power_mode(is_screen_off);
 				dhdhtc_update_dtim_listen_interval(is_screen_off);
 /* HTC_CSP_END */
+=======
+	if (dhd && dhd->up) {
+		if (value && dhd->in_suspend) {
+
+				/* Kernel suspended */
+				DHD_ERROR(("%s: force extra Suspend setting \n", __FUNCTION__));
+
+				dhd_wl_ioctl_cmd(dhd, WLC_SET_PM, (char *)&power_mode,
+				                 sizeof(power_mode), TRUE, 0);
+
+				/* Enable packet filter, only allow unicast packet to send up */
+				dhd_set_packet_filter(1, dhd);
+
+				/* If DTIM skip is set up as default, force it to wake
+				 * each third DTIM for better power savings.  Note that
+				 * one side effect is a chance to miss BC/MC packet.
+				 */
+				bcn_li_dtim = dhd_get_dtim_skip(dhd);
+				bcm_mkiovar("bcn_li_dtim", (char *)&bcn_li_dtim,
+					4, iovbuf, sizeof(iovbuf));
+				dhd_wl_ioctl_cmd(dhd, WLC_SET_VAR, iovbuf, sizeof(iovbuf), TRUE, 0);
+
+				/* Disable firmware roaming during suspend */
+				bcm_mkiovar("roam_off", (char *)&roamvar, 4,
+					iovbuf, sizeof(iovbuf));
+				dhd_wl_ioctl_cmd(dhd, WLC_SET_VAR, iovbuf, sizeof(iovbuf), TRUE, 0);
+			} else {
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 				/* Kernel resumed  */
 				DHD_TRACE(("%s: Remove extra suspend setting \n", __FUNCTION__));
 
+<<<<<<< HEAD
 #ifdef PNO_SUPPORT
 				dhd_set_pfn(dhd, 0);
 #endif
@@ -654,12 +752,31 @@ static int dhd_set_suspend(int value, dhd_pub_t *dhd)
 #endif
 /* HTC_CSP_END */
 
+=======
+				power_mode = PM_FAST;
+				dhd_wl_ioctl_cmd(dhd, WLC_SET_PM, (char *)&power_mode,
+				                 sizeof(power_mode), TRUE, 0);
+
+				/* disable pkt filter */
+				dhd_set_packet_filter(0, dhd);
+
+				/* restore pre-suspend setting for dtim_skip */
+				bcm_mkiovar("bcn_li_dtim", (char *)&dhd->dtim_skip,
+					4, iovbuf, sizeof(iovbuf));
+
+				dhd_wl_ioctl_cmd(dhd, WLC_SET_VAR, iovbuf, sizeof(iovbuf), TRUE, 0);
+				roamvar = dhd_roam_disable;
+				bcm_mkiovar("roam_off", (char *)&roamvar, 4, iovbuf,
+					sizeof(iovbuf));
+				dhd_wl_ioctl_cmd(dhd, WLC_SET_VAR, iovbuf, sizeof(iovbuf), TRUE, 0);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			}
 	}
 
 	return 0;
 }
 
+<<<<<<< HEAD
 /* HTC_CSP_START */
 #ifdef BCM4329_LOW_POWER
 int dhd_set_keepalive(int value)
@@ -815,6 +932,8 @@ int dhdhtc_update_dtim_listen_interval(int is_screen_off)
 }
 /* HTC_CSP_END */
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 static void dhd_suspend_resume_helper(struct dhd_info *dhd, int val)
 {
 	dhd_pub_t *dhdp = &dhd->pub;
@@ -922,9 +1041,14 @@ dhd_net2idx(dhd_info_t *dhd, struct net_device *net)
 	return DHD_BAD_IF;
 }
 
+<<<<<<< HEAD
 struct net_device * dhd_idx2net(void *pub, int ifidx)
 {
 	struct dhd_pub *dhd_pub = (struct dhd_pub *)pub;
+=======
+struct net_device * dhd_idx2net(struct dhd_pub *dhd_pub, int ifidx)
+{
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	struct dhd_info *dhd_info;
 
 	if (!dhd_pub || ifidx < 0 || ifidx >= DHD_MAX_IFS)
@@ -992,6 +1116,7 @@ dhd_bssidx2bssid(dhd_pub_t *dhdp, int idx)
 }
 
 
+<<<<<<< HEAD
 void 
 dhd_state_set_flags(dhd_pub_t *dhdp, dhd_attach_states_t flags, int add)
 {
@@ -1010,6 +1135,8 @@ dhd_state_set_flags(dhd_pub_t *dhdp, dhd_attach_states_t flags, int add)
 	DHD_INFO(("%s: dhd_state=%x.\n", __FUNCTION__, dhd->dhd_state));
 }
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 static void
 _dhd_set_multicast_list(dhd_info_t *dhd, int ifidx)
 {
@@ -1026,10 +1153,13 @@ _dhd_set_multicast_list(dhd_info_t *dhd, int ifidx)
 	uint buflen;
 	int ret;
 
+<<<<<<< HEAD
 	if (module_remove) {
 		printf("%s: module removed.\n", __FUNCTION__);
 		return;
 	}
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	ASSERT(dhd && dhd->iflist[ifidx]);
 	dev = dhd->iflist[ifidx]->net;
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)
@@ -1159,11 +1289,14 @@ _dhd_set_mac_address(dhd_info_t *dhd, int ifidx, struct ether_addr *addr)
 	wl_ioctl_t ioc;
 	int ret;
 
+<<<<<<< HEAD
 	if (module_remove) {
 		printf("%s: module removed.\n", __FUNCTION__);
 		return -1;
 	}
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (!bcm_mkiovar("cur_etheraddr", (char*)addr, ETHER_ADDR_LEN, buf, 32)) {
 		DHD_ERROR(("%s: mkiovar failed for cur_etheraddr\n", dhd_ifname(&dhd->pub, ifidx)));
 		return -1;
@@ -1179,7 +1312,10 @@ _dhd_set_mac_address(dhd_info_t *dhd, int ifidx, struct ether_addr *addr)
 		DHD_ERROR(("%s: set cur_etheraddr failed\n", dhd_ifname(&dhd->pub, ifidx)));
 	} else {
 		memcpy(dhd->iflist[ifidx]->net->dev_addr, addr, ETHER_ADDR_LEN);
+<<<<<<< HEAD
 		memcpy(dhd->pub.mac.octet, addr, ETHER_ADDR_LEN);
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 
 	return ret;
@@ -1199,8 +1335,11 @@ dhd_op_if(dhd_if_t *ifp)
 	unsigned long flags;
 #endif
 
+<<<<<<< HEAD
 	if (!ifp || !ifp->info || !ifp->idx)
 		return;
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	ASSERT(ifp && ifp->info && ifp->idx);	/* Virtual interfaces only */
 
 	dhd = ifp->info;
@@ -1237,7 +1376,11 @@ dhd_op_if(dhd_if_t *ifp)
 #ifdef WL_CFG80211
 			if (dhd->dhd_state & DHD_ATTACH_STATE_CFG80211)
 				if (!wl_cfg80211_notify_ifadd(ifp->net, ifp->idx, ifp->bssidx,
+<<<<<<< HEAD
 					(void*)dhd_net_attach)) {
+=======
+					dhd_net_attach)) {
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 					ifp->state = DHD_IF_NONE;
 					return;
 				}
@@ -1276,9 +1419,12 @@ dhd_op_if(dhd_if_t *ifp)
 				wl_cfg80211_notify_ifdel(ifp->net);
 			}
 #endif
+<<<<<<< HEAD
 			/*HTC_CSP_START*/
 			msleep(300);
 			/*HTC_CSP_END*/
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			netif_stop_queue(ifp->net);
 			unregister_netdev(ifp->net);
 			ret = DHD_DEL_IF;	/* Make sure the free_netdev() is called */
@@ -1296,7 +1442,10 @@ dhd_op_if(dhd_if_t *ifp)
 		ifp->set_multicast = FALSE;
 		if (ifp->net) {
 			free_netdev(ifp->net);
+<<<<<<< HEAD
 			ifp->net = NULL;
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		}
 		dhd->iflist[ifp->idx] = NULL;
 #ifdef SOFTAP
@@ -1328,8 +1477,11 @@ _dhd_sysioc_thread(void *data)
 
 	while (down_interruptible(&tsk->sema) == 0) {
 
+<<<<<<< HEAD
     	if (dhd->dhd_force_exit== TRUE)
 	    		break;
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		SMP_RD_BARRIER_DEPENDS();
 		if (tsk->terminated) {
 			break;
@@ -1396,6 +1548,7 @@ dhd_set_mac_address(struct net_device *dev, void *addr)
 	struct sockaddr *sa = (struct sockaddr *)addr;
 	int ifidx;
 
+<<<<<<< HEAD
 	printf("enter %s\n", __func__);
 
 	/* BRCM: anthony, add for debug, reject if down */
@@ -1403,6 +1556,8 @@ dhd_set_mac_address(struct net_device *dev, void *addr)
 		printf("%s: dhd is down. skip it.\n", __func__);
 		return -ENODEV;
 	}
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	ifidx = dhd_net2idx(dhd, dev);
 	if (ifidx == DHD_BAD_IF)
 		return -1;
@@ -1420,6 +1575,7 @@ dhd_set_multicast_list(struct net_device *dev)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 	int ifidx;
+<<<<<<< HEAD
 	printf("enter %s\n", __func__);
 
 	/* BRCM: anthoy, add for debug, reject if down */
@@ -1427,6 +1583,8 @@ dhd_set_multicast_list(struct net_device *dev)
 		printf("%s: dhd is down. skip it.\n", __func__);
 		return;
 	}
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	ifidx = dhd_net2idx(dhd, dev);
 	if (ifidx == DHD_BAD_IF)
@@ -1451,8 +1609,11 @@ int
 dhd_os_wlfc_unblock(dhd_pub_t *pub)
 {
 	dhd_info_t *di = (dhd_info_t *)(pub->info);
+<<<<<<< HEAD
 
 	(void)di;
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	ASSERT(di != NULL);
 	spin_unlock_bh(&di->wlfc_spinlock);
 	return 1;
@@ -1478,7 +1639,11 @@ dhd_sendpkt(dhd_pub_t *dhdp, int ifidx, void *pktbuf)
 	}
 
 	/* Update multicast statistic */
+<<<<<<< HEAD
 	if (PKTLEN(dhdp->osh, pktbuf) >= ETHER_HDR_LEN) {
+=======
+	if (PKTLEN(dhdp->osh, pktbuf) >= ETHER_ADDR_LEN) {
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		uint8 *pktdata = (uint8 *)PKTDATA(dhdp->osh, pktbuf);
 		eh = (struct ether_header *)pktdata;
 
@@ -1486,9 +1651,12 @@ dhd_sendpkt(dhd_pub_t *dhdp, int ifidx, void *pktbuf)
 			dhdp->tx_multicast++;
 		if (ntoh16(eh->ether_type) == ETHER_TYPE_802_1X)
 			atomic_inc(&dhd->pend_8021x_cnt);
+<<<<<<< HEAD
 	} else {
 			PKTFREE(dhd->pub.osh, pktbuf, TRUE);
 			return BCME_ERROR;
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 
 	/* Look into the packet and update the packet priority */
@@ -1542,9 +1710,12 @@ dhd_sendpkt(dhd_pub_t *dhdp, int ifidx, void *pktbuf)
 	return ret;
 }
 
+<<<<<<< HEAD
 /* HTC_CSP_START */
 static int txq_full_event_num = 0;
 /* HTC_CSP_END */
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 int
 dhd_start_xmit(struct sk_buff *skb, struct net_device *net)
 {
@@ -1560,6 +1731,7 @@ dhd_start_xmit(struct sk_buff *skb, struct net_device *net)
 
 	DHD_TRACE(("%s: Enter\n", __FUNCTION__));
 
+<<<<<<< HEAD
 /* HTC_CSP_START */
 	if (module_remove) {
 		printf("%s: module removed.", __FUNCTION__);
@@ -1569,6 +1741,8 @@ dhd_start_xmit(struct sk_buff *skb, struct net_device *net)
 	}
 /* HTC_CSP_END */
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	DHD_OS_WAKE_LOCK(&dhd->pub);
 
 	/* Reject if down */
@@ -1576,9 +1750,12 @@ dhd_start_xmit(struct sk_buff *skb, struct net_device *net)
 		DHD_ERROR(("%s: xmit rejected pub.up=%d busstate=%d \n",
 			__FUNCTION__, dhd->pub.up, dhd->pub.busstate));
 		netif_stop_queue(net);
+<<<<<<< HEAD
 /* HTC_CSP_START */
 		dev_kfree_skb(skb);
 /* HTC_CSP_END */
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		/* Send Event when bus down detected during data session */
 		if (dhd->pub.busstate == DHD_BUS_DOWN)  {
 			DHD_ERROR(("%s: Event HANG sent up\n", __FUNCTION__));
@@ -1592,9 +1769,12 @@ dhd_start_xmit(struct sk_buff *skb, struct net_device *net)
 	if (ifidx == DHD_BAD_IF) {
 		DHD_ERROR(("%s: bad ifidx %d\n", __FUNCTION__, ifidx));
 		netif_stop_queue(net);
+<<<<<<< HEAD
 /* HTC_CSP_START */
 		dev_kfree_skb(skb);
 /* HTC_CSP_END */
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		DHD_OS_WAKE_UNLOCK(&dhd->pub);
 		return -ENODEV;
 	}
@@ -1640,6 +1820,7 @@ dhd_start_xmit(struct sk_buff *skb, struct net_device *net)
 #endif
 
 	ret = dhd_sendpkt(&dhd->pub, ifidx, pktbuf);
+<<<<<<< HEAD
 /* HTC_CSP_START */
 	/* check if "out of bus->txq" event happended */
 	if ( ret == BCME_NORESOURCE ) {
@@ -1655,6 +1836,9 @@ dhd_start_xmit(struct sk_buff *skb, struct net_device *net)
 		txq_full_event_num = 0;
 	}
 /* HTC_CSP_END */
+=======
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 done:
 	if (ret)
@@ -1685,24 +1869,38 @@ dhd_txflowcontrol(dhd_pub_t *dhdp, int ifidx, bool state)
 		for (i = 0; i < DHD_MAX_IFS; i++) {
 			if (dhd->iflist[i]) {
 				net = dhd->iflist[i]->net;
+<<<<<<< HEAD
 				if (net) {
 					if (state == ON)
 						netif_stop_queue(net);
 					else
 						netif_wake_queue(net);
 				}
+=======
+				if (state == ON)
+					netif_stop_queue(net);
+				else
+					netif_wake_queue(net);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			}
 		}
 	}
 	else {
 		if (dhd->iflist[ifidx]) {
 			net = dhd->iflist[ifidx]->net;
+<<<<<<< HEAD
 			if (net) {
 				if (state == ON)
 					netif_stop_queue(net);
 				else
 					netif_wake_queue(net);
 			}
+=======
+			if (state == ON)
+				netif_stop_queue(net);
+			else
+				netif_wake_queue(net);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		}
 	}
 }
@@ -1714,11 +1912,16 @@ dhd_rx_frame(dhd_pub_t *dhdp, int ifidx, void *pktbuf, int numpkt, uint8 chan)
 	struct sk_buff *skb;
 	uchar *eth;
 	uint len;
+<<<<<<< HEAD
 	void *data = NULL, *pnext = NULL, *save_pktbuf;
+=======
+	void *data, *pnext = NULL, *save_pktbuf;
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	int i;
 	dhd_if_t *ifp;
 	wl_event_msg_t event;
 	int tout = DHD_PACKET_TIMEOUT;
+<<<<<<< HEAD
 #ifdef HTC_KlocWork
 	memset(&event,0,sizeof(event));
 #endif
@@ -1739,6 +1942,10 @@ dhd_rx_frame(dhd_pub_t *dhdp, int ifidx, void *pktbuf, int numpkt, uint8 chan)
 		return;
 	}
 /* HTC_CSP_END */
+=======
+
+	DHD_TRACE(("%s: Enter\n", __FUNCTION__));
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	save_pktbuf = pktbuf;
 
@@ -1748,10 +1955,17 @@ dhd_rx_frame(dhd_pub_t *dhdp, int ifidx, void *pktbuf, int numpkt, uint8 chan)
 
 		ifp = dhd->iflist[ifidx];
 		if (ifp == NULL) {
+<<<<<<< HEAD
 		  DHD_ERROR(("%s: ifp is NULL. drop packet \n",
 		  __FUNCTION__));
 		  PKTFREE(dhdp->osh, pktbuf, TRUE);
 		  continue;
+=======
+			DHD_ERROR(("%s: ifp is NULL. drop packet\n",
+				__FUNCTION__));
+			PKTFREE(dhdp->osh, pktbuf, TRUE);
+			continue;
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		}
 
 		/* Dropping packets before registering net device to avoid kernel panic */
@@ -1838,12 +2052,15 @@ dhd_rx_frame(dhd_pub_t *dhdp, int ifidx, void *pktbuf, int numpkt, uint8 chan)
 
 			wl_event_to_host_order(&event);
 			if (event.event_type == WLC_E_BTA_HCI_EVENT) {
+<<<<<<< HEAD
 #ifdef HTC_KlocWork
 				if(!data) {
 					printf("[HTCKW] dhd_rx_frame: data=NULL\n");
 				}
 				else
 #endif
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 				dhd_bta_doevt(dhdp, data, event.datalen);
 			}
 			tout = DHD_EVENT_TIMEOUT;
@@ -1933,20 +2150,30 @@ dhd_get_stats(struct net_device *net)
 	DHD_TRACE(("%s: Enter\n", __FUNCTION__));
 
 	ifidx = dhd_net2idx(dhd, net);
+<<<<<<< HEAD
 	if (ifidx == DHD_BAD_IF) {
 		DHD_ERROR(("%s: BAD_IF\n", __FUNCTION__));
 		return NULL;
 	}
+=======
+	if (ifidx == DHD_BAD_IF)
+		return NULL;
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	ifp = dhd->iflist[ifidx];
 	ASSERT(dhd && ifp);
 
 	if (dhd->pub.up) {
+<<<<<<< HEAD
 		if (module_remove) {
 			printf("%s: module removed. return old value. ifp=%p, dhd=%p\n", __FUNCTION__, ifp, dhd);
 		} else 
 			/* Use the protocol to get dongle stats */
 			dhd_prot_dstats(&dhd->pub);
+=======
+		/* Use the protocol to get dongle stats */
+		dhd_prot_dstats(&dhd->pub);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 
 	/* Copy dongle stats to net device stats */
@@ -1984,11 +2211,17 @@ dhd_watchdog_thread(void *data)
 	/* Run until signal received */
 	complete(&tsk->completed);
 
+<<<<<<< HEAD
 	while (1) {
 		if (down_interruptible (&tsk->sema) == 0) {
 			unsigned long flags;
 			if (dhd->dhd_force_exit== TRUE)
 				break;
+=======
+	while (1)
+		if (down_interruptible (&tsk->sema) == 0) {
+			unsigned long flags;
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 			SMP_RD_BARRIER_DEPENDS();
 			if (tsk->terminated) {
@@ -2016,7 +2249,11 @@ dhd_watchdog_thread(void *data)
 		} else {
 			break;
 		}
+<<<<<<< HEAD
 	}
+=======
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	complete_and_exit(&tsk->completed, 0);
 }
 #endif /* DHDTHREAD */
@@ -2036,9 +2273,12 @@ static void dhd_watchdog(ulong data)
 	if (dhd->thr_wdt_ctl.thr_pid >= 0) {
 		up(&dhd->thr_wdt_ctl.sema);
 		return;
+<<<<<<< HEAD
 	} else {
 		DHD_ERROR(("watch_dog thr stopped, ignore\n"));
 		return;
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 #endif /* DHDTHREAD */
 
@@ -2058,6 +2298,7 @@ static void dhd_watchdog(ulong data)
 	DHD_OS_WAKE_UNLOCK(&dhd->pub);
 }
 
+<<<<<<< HEAD
 /* HTC_CSP_START */
 extern int wlan_ioprio_idle;
 static int prev_wlan_ioprio_idle=0;
@@ -2075,6 +2316,8 @@ static inline void set_wlan_ioprio(void)
 }
 /* HTC_CSP_END */
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #ifdef DHDTHREAD
 static int
 dhd_dpc_thread(void *data)
@@ -2100,6 +2343,7 @@ dhd_dpc_thread(void *data)
 
 	/* Run until signal received */
 	while (1) {
+<<<<<<< HEAD
         /* HTC_CSP_START */
         if(prev_wlan_ioprio_idle != wlan_ioprio_idle){
             set_wlan_ioprio();
@@ -2109,6 +2353,9 @@ dhd_dpc_thread(void *data)
 		if (down_interruptible(&tsk->sema) == 0) {
 			if (dhd->dhd_force_exit== TRUE)
 				break;
+=======
+		if (down_interruptible(&tsk->sema) == 0) {
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 			SMP_RD_BARRIER_DEPENDS();
 			if (tsk->terminated) {
@@ -2391,6 +2638,10 @@ static bool dhd_check_hang(struct net_device *net, dhd_pub_t *dhdp, int error)
 	}
 	return FALSE;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 static int
 dhd_ioctl_entry(struct net_device *net, struct ifreq *ifr, int cmd)
 {
@@ -2403,6 +2654,7 @@ dhd_ioctl_entry(struct net_device *net, struct ifreq *ifr, int cmd)
 	int ifidx;
 	int ret;
 
+<<<<<<< HEAD
 /* HTC_CSP_START */
 	if (module_remove) {
 		printf("%s: module removed. cmd 0x%04x\n", __FUNCTION__, cmd);
@@ -2415,6 +2667,8 @@ dhd_ioctl_entry(struct net_device *net, struct ifreq *ifr, int cmd)
 		printf("%s: dhd is down. skip it.\n", __func__);
 		return -ENODEV;
 	}
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	DHD_OS_WAKE_LOCK(&dhd->pub);
 
 	/* send to dongle only if we are not waiting for reload already */
@@ -2429,7 +2683,10 @@ dhd_ioctl_entry(struct net_device *net, struct ifreq *ifr, int cmd)
 	DHD_TRACE(("%s: ifidx %d, cmd 0x%04x\n", __FUNCTION__, ifidx, cmd));
 
 	if (ifidx == DHD_BAD_IF) {
+<<<<<<< HEAD
 		DHD_ERROR(("%s: BAD IF\n", __FUNCTION__));
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		DHD_OS_WAKE_UNLOCK(&dhd->pub);
 		return -1;
 	}
@@ -2633,9 +2890,13 @@ dhd_cleanup_virt_ifaces(dhd_info_t *dhd)
 				(dhd->iflist[i]->state != DHD_IF_DELETING)) {
 				dhd->iflist[i]->state = DHD_IF_DEL;
 				dhd->iflist[i]->idx = i;
+<<<<<<< HEAD
 				dhd_net_if_lock_local(dhd);
 				dhd_op_if(dhd->iflist[i]);
 				dhd_net_if_unlock_local(dhd);
+=======
+				dhd_op_if(dhd->iflist[i]);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			}
 		}
 	}
@@ -2663,7 +2924,11 @@ dhd_stop(struct net_device *net)
 
 #ifdef WL_CFG80211
 	if (ifidx == 0) {
+<<<<<<< HEAD
 		wl_cfg80211_down(NULL);
+=======
+		wl_cfg80211_down();
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 		/*
 		 * For CFG80211: Clean up all the left over virtual interfaces
@@ -2686,12 +2951,19 @@ dhd_stop(struct net_device *net)
 	/* Stop the protocol module */
 	dhd_prot_stop(&dhd->pub);
 
+<<<<<<< HEAD
 #if defined(WL_CFG80211) 
 /* #ifndef MODULE */
 	if (ifidx == 0 && !dhd_download_fw_on_driverload)
 		wl_android_wifi_off(net);
 /* #endif */
 #endif 
+=======
+#if defined(WL_CFG80211)
+	if (ifidx == 0 && !dhd_download_fw_on_driverload)
+		wl_android_wifi_off(net);
+#endif
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	dhd->pub.hang_was_sent = 0;
 	dhd->pub.rxcnt_timeout = 0;
 	dhd->pub.txcnt_timeout = 0;
@@ -2700,6 +2972,7 @@ exit:
 	DHD_OS_WAKE_UNLOCK(&dhd->pub);
 	return 0;
 }
+<<<<<<< HEAD
 #ifdef DHD_BCM_WIFI_HDMI
 bool dhd_bcm_whdmi_enable = FALSE;
 
@@ -2758,6 +3031,8 @@ err:
 #define BCM4330B2_APSTA_FW_PATH "/system/etc/firmware/fw_bcm4330_apsta_b2.bin"
 #define BCM4330B2_P2P_FW_PATH "/system/etc/firmware/fw_bcm4330_p2p_b2.bin"
 #define BCM4330B2_MFG_FW_PATH "/system/etc/firmware/bcm_mfg2.bin"
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 static int
 dhd_open(struct net_device *net)
@@ -2771,6 +3046,7 @@ dhd_open(struct net_device *net)
 	int32 ret = 0;
 
 	DHD_OS_WAKE_LOCK(&dhd->pub);
+<<<<<<< HEAD
 /* HTC_CSP_START */
 	if (module_remove) {
 		printf("%s: module removed. Just return.\n", __FUNCTION__);
@@ -2821,6 +3097,13 @@ dhd_open(struct net_device *net)
 				firmware_path[strlen(firmware_path)-1] = '\0';
 			strcpy(fw_path, firmware_path);
 		}
+=======
+	/* Update FW path if it was changed */
+	if ((firmware_path != NULL) && (firmware_path[0] != '\0')) {
+		if (firmware_path[strlen(firmware_path)-1] == '\n')
+			firmware_path[strlen(firmware_path)-1] = '\0';
+		strcpy(fw_path, firmware_path);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		firmware_path[0] = '\0';
 	}
 
@@ -2836,13 +3119,19 @@ dhd_open(struct net_device *net)
 	ifidx = dhd_net2idx(dhd, net);
 	DHD_TRACE(("%s: ifidx %d\n", __FUNCTION__, ifidx));
 
+<<<<<<< HEAD
 #ifdef HTC_KlocWork
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (ifidx < 0) {
 		DHD_ERROR(("%s: Error: called with invalid IF\n", __FUNCTION__));
 		ret = -1;
 		goto exit;
 	}
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	if (!dhd->iflist[ifidx] || dhd->iflist[ifidx]->state == DHD_IF_DEL) {
 		DHD_ERROR(("%s: Error: called when IF already deleted\n", __FUNCTION__));
@@ -2853,12 +3142,20 @@ dhd_open(struct net_device *net)
 	if (ifidx == 0) {
 		atomic_set(&dhd->pend_8021x_cnt, 0);
 #if defined(WL_CFG80211)
+<<<<<<< HEAD
 /* #ifndef MODULE */
 		DHD_ERROR(("\n%s\n", dhd_version));
 		if (!dhd_download_fw_on_driverload)
 			wl_android_wifi_on(net);
 /* #endif */
 #endif
+=======
+		DHD_ERROR(("\n%s\n", dhd_version));
+		if (!dhd_download_fw_on_driverload)
+			wl_android_wifi_on(net);
+#endif /* defined(WL_CFG80211) */
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		if (dhd->pub.busstate != DHD_BUS_DATA) {
 			int ret;
 
@@ -2883,7 +3180,11 @@ dhd_open(struct net_device *net)
 #endif /* TOE */
 
 #if defined(WL_CFG80211)
+<<<<<<< HEAD
 		if (unlikely(wl_cfg80211_up(NULL))) {
+=======
+		if (unlikely(wl_cfg80211_up())) {
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			DHD_ERROR(("%s: failed to bring up cfg80211\n", __FUNCTION__));
 			ret = -1;
 			goto exit;
@@ -2918,7 +3219,10 @@ dhd_osl_detach(osl_t *osh)
 		DHD_ERROR(("%s: MEMORY LEAK %d bytes\n", __FUNCTION__, MALLOCED(osh)));
 	}
 	osl_detach(osh);
+<<<<<<< HEAD
 	wifi_fail_retry = true;
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27))
 	up(&dhd_registration_sem);
 #endif
@@ -2987,6 +3291,7 @@ dhd_del_if(dhd_info_t *dhd, int ifidx)
 	up(&dhd->thr_sysioc_ctl.sema);
 }
 
+<<<<<<< HEAD
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 31))
 static struct net_device_ops dhd_ops_pri = {
 	.ndo_open = dhd_open,
@@ -3007,6 +3312,8 @@ static struct net_device_ops dhd_ops_virt = {
 };
 #endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 31)) */
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 dhd_pub_t *
 dhd_attach(osl_t *osh, struct dhd_bus *bus, uint bus_hdrlen)
 {
@@ -3019,6 +3326,7 @@ dhd_attach(osl_t *osh, struct dhd_bus *bus, uint bus_hdrlen)
 	/* updates firmware nvram path if it was provided as module parameters */
 	if ((firmware_path != NULL) && (firmware_path[0] != '\0'))
 		strcpy(fw_path, firmware_path);
+<<<<<<< HEAD
 
 	if (bcm_chip_is_4330) {
 		if (bcm_chip_is_4330b1) {
@@ -3030,6 +3338,8 @@ dhd_attach(osl_t *osh, struct dhd_bus *bus, uint bus_hdrlen)
 		}
 	}
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if ((nvram_path != NULL) && (nvram_path[0] != '\0'))
 		strcpy(nv_path, nvram_path);
 
@@ -3075,6 +3385,7 @@ dhd_attach(osl_t *osh, struct dhd_bus *bus, uint bus_hdrlen)
 		strncpy(net->name, iface_name, IFNAMSIZ);
 		net->name[IFNAMSIZ - 1] = 0;
 		len = strlen(net->name);
+<<<<<<< HEAD
 #ifdef HTC_KlocWork
         if(len > 0) {
             ch = net->name[len - 1];
@@ -3086,6 +3397,11 @@ dhd_attach(osl_t *osh, struct dhd_bus *bus, uint bus_hdrlen)
         if ((ch > '9' || ch < '0') && (len < IFNAMSIZ - 2))
             strcat(net->name, "%d");
 #endif
+=======
+		ch = net->name[len - 1];
+		if ((ch > '9' || ch < '0') && (len < IFNAMSIZ - 2))
+			strcat(net->name, "%d");
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 
 	if (dhd_add_if(dhd, 0, (void *)net, net->name, NULL, 0, 0) == DHD_BAD_IF)
@@ -3121,7 +3437,10 @@ dhd_attach(osl_t *osh, struct dhd_bus *bus, uint bus_hdrlen)
 #ifdef CONFIG_HAS_WAKELOCK
 	wake_lock_init(&dhd->wl_wifi, WAKE_LOCK_SUSPEND, "wlan_wake");
 	wake_lock_init(&dhd->wl_rxwake, WAKE_LOCK_SUSPEND, "wlan_rx_wake");
+<<<<<<< HEAD
 	wake_lock_init(&dhd->wl_htc, WAKE_LOCK_SUSPEND, "wlan_htc");
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 25))
 	mutex_init(&dhd->dhd_net_if_mutex);
@@ -3147,13 +3466,21 @@ dhd_attach(osl_t *osh, struct dhd_bus *bus, uint bus_hdrlen)
 #endif
 #if defined(CONFIG_WIRELESS_EXT)
 	/* Attach and link in the iw */
+<<<<<<< HEAD
 	//if (!(dhd_state &  DHD_ATTACH_STATE_CFG80211)) {
+=======
+	if (!(dhd_state &  DHD_ATTACH_STATE_CFG80211)) {
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		if (wl_iw_attach(net, (void *)&dhd->pub) != 0) {
 			DHD_ERROR(("wl_iw_attach failed\n"));
 			goto fail;
 		}
 	dhd_state |= DHD_ATTACH_STATE_WL_ATTACH;
+<<<<<<< HEAD
 	//}
+=======
+	}
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif /* defined(CONFIG_WIRELESS_EXT) */
 
 
@@ -3172,8 +3499,11 @@ dhd_attach(osl_t *osh, struct dhd_bus *bus, uint bus_hdrlen)
 		dhd->threads_only = FALSE;
 	}
 
+<<<<<<< HEAD
 	dhd->dhd_force_exit = FALSE; 
     
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (dhd_dpc_prio >= 0) {
 		/* Initialize watchdog thread */
 		PROC_START(dhd_watchdog_thread, dhd, &dhd->thr_wdt_ctl, 0);
@@ -3221,7 +3551,10 @@ dhd_attach(osl_t *osh, struct dhd_bus *bus, uint bus_hdrlen)
 #endif
 
 #ifdef ARP_OFFLOAD_SUPPORT
+<<<<<<< HEAD
 	dhd->pend_ipaddr = 0;
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	register_inetaddr_notifier(&dhd_notifier);
 #endif /* ARP_OFFLOAD_SUPPORT */
 
@@ -3249,41 +3582,61 @@ dhd_bus_start(dhd_pub_t *dhdp)
 	int ret = -1;
 	dhd_info_t *dhd = (dhd_info_t*)dhdp->info;
 	unsigned long flags;
+<<<<<<< HEAD
 #ifdef CUSTOMER_HW2
 	char mac_buf[16];
 #endif
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	ASSERT(dhd);
 
 	DHD_TRACE(("Enter %s:\n", __FUNCTION__));
 
 #ifdef DHDTHREAD
+<<<<<<< HEAD
 	if (dhd->threads_only)
 		dhd_os_sdlock(dhdp);
 #endif /* DHDTHREAD */
 
 
+=======
+	dhd_os_sdlock(dhdp);
+#endif /* DHDTHREAD */
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	/* try to download image and nvram to the dongle */
 	if  ((dhd->pub.busstate == DHD_BUS_DOWN) &&
 		(fw_path != NULL) && (fw_path[0] != '\0') &&
 		(nv_path != NULL) && (nv_path[0] != '\0')) {
+<<<<<<< HEAD
 		printf("load firmware from %s\n", fw_path);
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		/* wake lock moved to dhdsdio_download_firmware */
 		if (!(dhd_bus_download_firmware(dhd->pub.bus, dhd->pub.osh,
 		                                fw_path, nv_path))) {
 			DHD_ERROR(("%s: dhdsdio_probe_download failed. firmware = %s nvram = %s\n",
 			           __FUNCTION__, fw_path, nv_path));
 #ifdef DHDTHREAD
+<<<<<<< HEAD
 			if (dhd->threads_only)
 				dhd_os_sdunlock(dhdp);
+=======
+			dhd_os_sdunlock(dhdp);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif /* DHDTHREAD */
 			return -1;
 		}
 	}
 	if (dhd->pub.busstate != DHD_BUS_LOAD) {
 #ifdef DHDTHREAD
+<<<<<<< HEAD
 		if (dhd->threads_only)
 			dhd_os_sdunlock(dhdp);
+=======
+		dhd_os_sdunlock(dhdp);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif /* DHDTHREAD */
 		return -ENETDOWN;
 	}
@@ -3297,8 +3650,12 @@ dhd_bus_start(dhd_pub_t *dhdp)
 
 		DHD_ERROR(("%s, dhd_bus_init failed %d\n", __FUNCTION__, ret));
 #ifdef DHDTHREAD
+<<<<<<< HEAD
 		if (dhd->threads_only)
 			dhd_os_sdunlock(dhdp);
+=======
+		dhd_os_sdunlock(dhdp);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif /* DHDTHREAD */
 		return ret;
 	}
@@ -3314,8 +3671,12 @@ dhd_bus_start(dhd_pub_t *dhdp)
 
 		DHD_ERROR(("%s Host failed to register for OOB\n", __FUNCTION__));
 #ifdef DHDTHREAD
+<<<<<<< HEAD
 		if (dhd->threads_only)
 			dhd_os_sdunlock(dhdp);
+=======
+		dhd_os_sdunlock(dhdp);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif /* DHDTHREAD */
 		return -ENODEV;
 	}
@@ -3332,15 +3693,23 @@ dhd_bus_start(dhd_pub_t *dhdp)
 		del_timer_sync(&dhd->timer);
 		DHD_ERROR(("%s failed bus is not ready\n", __FUNCTION__));
 #ifdef DHDTHREAD
+<<<<<<< HEAD
 		if (dhd->threads_only)
 			dhd_os_sdunlock(dhdp);
+=======
+		dhd_os_sdunlock(dhdp);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif /* DHDTHREAD */
 		return -ENODEV;
 	}
 
 #ifdef DHDTHREAD
+<<<<<<< HEAD
 	if (dhd->threads_only)
 		dhd_os_sdunlock(dhdp);
+=======
+	dhd_os_sdunlock(dhdp);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif /* DHDTHREAD */
 
 #ifdef READ_MACADDR
@@ -3351,6 +3720,7 @@ dhd_bus_start(dhd_pub_t *dhdp)
 	if ((ret = dhd_prot_init(&dhd->pub)) < 0)
 		return ret;
 
+<<<<<<< HEAD
 #ifdef CUSTOMER_HW2
 	if (ap_fw_loaded == FALSE) {
 		sprintf( mac_buf, "0x%02x%02x%02x%02x%02x%02x",
@@ -3369,10 +3739,13 @@ dhd_bus_start(dhd_pub_t *dhdp)
 	/* Setup filter to allow only unicast */
 	dhdp->pktfilter[0] = "100 0 0 0 0x01 0x00";
 #endif
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #ifdef WRITE_MACADDR
 	dhd_write_macaddr(dhd->pub.mac.octet);
 #endif
 
+<<<<<<< HEAD
 /* HTC_CSP_START */
 	priv_dhdp = dhdp;
 /* HTC_CSP_END */
@@ -3407,6 +3780,11 @@ dhd_bus_start(dhd_pub_t *dhdp)
 extern dhd_pub_t *pdhd;
 /* HTC_CSP_END */
 
+=======
+	return 0;
+}
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 int
 dhd_preinit_ioctls(dhd_pub_t *dhd)
 {
@@ -3414,13 +3792,17 @@ dhd_preinit_ioctls(dhd_pub_t *dhd)
 	char eventmask[WL_EVENTING_MASK_LEN];
 	char iovbuf[WL_EVENTING_MASK_LEN + 12];	/*  Room for "event_msgs" + '\0' + bitvec  */
 
+<<<<<<< HEAD
 	char buf[256];
 	char *ptr;
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	uint up = 0;
 	uint power_mode = PM_FAST;
 	uint32 dongle_align = DHD_SDALIGN;
 	uint32 glom = 0;
 	uint bcn_timeout = 4;
+<<<<<<< HEAD
 	uint retry_max = 10;
 #if defined(ARP_OFFLOAD_SUPPORT)
 	int arpoe = 0; /* Do not enable ARP offload feature since it has bug */
@@ -3448,11 +3830,37 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 #if defined(AP) || defined(WLP2P)
 	uint32 apsta = 1; /* Enable APSTA mode */
 #endif /* defined(AP) || defined(WLP2P) || defined(DHD_BCM_WIFI_HDMI) */
+=======
+	uint retry_max = 3;
+#if defined(ARP_OFFLOAD_SUPPORT)
+	int arpoe = 1;
+#endif
+	int scan_assoc_time = 40;
+	int scan_unassoc_time = 40;
+	int scan_passive_time = 130;
+	char buf[WLC_IOCTL_SMLEN];
+	char *ptr;
+	uint32 listen_interval = LISTEN_INTERVAL; /* Default Listen Interval in Beacons */
+#if defined(SOFTAP)
+	uint dtim = 1;
+#endif
+#if (defined(AP) && !defined(WLP2P)) || (!defined(AP) && defined(WL_CFG80211))
+	uint32 mpc = 0; /* Turn MPC off for AP/APSTA mode */
+#endif
+
+#if defined(AP) || defined(WLP2P)
+	uint32 apsta = 1; /* Enable APSTA mode */
+#endif /* defined(AP) || defined(WLP2P) */
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #ifdef GET_CUSTOM_MAC_ENABLE
 	struct ether_addr ea_addr;
 #endif /* GET_CUSTOM_MAC_ENABLE */
 
+<<<<<<< HEAD
 	DHD_TRACE(("Enter %s\n", __func__));
+=======
+	DHD_TRACE(("Enter %s\n", __FUNCTION__));
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	dhd->op_mode = 0;
 #ifdef GET_CUSTOM_MAC_ENABLE
 	ret = dhd_custom_get_mac_address(ea_addr.octet);
@@ -3461,6 +3869,7 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 		bcm_mkiovar("cur_etheraddr", (void *)&ea_addr, ETHER_ADDR_LEN, buf, sizeof(buf));
 		ret = dhd_wl_ioctl_cmd(dhd, WLC_SET_VAR, buf, sizeof(buf), TRUE, 0);
 		if (ret < 0) {
+<<<<<<< HEAD
 			DHD_ERROR(("%s: can't set MAC address , error=%d\n", __func__, ret));
 			return BCME_NOTUP;
 		}
@@ -3482,6 +3891,24 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 		return BCME_NOTUP;
 	}
 	memcpy(dhd->mac.octet, iovbuf, ETHER_ADDR_LEN);
+=======
+			DHD_ERROR(("%s: can't set MAC address , error=%d\n", __FUNCTION__, ret));
+			return BCME_NOTUP;
+		}
+		memcpy(dhd->mac.octet, ea_addr.octet, ETHER_ADDR_LEN);
+	} else {
+#endif /* GET_CUSTOM_MAC_ENABLE */
+		/* Get the default device MAC address directly from firmware */
+		memset(buf, 0, sizeof(buf));
+		bcm_mkiovar("cur_etheraddr", 0, 0, buf, sizeof(buf));
+		if ((ret = dhd_wl_ioctl_cmd(dhd, WLC_GET_VAR, buf, sizeof(buf),
+			FALSE, 0)) < 0) {
+			DHD_ERROR(("%s: can't get MAC address , error=%d\n", __FUNCTION__, ret));
+			return BCME_NOTUP;
+		}
+		/* Update public MAC address after reading from Firmware */
+		memcpy(dhd->mac.octet, buf, ETHER_ADDR_LEN);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #ifdef GET_CUSTOM_MAC_ENABLE
 	}
 #endif /* GET_CUSTOM_MAC_ENABLE */
@@ -3501,9 +3928,15 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 
 		bcm_mkiovar("cur_etheraddr", (void *)iovbuf, ETHER_ADDR_LEN, buf, sizeof(buf));
 		ret = dhd_wl_ioctl_cmd(dhd, WLC_SET_VAR, buf, sizeof(buf), TRUE, 0);
+<<<<<<< HEAD
 		if (ret < 0)
 			DHD_ERROR(("%s: can't set MAC address , error=%d\n", __func__, ret));
 		else
+=======
+		if (ret < 0) {
+			DHD_ERROR(("%s: can't set MAC address , error=%d\n", __FUNCTION__, ret));
+		} else
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			memcpy(dhd->mac.octet, iovbuf, ETHER_ADDR_LEN);
 	}
 #endif /* SET_RANDOM_MAC_SOFTAP */
@@ -3524,7 +3957,11 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 			dhd_pkt_filter_enable = FALSE;
 		}
 	}
+<<<<<<< HEAD
 #endif 
+=======
+#endif
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #if !defined(AP) && defined(WL_CFG80211)
 	/* Check if firmware with HostAPD support used */
@@ -3542,7 +3979,11 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 				dhd_pkt_filter_enable = FALSE;
 			}
 	}
+<<<<<<< HEAD
 #endif 
+=======
+#endif
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	if ((dhd->op_mode != WFD_MASK) && (dhd->op_mode != HOSTAPD_MASK)) {
 		/* STA only operation mode */
@@ -3569,6 +4010,7 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 	if ((ret = dhd_wl_ioctl_cmd(dhd, WLC_SET_VAR, iovbuf, sizeof(iovbuf), TRUE, 0)) < 0)
 		DHD_ERROR(("%s assoc_listen failed %d\n", __FUNCTION__, ret));
 
+<<<<<<< HEAD
 	/* query for 'ver' to get version info from firmware */
 	memset(buf, 0, sizeof(buf));
 	ptr = buf;
@@ -3579,6 +4021,8 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 	/* Print fw version info */
 	DHD_DEFAULT(("Firmware version = %s\n", buf));
 /* HTC_CSP_END */
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	/* Set PowerSave mode */
 	dhd_wl_ioctl_cmd(dhd, WLC_SET_PM, (char *)&power_mode, sizeof(power_mode), TRUE, 0);
 
@@ -3593,8 +4037,13 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 	/* Setup timeout if Beacons are lost and roam is off to report link down */
 	bcm_mkiovar("bcn_timeout", (char *)&bcn_timeout, 4, iovbuf, sizeof(iovbuf));
 	dhd_wl_ioctl_cmd(dhd, WLC_SET_VAR, iovbuf, sizeof(iovbuf), TRUE, 0);
+<<<<<<< HEAD
 	/* Enable/Disable build-in roaming to allowed ext supplicant to take of romaing */
 	bcm_mkiovar("roam_off", (char *)&dhd_roam, 4, iovbuf, sizeof(iovbuf));
+=======
+	/* Setup assoc_retry_max count to reconnect target AP in dongle */
+	bcm_mkiovar("assoc_retry_max", (char *)&retry_max, 4, iovbuf, sizeof(iovbuf));
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	dhd_wl_ioctl_cmd(dhd, WLC_SET_VAR, iovbuf, sizeof(iovbuf), TRUE, 0);
 #if defined(AP) && !defined(WLP2P)
 	/* Turn off MPC in AP mode */
@@ -3610,6 +4059,7 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 	}
 #endif
 
+<<<<<<< HEAD
 	if (dhd_roam == 0)
 	{
 		/* set internal roaming roaming parameters */
@@ -3661,6 +4111,8 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 		}
 	}
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #if defined(KEEP_ALIVE)
 	{
 	/* Set Keep Alive : be sure to use FW with -keepalive */
@@ -3668,7 +4120,11 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 
 #if defined(SOFTAP)
 	if (ap_fw_loaded == FALSE)
+<<<<<<< HEAD
 #endif 
+=======
+#endif
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		if ((res = dhd_keep_alive_onoff(dhd)) < 0)
 			DHD_ERROR(("%s set keeplive failed %d\n",
 			__FUNCTION__, res));
@@ -3700,16 +4156,23 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 	setbit(eventmask, WLC_E_NDIS_LINK);
 	setbit(eventmask, WLC_E_MIC_ERROR);
 	setbit(eventmask, WLC_E_PMKID_CACHE);
+<<<<<<< HEAD
 	/* setbit(dhdp->eventmask, WLC_E_TXFAIL); */
 	setbit(eventmask, WLC_E_JOIN_START);
 	setbit(eventmask, WLC_E_SCAN_COMPLETE);
 	setbit(eventmask, WLC_E_RELOAD);
+=======
+	setbit(eventmask, WLC_E_TXFAIL);
+	setbit(eventmask, WLC_E_JOIN_START);
+	setbit(eventmask, WLC_E_SCAN_COMPLETE);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #ifdef WLMEDIA_HTSF
 	setbit(eventmask, WLC_E_HTSFSYNC);
 #endif /* WLMEDIA_HTSF */
 #ifdef PNO_SUPPORT
 	setbit(eventmask, WLC_E_PFN_NET_FOUND);
 #endif /* PNO_SUPPORT */
+<<<<<<< HEAD
 
 #ifdef WLC_E_RSSI_LOW 
 	setbit(eventmask, WLC_E_RSSI_LOW);
@@ -3724,12 +4187,23 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 #ifdef WL_CFG80211
 	setbit(eventmask, WLC_E_ESCAN_RESULT);
 	//if ((dhd->op_mode & WFD_MASK) == WFD_MASK) {
+=======
+	/* enable dongle roaming event */
+	setbit(eventmask, WLC_E_ROAM);
+#ifdef WL_CFG80211
+	setbit(eventmask, WLC_E_ESCAN_RESULT);
+	if ((dhd->op_mode & WFD_MASK) == WFD_MASK) {
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		setbit(eventmask, WLC_E_ACTION_FRAME_RX);
 		setbit(eventmask, WLC_E_ACTION_FRAME_COMPLETE);
 		setbit(eventmask, WLC_E_ACTION_FRAME_OFF_CHAN_COMPLETE);
 		setbit(eventmask, WLC_E_P2P_PROBREQ_MSG);
 		setbit(eventmask, WLC_E_P2P_DISC_LISTEN_COMPLETE);
+<<<<<<< HEAD
 	//}
+=======
+	}
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif /* WL_CFG80211 */
 
 	/* Write updated Event mask */
@@ -3743,6 +4217,7 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 		sizeof(scan_assoc_time), TRUE, 0);
 	dhd_wl_ioctl_cmd(dhd, WLC_SET_SCAN_UNASSOC_TIME, (char *)&scan_unassoc_time,
 		sizeof(scan_unassoc_time), TRUE, 0);
+<<<<<<< HEAD
 /* HTC_CSP_START */
 	dhd_wl_ioctl_cmd(dhd, WLC_SET_SCAN_PASSIVE_TIME, (char *)&scan_passive_time,
 		sizeof(scan_passive_time), TRUE, 0);
@@ -3762,6 +4237,10 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
     dhd_wl_ioctl_cmd(dhd, WLC_SET_VAR, iovbuf, sizeof(iovbuf), TRUE, 0);
 	*/
 /* HTC_CSP_END */
+=======
+	dhd_wl_ioctl_cmd(dhd, WLC_SET_SCAN_PASSIVE_TIME, (char *)&scan_passive_time,
+		sizeof(scan_passive_time), TRUE, 0);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #ifdef ARP_OFFLOAD_SUPPORT
 	/* Set and enable ARP offload feature for STA only  */
@@ -3778,6 +4257,7 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 	}
 #endif /* ARP_OFFLOAD_SUPPORT */
 
+<<<<<<< HEAD
 /* HTC_CSP_START */
 	/* Lock CPU frequency to improve hotspot throughput*/
 	ret = 3;
@@ -3838,6 +4318,46 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 	bcm_mkiovar("tc_enable", (char *)&ret, 4, iovbuf, sizeof(iovbuf));
 	dhd_wl_ioctl_cmd(dhd, WLC_SET_VAR, iovbuf, sizeof(iovbuf), TRUE, 0);
 /* HTC_CSP_END */
+=======
+#ifdef PKT_FILTER_SUPPORT
+	/* Setup defintions for pktfilter , enable in suspend */
+	dhd->pktfilter_count = 4;
+	/* Setup filter to allow only unicast */
+	dhd->pktfilter[0] = "100 0 0 0 0x01 0x00";
+	dhd->pktfilter[1] = NULL;
+	dhd->pktfilter[2] = NULL;
+	dhd->pktfilter[3] = NULL;
+#if defined(SOFTAP)
+	if (ap_fw_loaded) {
+		int i;
+		for (i = 0; i < dhd->pktfilter_count; i++) {
+			dhd_pktfilter_offload_enable(dhd, dhd->pktfilter[i],
+				0, dhd_master_mode);
+		}
+	}
+#endif /* defined(SOFTAP) */
+#endif /* PKT_FILTER_SUPPORT */
+
+	/* Force STA UP */
+	if ((ret = dhd_wl_ioctl_cmd(dhd, WLC_UP, (char *)&up, sizeof(up), TRUE, 0)) < 0) {
+		DHD_ERROR(("%s Setting WL UP failed %d\n", __FUNCTION__, ret));
+		goto done;
+	}
+
+	/* query for 'ver' to get version info from firmware */
+	memset(buf, 0, sizeof(buf));
+	ptr = buf;
+	bcm_mkiovar("ver", (char *)&buf, 4, buf, sizeof(buf));
+	if ((ret  = dhd_wl_ioctl_cmd(dhd, WLC_GET_VAR, buf, sizeof(buf), FALSE, 0)) < 0)
+		DHD_ERROR(("%s failed %d\n", __FUNCTION__, ret));
+	else {
+		bcmstrtok(&ptr, "\n", 0);
+		/* Print fw version info */
+		DHD_ERROR(("Firmware version = %s\n", buf));
+		DHD_BLOG(buf, strlen(buf) + 1);
+		DHD_BLOG(dhd_version, strlen(dhd_version) + 1);
+	}
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 done:
 	return ret;
@@ -3868,6 +4388,29 @@ dhd_iovar(dhd_pub_t *pub, int ifidx, char *name, char *cmd_buf, uint cmd_len, in
 	return ret;
 }
 
+<<<<<<< HEAD
+=======
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 31))
+static struct net_device_ops dhd_ops_pri = {
+	.ndo_open = dhd_open,
+	.ndo_stop = dhd_stop,
+	.ndo_get_stats = dhd_get_stats,
+	.ndo_do_ioctl = dhd_ioctl_entry,
+	.ndo_start_xmit = dhd_start_xmit,
+	.ndo_set_mac_address = dhd_set_mac_address,
+	.ndo_set_multicast_list = dhd_set_multicast_list,
+};
+
+static struct net_device_ops dhd_ops_virt = {
+	.ndo_get_stats = dhd_get_stats,
+	.ndo_do_ioctl = dhd_ioctl_entry,
+	.ndo_start_xmit = dhd_start_xmit,
+	.ndo_set_mac_address = dhd_set_mac_address,
+	.ndo_set_multicast_list = dhd_set_multicast_list,
+};
+#endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 31)) */
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 int dhd_change_mtu(dhd_pub_t *dhdp, int new_mtu, int ifidx)
 {
 	struct dhd_info *dhd = dhdp->info;
@@ -3971,6 +4514,7 @@ static int dhd_device_event(struct notifier_block *this,
 			DHD_ARPOE(("%s: [%s] Up IP: 0x%x\n",
 				__FUNCTION__, ifa->ifa_label, ifa->ifa_address));
 
+<<<<<<< HEAD
 			if (dhd->pub.busstate != DHD_BUS_DATA) {
 				DHD_ERROR(("%s: bus not ready, exit\n", __FUNCTION__));
 				if (dhd->pend_ipaddr) {
@@ -3980,6 +4524,8 @@ static int dhd_device_event(struct notifier_block *this,
 				dhd->pend_ipaddr = ifa->ifa_address;
 				break;
 			}
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			/* firmware not downloaded, do nothing */
 			if (dhd->pub.busstate == DHD_BUS_DOWN) {
 				DHD_ERROR(("%s: bus is down, exit\n", __FUNCTION__));
@@ -4000,7 +4546,11 @@ static int dhd_device_event(struct notifier_block *this,
 		case NETDEV_DOWN:
 			DHD_ARPOE(("%s: [%s] Down IP: 0x%x\n",
 				__FUNCTION__, ifa->ifa_label, ifa->ifa_address));
+<<<<<<< HEAD
 			dhd->pend_ipaddr = 0;
+=======
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #ifdef AOE_IP_ALIAS_SUPPORT
 		if (!(ifa->ifa_label[strlen(ifa->ifa_label)-2] == 0x3a)) {
 				DHD_ARPOE(("%s: primary interface is down, AOE clr all\n",
@@ -4051,7 +4601,11 @@ dhd_net_attach(dhd_pub_t *dhdp, int ifidx)
 #else
 	ASSERT(!net->netdev_ops);
 	net->netdev_ops = &dhd_ops_virt;
+<<<<<<< HEAD
 #endif /* LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 31) */
+=======
+#endif
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	/* Ok, link into the network layer... */
 	if (ifidx == 0) {
@@ -4063,7 +4617,11 @@ dhd_net_attach(dhd_pub_t *dhdp, int ifidx)
 		net->stop = dhd_stop;
 #else
 		net->netdev_ops = &dhd_ops_pri;
+<<<<<<< HEAD
 #endif /* LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 31) */
+=======
+#endif
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	} else {
 		/*
 		 * We have to use the primary MAC for virtual interfaces
@@ -4074,8 +4632,12 @@ dhd_net_attach(dhd_pub_t *dhdp, int ifidx)
 		 * portable hotspot.  This will not work in simultaneous AP/STA mode,
 		 * nor with P2P.  Need to set the Donlge's MAC address, and then use that.
 		 */
+<<<<<<< HEAD
 		if (!memcmp(temp_addr, dhd->iflist[0]->mac_addr,
 			ETHER_ADDR_LEN)) {
+=======
+		if (ifidx > 0) {
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			DHD_ERROR(("%s interface [%s]: set locally administered bit in MAC\n",
 			__func__, net->name));
 			temp_addr[0] |= 0x02;
@@ -4175,8 +4737,11 @@ void dhd_detach(dhd_pub_t *dhdp)
 	if (!dhd)
 		return;
 
+<<<<<<< HEAD
 	dhd->dhd_force_exit = TRUE; 
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	DHD_TRACE(("%s: Enter state 0x%x\n", __FUNCTION__, dhd->dhd_state));
 
 	if (!(dhd->dhd_state & DHD_ATTACH_STATE_DONE)) {
@@ -4197,7 +4762,10 @@ void dhd_detach(dhd_pub_t *dhdp)
 	}
 #endif /* defined(CONFIG_HAS_EARLYSUSPEND) */
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #if defined(CONFIG_WIRELESS_EXT)
 	if (dhd->dhd_state & DHD_ATTACH_STATE_WL_ATTACH) {
 		/* Detatch and unlink in the iw */
@@ -4205,9 +4773,14 @@ void dhd_detach(dhd_pub_t *dhdp)
 	}
 #endif /* defined(CONFIG_WIRELESS_EXT) */
 
+<<<<<<< HEAD
 	if (dhd->dhd_state & DHD_ATTACH_STATE_THREADS_CREATED) {
 		if (&dhd->thr_sysioc_ctl.thr_pid >= 0)
 			PROC_STOP(&dhd->thr_sysioc_ctl);
+=======
+	if (&dhd->thr_sysioc_ctl.thr_pid >= 0) {
+		PROC_STOP(&dhd->thr_sysioc_ctl);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 
 	/* delete all interfaces, start with virtual  */
@@ -4227,6 +4800,7 @@ void dhd_detach(dhd_pub_t *dhdp)
 		ifp = dhd->iflist[0];
 		ASSERT(ifp);
 
+<<<<<<< HEAD
 #ifdef HTC_KlocWork
 		if (ifp->net) {
 #endif
@@ -4249,6 +4823,22 @@ void dhd_detach(dhd_pub_t *dhdp)
 #ifdef HTC_KlocWork
 		}
 #endif
+=======
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(2, 6, 31))
+		if (ifp->net->open)
+#else
+		if (ifp->net->netdev_ops == &dhd_ops_pri)
+#endif
+		{
+			if (ifp->net) {
+				unregister_netdev(ifp->net);
+				free_netdev(ifp->net);
+				ifp->net = NULL;
+			}
+			MFREE(dhd->pub.osh, ifp, sizeof(*ifp));
+			dhd->iflist[0] = NULL;
+		}
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 
 	/* Clear the watchdog timer */
@@ -4268,10 +4858,13 @@ void dhd_detach(dhd_pub_t *dhdp)
 		if (dhd->thr_dpc_ctl.thr_pid >= 0) {
 			PROC_STOP(&dhd->thr_dpc_ctl);
 		}
+<<<<<<< HEAD
 
 		if (dhd->thr_sysioc_ctl.thr_pid >= 0) {
 			PROC_STOP(&dhd->thr_sysioc_ctl);
 		}
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		else
 #endif /* DHDTHREAD */
 		tasklet_kill(&dhd->tasklet);
@@ -4285,25 +4878,40 @@ void dhd_detach(dhd_pub_t *dhdp)
 
 #ifdef WL_CFG80211
 	if (dhd->dhd_state & DHD_ATTACH_STATE_CFG80211) {
+<<<<<<< HEAD
 		wl_cfg80211_detach(NULL);
+=======
+		wl_cfg80211_detach();
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		dhd_monitor_uninit();
 	}
 #endif
 
+<<<<<<< HEAD
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) && defined(CONFIG_PM_SLEEP)
 		unregister_pm_notifier(&dhd_sleep_pm_notifier);
 #endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) && defined(CONFIG_PM_SLEEP) */
 	/* && defined(CONFIG_PM_SLEEP) */
+=======
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) && defined(CONFIG_PM_SLEEP)
+		unregister_pm_notifier(&dhd_sleep_pm_notifier);
+#endif /* (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) && defined(CONFIG_PM_SLEEP) */
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	if (dhd->dhd_state & DHD_ATTACH_STATE_WAKELOCKS_INIT) {
 #ifdef CONFIG_HAS_WAKELOCK
 		wake_lock_destroy(&dhd->wl_wifi);
 		wake_lock_destroy(&dhd->wl_rxwake);
+<<<<<<< HEAD
 		wake_lock_destroy(&dhd->wl_htc);
 #endif
 	}
 	dhd->dhd_force_exit = FALSE; 
+=======
+#endif
+	}
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 }
 
 
@@ -4320,15 +4928,19 @@ dhd_free(dhd_pub_t *dhdp)
 	}
 }
 
+<<<<<<< HEAD
 /* HTC_CSP_START */
 extern struct perf_lock wlan_perf_lock;
 /* HTC_CSP_END */
 extern void disable_dev_wlc_ioctl(void);
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 static void __exit
 dhd_module_cleanup(void)
 {
 	DHD_TRACE(("%s: Enter\n", __FUNCTION__));
 
+<<<<<<< HEAD
 /* HTC_CSP_START */
 	if (priv_dhdp)
 		dhd_net_if_lock_local(priv_dhdp->info);
@@ -4349,6 +4961,8 @@ dhd_module_cleanup(void)
 /* HTC_CSP_END */
 
 	msleep(1000);
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	dhd_bus_unregister();
 
 #if defined(CONFIG_WIFI_CONTROL_FUNC)
@@ -4356,6 +4970,7 @@ dhd_module_cleanup(void)
 #endif /* CONFIG_WIFI_CONTROL_FUNC */
 	wl_android_exit();
 
+<<<<<<< HEAD
 /* HTC_CSP_START */
 #ifdef CONFIG_PERLOCK
         if (is_perf_lock_active(&wlan_perf_lock))
@@ -4366,6 +4981,10 @@ dhd_module_cleanup(void)
 	/* Call customer gpio to turn off power with WL_REG_ON signal */
 	dhd_customer_gpio_wlan_ctrl(WLAN_POWER_OFF);
     printf("[ATS][press_widget][turn_off]\n"); //For Auto Test System log parsing
+=======
+	/* Call customer gpio to turn off power with WL_REG_ON signal */
+	dhd_customer_gpio_wlan_ctrl(WLAN_POWER_OFF);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 }
 
 
@@ -4373,14 +4992,20 @@ static int __init
 dhd_module_init(void)
 {
 	int error = 0;
+<<<<<<< HEAD
 	int retry = 0;
 	wifi_fail_retry = false;
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	DHD_TRACE(("%s: Enter\n", __FUNCTION__));
 
 	wl_android_init();
 
+<<<<<<< HEAD
 init_retry:
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #ifdef DHDTHREAD
 	/* Sanity check on the module parameters */
 	do {
@@ -4403,7 +5028,11 @@ init_retry:
 #if defined(CONFIG_WIFI_CONTROL_FUNC)
 	if (wl_android_wifictrl_func_add() < 0)
 		goto fail_1;
+<<<<<<< HEAD
 #endif 
+=======
+#endif
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27))
 		sema_init(&dhd_registration_sem, 0);
@@ -4411,7 +5040,11 @@ init_retry:
 	error = dhd_bus_register();
 
 	if (!error)
+<<<<<<< HEAD
 		printf("%s\n", dhd_version);
+=======
+		printf("\n%s\n", dhd_version);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	else {
 		DHD_ERROR(("%s: sdio_register_driver failed\n", __FUNCTION__));
 		goto fail_1;
@@ -4429,6 +5062,7 @@ init_retry:
 		goto fail_2;
 		}
 #endif
+<<<<<<< HEAD
 	if (wifi_fail_retry) {
 		wifi_fail_retry = false;
 		DHD_ERROR(("%s: wifi_fail_retry is true\n", __FUNCTION__));
@@ -4443,6 +5077,12 @@ init_retry:
 	module_insert = 1;
 /* HTC_CSP_END */
 	printf("[ATS][press_widget][launch]\n"); //For Auto Test System log parsing
+=======
+#if defined(WL_CFG80211)
+	error = wl_android_post_init();
+#endif
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return error;
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 27)) && 1
 fail_2:
@@ -4456,6 +5096,7 @@ fail_1:
 	/* Call customer gpio to turn off power with WL_REG_ON signal */
 	dhd_customer_gpio_wlan_ctrl(WLAN_POWER_OFF);
 
+<<<<<<< HEAD
 	if (!retry) {
 		printf("module init fail, try again!\n");
 		retry = 1;
@@ -4469,6 +5110,12 @@ late_initcall(dhd_module_init);
 #else
 module_init(dhd_module_init);
 #endif
+=======
+	return error;
+}
+
+late_initcall(dhd_module_init);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 module_exit(dhd_module_cleanup);
 
 /*
@@ -4561,7 +5208,10 @@ dhd_os_ioctl_resp_wake(dhd_pub_t *pub)
 	return 0;
 }
 
+<<<<<<< HEAD
 /* HTC_CSP_START */
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 void
 dhd_os_wd_timer(void *bus, uint wdtick)
 {
@@ -4599,7 +5249,10 @@ dhd_os_wd_timer(void *bus, uint wdtick)
 	}
 	dhd_os_spin_unlock(pub, flags);
 }
+<<<<<<< HEAD
 /* HTC_CSP_END */
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 void *
 dhd_os_open_image(char *filename)
@@ -4997,6 +5650,7 @@ int net_os_rxfilter_add_remove(struct net_device *dev, int add_remove, int num)
 	return ret;
 }
 
+<<<<<<< HEAD
 /*HTC_CSP_START */
 int wl_android_set_pktfilter(struct net_device *dev, struct dd_pkt_filter_s *data)
 {
@@ -5009,6 +5663,8 @@ int wl_android_set_pktfilter(struct net_device *dev, struct dd_pkt_filter_s *dat
 }
 /* HTC_CSP_END */
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 int net_os_set_packet_filter(struct net_device *dev, int val)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
@@ -5084,11 +5740,14 @@ int net_os_send_hang_message(struct net_device *dev)
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
 	int ret = 0;
 
+<<<<<<< HEAD
 	if (module_remove) {
 		printf("%s: module removed. Do not send hang event.\n", __FUNCTION__);
 		return ret;
 	}
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (dhd) {
 		if (!dhd->pub.hang_was_sent) {
 			dhd->pub.hang_was_sent = 1;
@@ -5103,6 +5762,7 @@ int net_os_send_hang_message(struct net_device *dev)
 	return ret;
 }
 
+<<<<<<< HEAD
 /* HTC_CSP_START */
 #if defined(CONFIG_WIRELESS_EXT)
 void dhd_info_send_hang_message(dhd_pub_t *dhdp)
@@ -5137,6 +5797,8 @@ int net_os_send_rssilow_message(struct net_device *dev)
 #endif
 /* HTC_CSP_END */
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 void dhd_bus_country_set(struct net_device *dev, wl_country_t *cspec)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
@@ -5145,6 +5807,7 @@ void dhd_bus_country_set(struct net_device *dev, wl_country_t *cspec)
 			memcpy(&dhd->pub.dhd_cspec, cspec, sizeof(wl_country_t));
 }
 
+<<<<<<< HEAD
 wl_country_t *dhd_bus_country_get(struct net_device *dev)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
@@ -5153,6 +5816,8 @@ wl_country_t *dhd_bus_country_get(struct net_device *dev)
 		return &dhd->pub.dhd_cspec;
 	return NULL;
 }
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 void dhd_net_if_lock(struct net_device *dev)
 {
@@ -5266,6 +5931,7 @@ exit:
 }
 #endif /* DHD_DEBUG */
 
+<<<<<<< HEAD
 void dhd_htc_wake_lock_timeout(dhd_pub_t *pub, int sec)
 {
 	dhd_info_t *dhd = (dhd_info_t *)(pub->info);
@@ -5275,6 +5941,8 @@ void dhd_htc_wake_lock_timeout(dhd_pub_t *pub, int sec)
 #endif
 }
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 int dhd_os_wake_lock_timeout(dhd_pub_t *pub)
 {
 	dhd_info_t *dhd = (dhd_info_t *)(pub->info);
@@ -5380,6 +6048,7 @@ int dhd_os_wake_unlock(dhd_pub_t *pub)
 	return ret;
 }
 
+<<<<<<< HEAD
 int net_os_wake_unlock(struct net_device *dev)
 {
 	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
@@ -5413,6 +6082,8 @@ int dhd_os_wake_force_unlock(dhd_pub_t *pub)
 	return ret;
 }
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 int dhd_os_check_wakelock(void *dhdp)
 {
 #ifdef CONFIG_HAS_WAKELOCK
@@ -5438,6 +6109,19 @@ int dhd_os_check_if_up(void *dhdp)
 	return pub->up;
 }
 
+<<<<<<< HEAD
+=======
+int net_os_wake_unlock(struct net_device *dev)
+{
+	dhd_info_t *dhd = *(dhd_info_t **)netdev_priv(dev);
+	int ret = 0;
+
+	if (dhd)
+		ret = dhd_os_wake_unlock(&dhd->pub);
+	return ret;
+}
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 int dhd_ioctl_entry_local(struct net_device *net, wl_ioctl_t *ioc, int cmd)
 {
 	int ifidx;
@@ -5965,6 +6649,7 @@ void htsf_update(dhd_info_t *dhd, void *data)
 }
 
 #endif /* WLMEDIA_HTSF */
+<<<<<<< HEAD
 
 void dhd_reset_hang_was_sent(struct net_device *dev)
 {
@@ -5995,3 +6680,5 @@ int dhd_get_txrx_stats(struct net_device *net, unsigned long *rx_packets, unsign
 	return 0;
 }
 /* HTC_CSP_END */
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd

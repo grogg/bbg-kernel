@@ -21,7 +21,11 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
+<<<<<<< HEAD
  * $Id: pcicfg.h 275703 2011-08-04 20:20:27Z $
+=======
+ * $Id: pcicfg.h,v 1.50 2009-12-07 21:56:06 Exp $
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 
@@ -39,6 +43,7 @@
 #define	PCI_INT_MASK		0x94	
 
 #define PCIE_EXTCFG_OFFSET	0x100
+<<<<<<< HEAD
 #define	PCI_SPROM_CONTROL	0x88	
 #define	PCI_BAR1_CONTROL	0x8c	
 #define PCI_TO_SB_MB		0x98	
@@ -52,6 +57,8 @@
 
 #define	PCI_BAR0_SHADOW_OFFSET	(2 * 1024)	
 #define	PCI_BAR0_SPROM_OFFSET	(4 * 1024)	
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define	PCI_BAR0_PCIREGS_OFFSET	(6 * 1024)	
 #define	PCI_BAR0_PCISBR_OFFSET	(4 * 1024)	
 
@@ -62,6 +69,7 @@
 #define	PCI_16KB0_CCREGS_OFFSET	(12 * 1024)	
 #define PCI_16KBB0_WINSZ	(16 * 1024)	
 
+<<<<<<< HEAD
 
 #define	PCI_16KB0_WIN2_OFFSET	(4 * 1024)	
 
@@ -75,4 +83,6 @@
 #define SPROM_BACKPLANE_EN	0x40	
 #define SPROM_OTPIN_USE		0x80	
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif	

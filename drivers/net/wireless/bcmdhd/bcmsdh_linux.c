@@ -21,7 +21,11 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
+<<<<<<< HEAD
  * $Id: bcmsdh_linux.c 281719 2011-09-02 23:50:57Z $
+=======
+ * $Id: bcmsdh_linux.c,v 1.72.6.5 2010-12-23 01:13:15 Exp $
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 /**
@@ -238,9 +242,15 @@ int bcmsdh_probe(struct device *dev)
 	/* chain SDIO Host Controller info together */
 	sdhc->next = sdhcinfo;
 	sdhcinfo = sdhc;
+<<<<<<< HEAD
 
 	/* Read the vendor/device ID from the CIS */
 	vendevid = bcmsdh_query_device(sdh);
+=======
+	/* Read the vendor/device ID from the CIS */
+	vendevid = bcmsdh_query_device(sdh);
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	/* try to attach to the target device */
 	if (!(sdhc->ch = drvinfo.attach((vendevid >> 16),
 	                                 (vendevid & 0xFFFF), 0, 0, 0, 0,
@@ -274,7 +284,10 @@ int bcmsdh_remove(struct device *dev)
 	sdhc = sdhcinfo;
 	drvinfo.detach(sdhc->ch);
 	bcmsdh_detach(sdhc->osh, sdhc->sdh);
+<<<<<<< HEAD
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	/* find the SDIO Host Controller state for this pdev and take it out from the list */
 	for (sdhc = sdhcinfo, prev = NULL; sdhc; sdhc = sdhc->next) {
 		if (sdhc->dev == (void *)dev) {
@@ -291,6 +304,10 @@ int bcmsdh_remove(struct device *dev)
 		return 0;
 	}
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	/* release SDIO Host Controller info */
 	osh = sdhc->osh;
 	MFREE(osh, sdhc, sizeof(bcmsdh_hc_t));
@@ -599,6 +616,7 @@ static irqreturn_t wlan_oob_irq(int irq, void *dev_id)
 
 	dhdp = (dhd_pub_t *)dev_get_drvdata(sdhcinfo->dev);
 
+<<<<<<< HEAD
 #ifdef HW_OOB
 	bcmsdh_oob_intr_set(0);
 #endif
@@ -607,6 +625,11 @@ static irqreturn_t wlan_oob_irq(int irq, void *dev_id)
 #ifndef HW_OOB
 		bcmsdh_oob_intr_set(0);
 #endif
+=======
+	bcmsdh_oob_intr_set(0);
+
+	if (dhdp == NULL) {
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		SDLX_MSG(("Out of band GPIO interrupt fired way too early\n"));
 		return IRQ_HANDLED;
 	}
@@ -616,6 +639,16 @@ static irqreturn_t wlan_oob_irq(int irq, void *dev_id)
 	return IRQ_HANDLED;
 }
 
+<<<<<<< HEAD
+=======
+void *bcmsdh_get_drvdata(void)
+{
+	if (!sdhcinfo)
+		return NULL;
+	return dev_get_drvdata(sdhcinfo->dev);
+}
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 int bcmsdh_register_oob_intr(void * dhdp)
 {
 	int error = 0;
@@ -643,6 +676,7 @@ int bcmsdh_register_oob_intr(void * dhdp)
 	return 0;
 }
 
+<<<<<<< HEAD
 void *bcmsdh_get_drvdata(void)
 {
 	if (!sdhcinfo)
@@ -650,6 +684,8 @@ void *bcmsdh_get_drvdata(void)
 	return dev_get_drvdata(sdhcinfo->dev);
 }
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 void bcmsdh_set_irq(int flag)
 {
 	if (sdhcinfo->oob_irq_registered && sdhcinfo->oob_irq_enable_flag != flag) {
@@ -676,7 +712,10 @@ void bcmsdh_unregister_oob_intr(void)
 	}
 }
 #endif /* defined(OOB_INTR_ONLY) */
+<<<<<<< HEAD
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 /* Module parameters specific to each host-controller driver */
 
 extern uint sd_msglevel;	/* Debug message level */
@@ -700,9 +739,12 @@ module_param(sd_hiok, uint, 0);
 extern uint sd_f2_blocksize;
 module_param(sd_f2_blocksize, int, 0);
 
+<<<<<<< HEAD
 #ifdef BCMSDIOH_STD
 module_param(sd_uhsimode, int, 0);
 #endif
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #ifdef BCMSDH_MODULE
 EXPORT_SYMBOL(bcmsdh_attach);

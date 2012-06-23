@@ -22,7 +22,11 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
+<<<<<<< HEAD
  * $Id: sdioh.h 275703 2011-08-04 20:20:27Z $
+=======
+ * $Id: sdioh.h,v 13.17.2.3 2011-01-08 05:28:21 Exp $
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 #ifndef	_SDIOH_H
@@ -68,10 +72,13 @@
 #define SD_ADMA_SysAddr			0x58
 #define SD_SlotInterruptStatus		0x0FC
 #define SD_HostControllerVersion 	0x0FE
+<<<<<<< HEAD
 #define	SD_GPIO_Reg			0x100
 #define	SD_GPIO_OE			0x104
 #define	SD_GPIO_Enable			0x108
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 /* SD specific registers in PCI config space */
 #define SD_SlotInfo	0x40
@@ -413,6 +420,7 @@
 /* SD_SlotInterruptStatus: Offset 0x0FC , size = bytes */
 /* SD_HostControllerVersion : Offset 0x0FE , size = bytes */
 
+<<<<<<< HEAD
 /* SDIO Host Control Register DMA Mode Definitions */
 #define SDIOH_SDMA_MODE			0
 #define SDIOH_ADMA1_MODE		1
@@ -439,4 +447,6 @@ typedef struct adma1_dscr {
 	uint32 phys_addr_attr;
 } adma1_dscr_t;
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif /* _SDIOH_H */

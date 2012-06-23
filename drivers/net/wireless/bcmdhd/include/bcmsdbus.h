@@ -22,7 +22,11 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
+<<<<<<< HEAD
  * $Id: bcmsdbus.h 275703 2011-08-04 20:20:27Z $
+=======
+ * $Id: bcmsdbus.h,v 13.17.86.2 2010-12-23 01:13:20 Exp $
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 #ifndef	_sdio_api_h_
@@ -117,6 +121,7 @@ void *bcmsdh_get_sdioh(bcmsdh_info_t *sdh);
 
 
 
+<<<<<<< HEAD
 extern SDIOH_API_RC sdioh_sleep(sdioh_info_t *si, bool enab);
 
 /* GPIO support */
@@ -125,4 +130,6 @@ extern bool sdioh_gpioin(sdioh_info_t *sd, uint32 gpio);
 extern SDIOH_API_RC sdioh_gpioouten(sdioh_info_t *sd, uint32 gpio);
 extern SDIOH_API_RC sdioh_gpioout(sdioh_info_t *sd, uint32 gpio, bool enab);
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif /* _sdio_api_h_ */

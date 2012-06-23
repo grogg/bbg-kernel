@@ -23,7 +23,11 @@
  *
  * Dependencies: proto/bcmeth.h
  *
+<<<<<<< HEAD
  * $Id: bcmevent.h,v 9.64.2.9 2011-02-01 06:24:21 $
+=======
+ * $Id: bcmevent.h,v 9.64.2.9 2011-02-01 06:24:21 Exp $
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  *
  */
 
@@ -182,6 +186,7 @@ typedef BWL_PRE_PACKED_STRUCT struct bcm_event {
 #define WLC_E_PFN_SCAN_NONE		82	
 #define WLC_E_PFN_SCAN_ALLGONE	83	
 #define WLC_E_GTK_PLUMBED 84
+<<<<<<< HEAD
 #define WLC_E_RELOAD		85
 #define WLC_E_RSSI_LOW		86      /* Send up rssi low event */
 #define WLC_E_ASSOCREQ_IE	87	/* Send up assoc ie */
@@ -189,6 +194,9 @@ typedef BWL_PRE_PACKED_STRUCT struct bcm_event {
 #define WLC_E_TX_STAT_ERROR     89      
 #define WLC_E_LAST	90
 
+=======
+#define WLC_E_LAST	85
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 
 typedef struct {
@@ -232,8 +240,11 @@ extern const int		bcmevent_names_size;
 #define WLC_E_REASON_TSPEC_REJECTED	7	
 #define WLC_E_REASON_BETTER_AP		8	
 
+<<<<<<< HEAD
 #define WLC_E_REASON_REQUESTED_ROAM 11	
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #define WLC_E_PRUNE_ENCR_MISMATCH	1	
 #define WLC_E_PRUNE_BCAST_BSSID		2	
@@ -314,7 +325,10 @@ typedef struct wl_event_data_if {
 #define WLC_E_OVL_DOWNLOAD	0	
 #define WLC_E_OVL_UPDATE_IND	1	
 
+<<<<<<< HEAD
 #define WLC_E_RELOAD_STATUS1            1  /* Internal Firmware Error */
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #include <packed_section_end.h>
 

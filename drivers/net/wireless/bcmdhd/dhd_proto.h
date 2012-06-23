@@ -24,7 +24,11 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
+<<<<<<< HEAD
  * $Id: dhd_proto.h 275786 2011-08-04 22:42:42Z $
+=======
+ * $Id: dhd_proto.h,v 1.8.10.6 2010-12-22 23:47:24 Exp $
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 #ifndef _dhd_proto_h_
@@ -34,7 +38,11 @@
 #include <wlioctl.h>
 
 #ifndef IOCTL_RESP_TIMEOUT
+<<<<<<< HEAD
 #define IOCTL_RESP_TIMEOUT  2000 /* In milli second */
+=======
+#define IOCTL_RESP_TIMEOUT  20000 /* In milli second */
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif
 
 /*

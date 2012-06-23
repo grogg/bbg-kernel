@@ -33,6 +33,7 @@
 
 #define	EPI_RC_NUMBER		125
 
+<<<<<<< HEAD
 #define	EPI_INCREMENTAL_NUMBER	120
 
 #define	EPI_BUILD_NUMBER	0
@@ -40,10 +41,23 @@
 #define	EPI_VERSION		5, 90, 125, 120
 
 #define	EPI_VERSION_NUM		0x055a7d78
+=======
+#define	EPI_INCREMENTAL_NUMBER	94
+
+#define	EPI_BUILD_NUMBER	0
+
+#define	EPI_VERSION		5, 90, 125, 94
+
+#define	EPI_VERSION_NUM		0x055a7d5e
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #define EPI_VERSION_DEV		5.90.125
 
 
+<<<<<<< HEAD
 #define	EPI_VERSION_STR		"5.90.125.120"
+=======
+#define	EPI_VERSION_STR		"5.90.125.94"
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #endif 

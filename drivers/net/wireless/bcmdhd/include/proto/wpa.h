@@ -21,7 +21,11 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
+<<<<<<< HEAD
  * $Id: wpa.h,v 1.19 2009-07-13 08:29:58 $
+=======
+ * $Id: wpa.h,v 1.19 2009-07-13 08:29:58 Exp $
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 
@@ -115,18 +119,23 @@ typedef BWL_PRE_PACKED_STRUCT struct
 #define WPA_CIPHER_AES_CCM	4	
 #define WPA_CIPHER_WEP_104	5	
 
+<<<<<<< HEAD
 #ifdef BCMWAPI_WAI
 #define WAPI_CIPHER_NONE	WPA_CIPHER_NONE
 #define WAPI_CIPHER_SMS4	11
 
 #define WAPI_CSE_WPI_SMS4	1
 #endif /* BCMWAPI_WAI */
+=======
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define IS_WPA_CIPHER(cipher)	((cipher) == WPA_CIPHER_NONE || \
 				 (cipher) == WPA_CIPHER_WEP_40 || \
 				 (cipher) == WPA_CIPHER_WEP_104 || \
 				 (cipher) == WPA_CIPHER_TKIP || \
 				 (cipher) == WPA_CIPHER_AES_OCB || \
 				 (cipher) == WPA_CIPHER_AES_CCM)
+<<<<<<< HEAD
 #ifdef BCMWAPI_WAI
 #define IS_WAPI_CIPHER(cipher)	((cipher) == WAPI_CIPHER_NONE || \
 				 (cipher) == WAPI_CSE_WPI_SMS4)
@@ -138,6 +147,8 @@ typedef BWL_PRE_PACKED_STRUCT struct
 #define WAPI_CIPHER_2_CSE_WPI(cipher) ((cipher) == WAPI_CIPHER_SMS4 ? \
 				WAPI_CSE_WPI_SMS4 : WAPI_CIPHER_NONE)
 #endif /* BCMWAPI_WAI */
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 
 #define WPA_TKIP_CM_DETECT	60	
@@ -169,6 +180,7 @@ typedef BWL_PRE_PACKED_STRUCT struct
 
 #define	WPA_CAP_WPA2_PREAUTH		RSN_CAP_PREAUTH
 
+<<<<<<< HEAD
 #ifdef BCMWAPI_WAI
 #define WAPI_CAP_PREAUTH		RSN_CAP_PREAUTH
 
@@ -182,6 +194,10 @@ typedef BWL_PRE_PACKED_STRUCT struct
 #define WAPI_USK_REKEY_COUNT		0x4000000 /* 0xA00000 */
 #define WAPI_MSK_REKEY_COUNT		0x4000000 /* 0xA00000 */
 #endif /* BCMWAPI_WAI */
+=======
+
+
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #include <packed_section_end.h>
 
 #endif 

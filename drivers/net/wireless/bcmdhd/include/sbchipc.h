@@ -5,7 +5,11 @@
  * JTAG, 0/1/2 UARTs, clock frequency control, a watchdog interrupt timer,
  * GPIO interface, extbus, and support for serial and parallel flashes.
  *
+<<<<<<< HEAD
  * $Id: sbchipc.h 275703 2011-08-04 20:20:27Z $
+=======
+ * $Id: sbchipc.h,v 13.169.2.14 2011-02-10 23:43:55 Exp $
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  *
  * Copyright (C) 1999-2011, Broadcom Corporation
  * 
@@ -41,6 +45,7 @@
 #define	PAD		_XSTR(__LINE__)
 #endif	
 
+<<<<<<< HEAD
 typedef struct eci_prerev35 {
 	uint32	eci_output;
 	uint32	eci_control;
@@ -85,6 +90,8 @@ typedef struct eci_rev35 {
 	uint32	eci_uartfifolevel;
 } eci_rev35_t;
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 typedef volatile struct {
 	uint32	chipid;			
 	uint32	capabilities;
@@ -197,6 +204,7 @@ typedef volatile struct {
 	uint32	prog_waitcount;
 	uint32	flash_config;
 	uint32	flash_waitcount;
+<<<<<<< HEAD
 	uint32  SECI_config;		
 	uint32	SECI_status;
 	uint32	SECI_statusmask;
@@ -217,6 +225,12 @@ typedef volatile struct {
 	uint32  seci_uart_lsr;
 	uint32  seci_uart_msr;
 	uint32  seci_uart_baudadj;
+=======
+	uint32	PAD[4];
+	uint32	PAD[40];
+
+	
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	
 	uint32	clk_ctl_st;		
 	uint32	hw_war;
@@ -1392,6 +1406,7 @@ typedef volatile struct {
 #define CST43237_BOOT_FROM_INVALID	3
 
 
+<<<<<<< HEAD
 #define RES43239_CBUCK_LPOM		0
 #define RES43239_CBUCK_BURST		1
 #define RES43239_CBUCK_LP_PWM		2
@@ -1413,6 +1428,11 @@ typedef volatile struct {
 #define RES43239_SR_SAVE_RESTORE	28
 #define RES43239_SR_PHY_PIC		29
 #define RES43239_SR_PHY_PWR_SW		30
+=======
+#define RES43239_OTP_PU			9
+#define RES43239_MACPHY_CLKAVAIL	23
+#define RES43239_HT_AVAIL		24
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 
 #define CST43239_SPROM_MASK			0x00000002
@@ -1420,7 +1440,11 @@ typedef volatile struct {
 #define	CST43239_RES_INIT_MODE_SHIFT	7
 #define	CST43239_RES_INIT_MODE_MASK		0x000001f0
 #define CST43239_CHIPMODE_SDIOD(cs)	((cs) & (1 << 15))	
+<<<<<<< HEAD
 #define CST43239_CHIPMODE_USB20D(cs)	(~(cs) & (1 << 15))	
+=======
+#define CST43239_CHIPMODE_USB20D(cs)	((cs) & !(1 << 15))	
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define CST43239_CHIPMODE_SDIO(cs)	(((cs) & (1 << 0)) == 0)	
 #define CST43239_CHIPMODE_GSPI(cs)	(((cs) & (1 << 0)) == (1 << 0))	
 
@@ -1428,6 +1452,7 @@ typedef volatile struct {
 #define CCTRL43239_XTAL_STRENGTH(ctl)	((ctl & 0x3F) << 12)
 
 
+<<<<<<< HEAD
 #define RES4331_REGULATOR		0
 #define RES4331_ILP_REQUEST		1
 #define RES4331_XTAL_PU			2
@@ -1462,6 +1487,8 @@ typedef volatile struct {
 #define	CST4331_OTP_PRESENT		0x00000004
 #define	CST4331_LDO_RF			0x00000008
 #define	CST4331_LDO_PAR			0x00000010
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 
 #define RES4315_CBUCK_LPOM		1	
@@ -1709,6 +1736,7 @@ typedef volatile struct {
 
 
 
+<<<<<<< HEAD
 #define SECI_MODE_UART			0x0
 #define SECI_MODE_SECI			0x1
 #define SECI_MODE_LEGACY_3WIRE_BT	0x2
@@ -1757,6 +1785,8 @@ typedef volatile struct {
 #define SECI_UART_MCR_XONOFF_RPT	(1 << 9)
 
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 
 #define ECI_BW_20   0x0

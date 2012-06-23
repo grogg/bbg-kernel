@@ -21,7 +21,11 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
+<<<<<<< HEAD
  * $Id: bcmdevs.h 279768 2011-08-25 19:38:56Z $
+=======
+ * $Id: bcmdevs.h,v 13.285.2.39 2011-02-04 05:03:16 Exp $
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 
@@ -31,6 +35,7 @@
 
 #define	VENDOR_EPIGRAM		0xfeda
 #define	VENDOR_BROADCOM		0x14e4
+<<<<<<< HEAD
 #define	VENDOR_3COM		0x10b7
 #define	VENDOR_NETGEAR		0x1385
 #define	VENDOR_DIAMOND		0x1092
@@ -41,6 +46,9 @@
 #define	VENDOR_APPLE		0x106b
 #define VENDOR_SI_IMAGE		0x1095		
 #define VENDOR_BUFFALO		0x1154		
+=======
+#define VENDOR_SI_IMAGE		0x1095		
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define VENDOR_TI		0x104c		
 #define VENDOR_RICOH		0x1180		
 #define VENDOR_JMICRON		0x197b
@@ -63,6 +71,7 @@
 #define BCM_DNGL_BL_PID_43239   0xbd1b
 #define BCM_DNGL_BDC_PID	0x0bdc
 #define BCM_DNGL_JTAG_PID	0x4a44
+<<<<<<< HEAD
 
 
 #define BCM_HWUSB_PID_43239     43239
@@ -94,6 +103,11 @@
 #define	BCM4306_V90_ID		0x4323		
 #define	BCM4306_D11DUAL_ID	0x4324		
 #define	BCM4306_D11G_ID2	0x4325		
+=======
+#define	BCM4325_D11DUAL_ID	0x431b		
+#define	BCM4325_D11G_ID		0x431c		
+#define	BCM4325_D11A_ID		0x431d		
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define	BCM4321_D11N_ID		0x4328		
 #define	BCM4321_D11N2G_ID	0x4329		
 #define	BCM4321_D11N5G_ID	0x432a		
@@ -140,6 +154,7 @@
 #define BCM43239_D11N_ID	0x4370		
 
 
+<<<<<<< HEAD
 #define	BCMGPRS_UART_ID		0x4333		
 #define	BCMGPRS2_UART_ID	0x4344		
 #define FPGA_JTAGM_ID		0x43f0		
@@ -182,6 +197,14 @@
 #define	EPI41230_DEVICE_ID	0xa10e		
 #define JINVANI_SDIOH_ID	0x4743		
 #define BCM27XX_SDIOH_ID	0x2702		
+=======
+#define SDIOH_FPGA_ID		0x43f2		
+#define SPIH_FPGA_ID		0x43f5		
+#define	BCM4710_DEVICE_ID	0x4710		
+#define BCM27XX_SDIOH_ID	0x2702		
+#define PCIXX21_FLASHMEDIA0_ID	0x8033		
+#define PCIXX21_SDIOH0_ID	0x8034		
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define PCIXX21_FLASHMEDIA_ID	0x803b		
 #define PCIXX21_SDIOH_ID	0x803c		
 #define R5C822_SDIOH_ID		0x0822		
@@ -194,13 +217,19 @@
 #define	BCM43112_CHIP_ID	43112		
 #define	BCM4312_CHIP_ID		0x4312		
 #define BCM4313_CHIP_ID		0x4313		
+<<<<<<< HEAD
 #define	BCM43131_CHIP_ID	43131		
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define	BCM4315_CHIP_ID		0x4315		
 #define	BCM4318_CHIP_ID		0x4318		
 #define	BCM4319_CHIP_ID		0x4319		
 #define	BCM4320_CHIP_ID		0x4320		
 #define	BCM4321_CHIP_ID		0x4321		
+<<<<<<< HEAD
 #define	BCM43217_CHIP_ID	43217
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define	BCM4322_CHIP_ID		0x4322		
 #define	BCM43221_CHIP_ID	43221		
 #define	BCM43222_CHIP_ID	43222		
@@ -227,27 +256,36 @@
 #define BCM4336_CHIP_ID		0x4336		
 #define BCM43362_CHIP_ID	43362		
 #define BCM4330_CHIP_ID		0x4330		
+<<<<<<< HEAD
 #define BCM6362_CHIP_ID		0x6362		
 #define BCM43142_CHIP_ID	43142
 #define BCM4314_CHIP_ID		0x4314
 
 #define	BCM4342_CHIP_ID		4342		
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define	BCM4402_CHIP_ID		0x4402		
 #define	BCM4704_CHIP_ID		0x4704		
 #define	BCM4710_CHIP_ID		0x4710		
 #define	BCM4712_CHIP_ID		0x4712		
+<<<<<<< HEAD
 #define	BCM4716_CHIP_ID		0x4716		
 #define	BCM47162_CHIP_ID	47162		
 #define	BCM4748_CHIP_ID		0x4748		
 #define	BCM4749_CHIP_ID		0x4749		
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define BCM4785_CHIP_ID		0x4785		
 #define	BCM5350_CHIP_ID		0x5350		
 #define	BCM5352_CHIP_ID		0x5352		
 #define	BCM5354_CHIP_ID		0x5354		
 #define BCM5365_CHIP_ID		0x5365		
+<<<<<<< HEAD
 #define	BCM5356_CHIP_ID		0x5356		
 #define	BCM5357_CHIP_ID		0x5357		
 #define	BCM53572_CHIP_ID	53572		
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 
 #define	BCM4303_PKG_ID		2		
@@ -262,6 +300,7 @@
 #define BCM4329_289PIN_PKG_ID	0		
 #define BCM4329_182PIN_PKG_ID	1		
 #define BCM5354E_PKG_ID		1		
+<<<<<<< HEAD
 #define	BCM4716_PKG_ID		8		
 #define	BCM4717_PKG_ID		9		
 #define	BCM4718_PKG_ID		10		
@@ -729,5 +768,10 @@
 #define MUXENAB_ERCX		0x00000004
 #define MUXENAB_JTAG		0x00000008
 #define MUXENAB_HOST_WAKE	0x00000010
+=======
+#define HDLSIM5350_PKG_ID	1		
+#define HDLSIM_PKG_ID		14		
+#define HWSIM_PKG_ID		15		
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #endif 

@@ -688,6 +688,7 @@ bcmsdh_sleep(void *sdh, bool enab)
 	return BCME_UNSUPPORTED;
 #endif
 }
+<<<<<<< HEAD
 
 int
 bcmsdh_gpio_init(void *sdh)
@@ -725,3 +726,5 @@ bcmsdh_gpioout(void *sdh, uint32 gpio, bool enab)
 	return sdioh_gpioout(sd, gpio, enab);
 }
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd

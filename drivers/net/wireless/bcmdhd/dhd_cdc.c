@@ -21,7 +21,11 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
+<<<<<<< HEAD
  * $Id: dhd_cdc.c 288105 2011-10-06 01:58:02Z $
+=======
+ * $Id: dhd_cdc.c,v 1.51.6.31 2011-02-09 14:31:43 Exp $
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  *
  * BDC is like CDC, except it includes a header for data packets to convey
  * packet priority over the bus, and flags (e.g. to indicate checksum status
@@ -121,7 +125,11 @@ dhdcdc_cmplt(dhd_pub_t *dhd, uint32 id, uint32 len)
 	return ret;
 }
 
+<<<<<<< HEAD
 int
+=======
+static int
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 dhdcdc_query_ioctl(dhd_pub_t *dhd, int ifidx, uint cmd, void *buf, uint len, uint8 action)
 {
 	dhd_prot_t *prot = dhd->prot;
@@ -276,6 +284,7 @@ done:
 	return ret;
 }
 
+<<<<<<< HEAD
 #ifdef PNO_SUPPORT
 #define htod32(i) i
 #define htod16(i) i
@@ -410,6 +419,8 @@ void dhd_clear_pfn()
 	memset(&pfn_ssid_set, 0, sizeof(pfn_ssid_set_t));
 }
 #endif
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 int
 dhd_prot_ioctl(dhd_pub_t *dhd, int ifidx, wl_ioctl_t * ioc, void * buf, int len)
@@ -2469,8 +2480,11 @@ dhd_prot_dump(dhd_pub_t *dhdp, struct bcmstrbuf *strbuf)
 #endif
 }
 
+<<<<<<< HEAD
 #define RAISE_BK_PRIO 1
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 void
 dhd_prot_hdrpush(dhd_pub_t *dhd, int ifidx, void *pktbuf)
 {
@@ -2493,10 +2507,13 @@ dhd_prot_hdrpush(dhd_pub_t *dhd, int ifidx, void *pktbuf)
 
 
 	h->priority = (PKTPRIO(pktbuf) & BDC_PRIORITY_MASK);
+<<<<<<< HEAD
 #ifdef RAISE_BK_PRIO
 	if ((dhd_APUP == true) && (h->priority < 3))
 		h->priority = 3;
 #endif
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	h->flags2 = 0;
 	h->dataOffset = 0;
 #endif /* BDC */
@@ -2603,7 +2620,11 @@ fail:
 #ifndef DHD_USE_STATIC_BUF
 	if (cdc != NULL)
 		MFREE(dhd->osh, cdc, sizeof(dhd_prot_t));
+<<<<<<< HEAD
 #endif /* DHD_USE_STATIC_BUF */
+=======
+#endif
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return BCME_NOMEM;
 }
 
@@ -2616,7 +2637,11 @@ dhd_prot_detach(dhd_pub_t *dhd)
 #endif
 #ifndef DHD_USE_STATIC_BUF
 	MFREE(dhd->osh, dhd->prot, sizeof(dhd_prot_t));
+<<<<<<< HEAD
 #endif /* DHD_USE_STATIC_BUF */
+=======
+#endif
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	dhd->prot = NULL;
 }
 
@@ -2652,10 +2677,16 @@ dhd_prot_init(dhd_pub_t *dhd)
 	ret = dhd_wlfc_init(dhd);
 #endif
 
+<<<<<<< HEAD
 #if defined(WL_CFG80211)
 	if (dhd_download_fw_on_driverload)
 #endif /* defined(WL_CFG80211) */
 		ret = dhd_preinit_ioctls(dhd);
+=======
+#if !defined(WL_CFG80211)
+	ret = dhd_preinit_ioctls(dhd);
+#endif /* WL_CFG80211 */
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	/* Always assumes wl for now */
 	dhd->iswl = TRUE;

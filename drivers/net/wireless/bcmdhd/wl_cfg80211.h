@@ -64,6 +64,7 @@ struct wl_ibss;
 #define	WL_ERR(args)									\
 do {										\
 	if (wl_dbg_level & WL_DBG_ERR) {				\
+<<<<<<< HEAD
 			printf(KERN_ERR "CFG80211-ERROR) %s : ", __func__);	\
 			printk args;						\
 		} 								\
@@ -95,6 +96,30 @@ do {									\
 do {									\
 	if (wl_dbg_level & WL_DBG_TRACE) {			\
 		printf(KERN_ERR "CFG80211-TRACE) %s :", __func__);	\
+=======
+			printk(KERN_ERR "CFG80211-ERROR) %s : ", __func__);	\
+			printk args;						\
+		} 								\
+} while (0)
+#define	WL_INFO(args)									\
+do {										\
+	if (wl_dbg_level & WL_DBG_INFO) {				\
+			printk(KERN_ERR "CFG80211-INFO) %s : ", __func__);	\
+			printk args;						\
+		}								\
+} while (0)
+#define	WL_SCAN(args)								\
+do {									\
+	if (wl_dbg_level & WL_DBG_SCAN) {			\
+		printk(KERN_ERR "CFG80211-SCAN) %s :", __func__);	\
+		printk args;							\
+	}									\
+} while (0)
+#define	WL_TRACE(args)								\
+do {									\
+	if (wl_dbg_level & WL_DBG_TRACE) {			\
+		printk(KERN_ERR "CFG80211-TRACE) %s :", __func__);	\
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		printk args;							\
 	}									\
 } while (0)
@@ -102,7 +127,11 @@ do {									\
 #define	WL_DBG(args)								\
 do {									\
 	if (wl_dbg_level & WL_DBG_DBG) {			\
+<<<<<<< HEAD
 		printf(KERN_ERR "CFG80211-DEBUG) %s :", __func__);	\
+=======
+		printk(KERN_ERR "CFG80211-DEBUG) %s :", __func__);	\
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		printk args;							\
 	}									\
 } while (0)
@@ -136,6 +165,7 @@ do {									\
 #define WL_AP_MAX	256	/* virtually unlimitted as long
 				 * as kernel memory allows
 				 */
+<<<<<<< HEAD
 #define WL_FILE_NAME_MAX		256
 #define WL_DWELL_TIME 	200
 #define WL_LONG_DWELL_TIME 1000
@@ -146,6 +176,16 @@ do {									\
 #define WL_INVALID 		-1
 
 /* driver status */
+=======
+#define WL_FILE_NAME_MAX	256
+#define WL_DWELL_TIME		200
+#define WL_LONG_DWELL_TIME	1000
+#define VWDEV_CNT 3
+
+#define WL_SCAN_TIMER_INTERVAL_MS	8000 /* Scan timeout */
+
+/* dongle status */
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 enum wl_status {
 	WL_STATUS_READY = 0,
 	WL_STATUS_SCANNING,
@@ -154,8 +194,12 @@ enum wl_status {
 	WL_STATUS_CONNECTED,
 	WL_STATUS_DISCONNECTING,
 	WL_STATUS_AP_CREATING,
+<<<<<<< HEAD
 	WL_STATUS_AP_CREATED,
 	WL_STATUS_SENDING_ACT_FRM
+=======
+	WL_STATUS_AP_CREATED
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 };
 
 /* wi-fi mode */
@@ -165,7 +209,11 @@ enum wl_mode {
 	WL_MODE_AP
 };
 
+<<<<<<< HEAD
 /* driver profile list */
+=======
+/* dongle profile list */
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 enum wl_prof_list {
 	WL_PROF_MODE,
 	WL_PROF_SSID,
@@ -178,7 +226,11 @@ enum wl_prof_list {
 	WL_PROF_DTIMPERIOD
 };
 
+<<<<<<< HEAD
 /* driver iscan state */
+=======
+/* dongle iscan state */
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 enum wl_iscan_state {
 	WL_ISCAN_STATE_IDLE,
 	WL_ISCAN_STATE_SCANING
@@ -208,8 +260,17 @@ struct beacon_proberesp {
 	u8 variable[0];
 } __attribute__ ((packed));
 
+<<<<<<< HEAD
 /* driver configuration */
 struct wl_conf {
+=======
+/* dongle configuration */
+struct wl_conf {
+	struct net_mode {
+		struct net_device *ndev;
+		s32 type;
+	} mode [VWDEV_CNT + 1];		/* adhoc , infrastructure or ap */
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	u32 frag_threshold;
 	u32 rts_threshold;
 	u32 retry_short;
@@ -267,6 +328,7 @@ struct wl_ibss {
 	u8 channel;
 };
 
+<<<<<<< HEAD
 /* wl driver profile */
 struct wl_profile {
 	u32 mode;
@@ -291,6 +353,24 @@ struct net_info {
 typedef s32(*ISCAN_HANDLER) (struct wl_priv *wl);
 
 /* iscan controller */
+=======
+/* dongle profile */
+struct wl_profile {
+	u32 mode;
+	struct wlc_ssid ssid;
+	u8 bssid[ETHER_ADDR_LEN];
+	u16 beacon_interval;
+	u8 dtim_period;
+	struct wl_security sec;
+	struct wl_ibss ibss;
+	s32 band;
+	bool active;
+};
+
+typedef s32(*ISCAN_HANDLER) (struct wl_priv *wl);
+
+/* dongle iscan controller */
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 struct wl_iscan_ctrl {
 	struct net_device *dev;
 	struct timer_list timer;
@@ -339,10 +419,16 @@ struct wl_pmk_list {
 #define ESCAN_BUF_SIZE (64 * 1024)
 
 struct escan_info {
+<<<<<<< HEAD
 	u32 escan_state;
 	u8 escan_buf[ESCAN_BUF_SIZE];
 	struct wiphy *wiphy;
 	struct net_device *ndev;
+=======
+    u32 escan_state;
+    u8 escan_buf[ESCAN_BUF_SIZE];
+    struct wiphy *wiphy;
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 };
 
 struct ap_info {
@@ -358,6 +444,7 @@ struct ap_info {
 };
 struct btcoex_info {
 	struct timer_list timer;
+<<<<<<< HEAD
 	u32 timer_ms;
 	u32 timer_on;
 	u32 ts_dhcp_start;	/* ms ts ecord time stats */
@@ -366,6 +453,16 @@ struct btcoex_info {
 					 * dhcp before t1/t2 expiration
 					 */
 	s32 bt_state;
+=======
+	uint32 timer_ms;
+	uint32 timer_on;
+	uint32 ts_dhcp_start;	/* ms ts ecord time stats */
+	uint32 ts_dhcp_ok;	/* ms ts ecord time stats */
+	bool dhcp_done;		/* flag, indicates that host done with
+				 * dhcp before t1/t2 expiration
+				 */
+	int bt_state;
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	struct work_struct work;
 	struct net_device *dev;
 };
@@ -377,6 +474,7 @@ struct sta_info {
 	u32 probe_req_ie_len;
 	u32 assoc_req_ie_len;
 };
+<<<<<<< HEAD
 
 struct afx_hdl {
 	wl_af_params_t *pending_tx_act_frm;
@@ -405,22 +503,54 @@ struct wl_priv {
 	spinlock_t cfgdrv_lock;	/* to protect scan status (and others if needed) */
 	struct completion act_frm_scan;
 	struct mutex usr_sync;	/* maily for up/down synchronization */
+=======
+/* dongle private data of cfg80211 interface */
+struct wl_priv {
+	struct wireless_dev *wdev;	/* representing wl cfg80211 device */
+	struct wireless_dev *vwdev[VWDEV_CNT];
+	struct wl_conf *conf;	/* dongle configuration */
+	struct cfg80211_scan_request *scan_request;	/* scan request object */
+	EVENT_HANDLER evt_handler[WLC_E_LAST];
+	struct list_head eq_list;	/* used for event queue */
+	spinlock_t eq_lock;	/* for event queue synchronization */
+	struct mutex usr_sync;	/* maily for dongle up/down synchronization */
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	struct wl_scan_results *bss_list;
 	struct wl_scan_results *scan_results;
 
 	/* scan request object for internal purpose */
 	struct wl_scan_req *scan_req_int;
+<<<<<<< HEAD
 	/* information element object for internal purpose */
 	struct wl_ie ie;
+=======
+
+	/* bss information for cfg80211 layer */
+	struct wl_cfg80211_bss_info *bss_info;
+	/* information element object for internal purpose */
+	struct wl_ie ie;
+
+	/* for synchronization of main event thread */
+	struct wl_profile *profile;	/* holding dongle profile */
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	struct wl_iscan_ctrl *iscan;	/* iscan controller */
 
 	/* association information container */
 	struct wl_connect_info conn_info;
 
+<<<<<<< HEAD
 	struct wl_pmk_list *pmk_list;	/* wpa2 pmk list */
 	tsk_ctl_t event_tsk;  		/* task of main event handler thread */
 	void *pub;
 	u32 iface_cnt;
+=======
+	/* control firwmare and nvram paramter downloading */
+	struct wl_fw_ctrl *fw;
+	struct wl_pmk_list *pmk_list;	/* wpa2 pmk list */
+	tsk_ctl_t event_tsk;  		/* task of main event handler thread */
+	unsigned long status;		/* current dongle status */
+	void *pub;
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	u32 channel;		/* current channel */
 	bool iscan_on;		/* iscan on/off switch */
 	bool iscan_kickstart;	/* indicate iscan already started */
@@ -430,12 +560,21 @@ struct wl_priv {
 	bool ibss_starter;	/* indicates this sta is ibss starter */
 	bool link_up;		/* link/connection up flag */
 
+<<<<<<< HEAD
 	/* indicate whether chip to support power save mode */
 	bool pwr_save;
 	bool roam_on;		/* on/off switch for self-roaming */
 	bool scan_tried;	/* indicates if first scan attempted */
 	u8 *ioctl_buf;		/* ioctl buffer */
 	struct mutex ioctl_buf_sync;
+=======
+	/* indicate whether dongle to support power save mode */
+	bool pwr_save;
+	bool dongle_up;		/* indicate whether dongle up or not */
+	bool roam_on;		/* on/off switch for dongle self-roaming */
+	bool scan_tried;	/* indicates if first scan attempted */
+	u8 *ioctl_buf;	/* ioctl buffer */
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	u8 *escan_ioctl_buf;
 	u8 *extra_buf;	/* maily to grab assoc information */
 	struct dentry *debugfsdir;
@@ -443,10 +582,15 @@ struct wl_priv {
 	bool rf_blocked;
 	struct ieee80211_channel remain_on_chan;
 	enum nl80211_channel_type remain_on_chan_type;
+<<<<<<< HEAD
 	u64 send_action_id;
 	u64 last_roc_id;
 	wait_queue_head_t netif_change_event;
 	struct afx_hdl *afx_hdl;
+=======
+	u64 cache_cookie;
+	wait_queue_head_t dongle_event_wait;
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	struct ap_info *ap_info;
 	struct sta_info *sta_info;
 	struct p2p_info *p2p;
@@ -455,12 +599,29 @@ struct wl_priv {
 	struct timer_list scan_timeout;   /* Timer for catch scan event timeout */
 };
 
+<<<<<<< HEAD
+=======
+#define wl_to_wiphy(w) (w->wdev->wiphy)
+#define wl_to_prmry_ndev(w) (w->wdev->netdev)
+#define ndev_to_wl(n) (wdev_to_wl(n->ieee80211_ptr))
+#define wl_to_sr(w) (w->scan_req_int)
+#define wl_to_ie(w) (&w->ie)
+#define iscan_to_wl(i) ((struct wl_priv *)(i->data))
+#define wl_to_iscan(w) (w->iscan)
+#define wl_to_conn(w) (&w->conn_info)
+#define wiphy_from_scan(w) (w->escan_info.wiphy)
+#define wl_get_drv_status(wl, stat)   (test_bit(WL_STATUS_ ## stat, &(wl)->status))
+#define wl_set_drv_status(wl, stat)   (set_bit(WL_STATUS_ ## stat, &(wl)->status))
+#define wl_clr_drv_status(wl, stat)   (clear_bit(WL_STATUS_ ## stat, &(wl)->status))
+#define wl_chg_drv_status(wl, stat)   (change_bit(WL_STATUS_ ## stat, &(wl)->status))
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 static inline struct wl_bss_info *next_bss(struct wl_scan_results *list, struct wl_bss_info *bss)
 {
 	return bss = bss ?
 		(struct wl_bss_info *)((uintptr) bss + dtoh32(bss->length)) : list->bss_info;
 }
+<<<<<<< HEAD
 static inline s32
 wl_alloc_netinfo(struct wl_priv *wl, struct net_device *ndev,
 	struct wireless_dev *wdev, s32 mode)
@@ -617,23 +778,95 @@ wl_get_profile_by_netdev(struct wl_priv *wl, struct net_device *ndev)
 	(wl_set_status_by_netdev(wl, WL_STATUS_ ## stat, ndev, 2))
 #define wl_chg_drv_status(wl, stat, ndev)  \
 	(wl_set_status_by_netdev(wl, WL_STATUS_ ## stat, ndev, 4))
+=======
+static inline s32 alloc_idx_vwdev(struct wl_priv *wl)
+{
+	s32 i = 0;
+	for (i = 0; i < VWDEV_CNT; i++) {
+		if (wl->vwdev[i] == NULL)
+				return i;
+	}
+	return -1;
+}
+
+static inline s32 get_idx_vwdev_by_netdev(struct wl_priv *wl, struct net_device *ndev)
+{
+	s32 i = 0;
+	for (i = 0; i < VWDEV_CNT; i++) {
+		if ((wl->vwdev[i] != NULL) && (wl->vwdev[i]->netdev == ndev))
+				return i;
+	}
+	return -1;
+}
+
+static inline s32 get_mode_by_netdev(struct wl_priv *wl, struct net_device *ndev)
+{
+	s32 i = 0;
+	for (i = 0; i <= VWDEV_CNT; i++) {
+		if (wl->conf->mode[i].ndev != NULL && (wl->conf->mode[i].ndev == ndev))
+			return wl->conf->mode[i].type;
+	}
+	return -1;
+}
+static inline void set_mode_by_netdev(struct wl_priv *wl, struct net_device *ndev, s32 type)
+{
+	s32 i = 0;
+	for (i = 0; i <= VWDEV_CNT; i++) {
+		if (type == -1) {
+			/* free the info of netdev */
+			if (wl->conf->mode[i].ndev == ndev) {
+				wl->conf->mode[i].ndev = NULL;
+				wl->conf->mode[i].type = -1;
+				break;
+			}
+
+		} else {
+			if ((wl->conf->mode[i].ndev != NULL)&&
+			(wl->conf->mode[i].ndev == ndev)) {
+				/* update type of ndev */
+				wl->conf->mode[i].type = type;
+				break;
+			}
+			else if ((wl->conf->mode[i].ndev == NULL)&&
+			(wl->conf->mode[i].type == -1)) {
+				wl->conf->mode[i].ndev = ndev;
+				wl->conf->mode[i].type = type;
+				break;
+			}
+		}
+	}
+}
+#define free_vwdev_by_index(wl, __i) do {      \
+						if (wl->vwdev[__i] != NULL) \
+							kfree(wl->vwdev[__i]); \
+						wl->vwdev[__i] = NULL; \
+					} while (0)
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #define for_each_bss(list, bss, __i)	\
 	for (__i = 0; __i < list->count && __i < WL_AP_MAX; __i++, bss = next_bss(list, bss))
 
+<<<<<<< HEAD
 #define for_each_ndev(wl, iter, next) \
 	list_for_each_entry_safe(iter, next, &wl->net_list, list)
 
 
+=======
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 /* In case of WPS from wpa_supplicant, pairwise siute and group suite is 0.
  * In addtion to that, wpa_version is WPA_VERSION_1
  */
 #define is_wps_conn(_sme) \
+<<<<<<< HEAD
 	((wl_cfgp2p_find_wpsie((u8 *)_sme->ie, _sme->ie_len) != NULL) && \
+=======
+	((_sme->crypto.wpa_versions & NL80211_WPA_VERSION_1) && \
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	 (!_sme->crypto.n_ciphers_pairwise) && \
 	 (!_sme->crypto.cipher_group))
 extern s32 wl_cfg80211_attach(struct net_device *ndev, void *data);
 extern s32 wl_cfg80211_attach_post(struct net_device *ndev);
+<<<<<<< HEAD
 extern void wl_cfg80211_detach(void *para);
 
 extern void wl_cfg80211_event(struct net_device *ndev, const wl_event_msg_t *e,
@@ -645,12 +878,32 @@ extern s32 wl_cfg80211_up(void *para);
 extern s32 wl_cfg80211_down(void *para);
 extern s32 wl_cfg80211_notify_ifadd(struct net_device *net, s32 idx, s32 bssidx, void *_net_attach);
 extern s32 wl_cfg80211_ifdel_ops(struct net_device *net);
+=======
+extern void wl_cfg80211_detach(void);
+/* event handler from dongle */
+extern void wl_cfg80211_event(struct net_device *ndev, const wl_event_msg_t *e,
+            void *data);
+extern void wl_cfg80211_set_sdio_func(void *func);	/* set sdio function info */
+extern struct sdio_func *wl_cfg80211_get_sdio_func(void);	/* set sdio function info */
+extern s32 wl_cfg80211_up(void);	/* dongle up */
+extern s32 wl_cfg80211_down(void);	/* dongle down */
+extern s32 wl_cfg80211_notify_ifadd(struct net_device *net, s32 idx, s32 bssidx,
+int (*_net_attach)(dhd_pub_t *dhdp, int ifidx));
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 extern s32 wl_cfg80211_notify_ifdel(struct net_device *ndev);
 extern s32 wl_cfg80211_is_progress_ifadd(void);
 extern s32 wl_cfg80211_is_progress_ifchange(void);
 extern s32 wl_cfg80211_is_progress_ifadd(void);
 extern s32 wl_cfg80211_notify_ifchange(void);
 extern void wl_cfg80211_dbg_level(u32 level);
+<<<<<<< HEAD
+=======
+extern void *wl_cfg80211_request_fw(s8 *file_name);
+extern s32 wl_cfg80211_read_fw(s8 *buf, u32 size);
+extern void wl_cfg80211_release_fw(void);
+extern s8 *wl_cfg80211_get_fwname(void);
+extern s8 *wl_cfg80211_get_nvramname(void);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 extern s32 wl_cfg80211_get_p2p_dev_addr(struct net_device *net, struct ether_addr *p2pdev_addr);
 extern s32 wl_cfg80211_set_p2p_noa(struct net_device *net, char* buf, int len);
 extern s32 wl_cfg80211_get_p2p_noa(struct net_device *net, char* buf, int len);
@@ -658,6 +911,7 @@ extern s32 wl_cfg80211_set_wps_p2p_ie(struct net_device *net, char *buf, int len
 	enum wl_management_type type);
 extern s32 wl_cfg80211_set_p2p_ps(struct net_device *net, char* buf, int len);
 extern int wl_cfg80211_hang(struct net_device *dev, u16 reason);
+<<<<<<< HEAD
 extern s32 wl_mode_to_nl80211_iftype(s32 mode);
 extern s32 wl_cfg80211_set_mpc(struct net_device *net, char* buf, int len);
 extern s32 wl_cfg80211_deauth_sta(struct net_device *net, char* buf, int len);
@@ -666,4 +920,13 @@ extern s32 wl_cfg80211_deauth_sta(struct net_device *net, char* buf, int len);
 extern s32 wl_cfg80211_scan_abort(struct wl_priv *wl, struct net_device *ndev);
 
 extern s32 wl_cfg80211_if_is_group_owner(void);
+=======
+
+/* do scan abort */
+extern s32
+wl_cfg80211_scan_abort(struct wl_priv *wl, struct net_device *ndev);
+
+extern s32
+wl_cfg80211_if_is_group_owner(void);
+>>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif				/* _wl_cfg80211_h_ */
