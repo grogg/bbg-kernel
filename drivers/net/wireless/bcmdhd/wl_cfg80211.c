@@ -60,6 +60,46 @@
 #include <wl_cfg80211.h>
 #include <wl_cfgp2p.h>
 
+<<<<<<< HEAD
+
+#ifdef BCMWAPI_WPI
+/* these items should evetually go into wireless.h of the linux system headfile dir */
+#ifndef IW_ENCODE_ALG_SM4
+#define IW_ENCODE_ALG_SM4 0x20
+#endif
+
+#ifndef IW_AUTH_WAPI_ENABLED
+#define IW_AUTH_WAPI_ENABLED 0x20
+#endif
+
+#ifndef IW_AUTH_WAPI_VERSION_1
+#define IW_AUTH_WAPI_VERSION_1  0x00000008
+#endif
+
+#ifndef IW_AUTH_CIPHER_SMS4
+#define IW_AUTH_CIPHER_SMS4     0x00000020
+#endif
+
+#ifndef IW_AUTH_KEY_MGMT_WAPI_PSK
+#define IW_AUTH_KEY_MGMT_WAPI_PSK 4
+#endif
+
+#ifndef IW_AUTH_KEY_MGMT_WAPI_CERT
+#define IW_AUTH_KEY_MGMT_WAPI_CERT 8
+#endif
+#endif /* BCMWAPI_WPI */
+
+#ifdef BCMWAPI_WPI
+#define IW_WSEC_ENABLED(wsec)   ((wsec) & (WEP_ENABLED | TKIP_ENABLED | AES_ENABLED | SMS4_ENABLED))
+#else /* BCMWAPI_WPI */
+#define IW_WSEC_ENABLED(wsec)   ((wsec) & (WEP_ENABLED | TKIP_ENABLED | AES_ENABLED))
+#endif /* BCMWAPI_WPI */
+#define FORCE_MPC
+
+static struct device *cfg80211_parent_dev = NULL;
+struct wl_priv *wlcfg_drv_priv = NULL;
+=======
+>>>>>>> 02e84ca... drivers: net: wifi: bcmdhd: update to One V source
 
 #ifdef BCMWAPI_WPI
 /* these items should evetually go into wireless.h of the linux system headfile dir */
@@ -98,7 +138,7 @@
 static struct device *cfg80211_parent_dev = NULL;
 struct wl_priv *wlcfg_drv_priv = NULL;
 
-u32 wl_dbg_level = WL_DBG_ERR;
+u32 wl_dbg_level = WL_DBG_ERR ;
 
 #define MAC2STR(a) (a)[0], (a)[1], (a)[2], (a)[3], (a)[4], (a)[5]
 #define MACSTR "%02x:%02x:%02x:%02x:%02x:%02x"
@@ -394,6 +434,12 @@ static s32 wl_iscan_pending(struct wl_priv *wl);
 static s32 wl_iscan_inprogress(struct wl_priv *wl);
 static s32 wl_iscan_aborted(struct wl_priv *wl);
 
+<<<<<<< HEAD
+=======
+#define MAX_SCAN_TIMEOUT_FAIL	10
+static s32 scan_timeout_num = 0;
+
+>>>>>>> 02e84ca... drivers: net: wifi: bcmdhd: update to One V source
 /*
  * find most significant bit set
  */
@@ -408,6 +454,10 @@ static int wl_rfkill_set(void *data, bool blocked);
 static wl_scan_params_t *wl_cfg80211_scan_alloc_params(int channel,
 	int nprobes, int *out_params_size);
 static void get_primary_mac(struct wl_priv *wl, struct ether_addr *mac);
+<<<<<<< HEAD
+=======
+static int wl_dump_counters(struct net_device *dev);
+>>>>>>> 02e84ca... drivers: net: wifi: bcmdhd: update to One V source
 
 /*
  * Some external functions, TODO: move them to dhd_linux.h
@@ -5775,9 +5825,14 @@ static s32 wl_iscan_thread(void *data)
 static void wl_scan_timeout(unsigned long data)
 {
 	struct wl_priv *wl = (struct wl_priv *)data;
+	struct net_device *ndev = wl_to_prmry_ndev(wl);
 
 	if (wl->scan_request) {
 		WL_ERR(("timer expired\n"));
+		scan_timeout_num++;
+		if (scan_timeout_num > MAX_SCAN_TIMEOUT_FAIL)
+			wl_dump_counters(ndev);
+
 		if (wl->escan_on)
 			wl_notify_escan_complete(wl, wl->escan_info.ndev, true);
 		else
@@ -5921,7 +5976,11 @@ static s32 wl_escan_handler(struct wl_priv *wl,
 
 		if (wl_get_drv_status_all(wl, SENDING_ACT_FRM)) {
 			p2p_dev_addr = wl_cfgp2p_retreive_p2p_dev_addr(bi, bi_length);
+<<<<<<< HEAD
 			if (p2p_dev_addr && !memcmp(p2p_dev_addr,
+=======
+			if (p2p_dev_addr && wl->afx_hdl&& !memcmp(p2p_dev_addr,
+>>>>>>> 02e84ca... drivers: net: wifi: bcmdhd: update to One V source
 				wl->afx_hdl->pending_tx_dst_addr.octet, ETHER_ADDR_LEN)) {
 				s32 channel = CHSPEC_CHANNEL(dtohchanspec(bi->chanspec));
 				WL_DBG(("ACTION FRAME SCAN : Peer found, channel : %d\n", channel));
@@ -5989,6 +6048,8 @@ static s32 wl_escan_handler(struct wl_priv *wl,
 			wl_notify_escan_complete(wl, ndev, false);
 			mutex_unlock(&wl->usr_sync);
 		}
+		/* reset scan_timeout num */
+		scan_timeout_num = 0;
 	}
 	else if (status == WLC_E_STATUS_ABORT) {
 		wl->escan_info.escan_state = WL_ESCAN_STATE_IDLE;
@@ -6007,6 +6068,8 @@ static s32 wl_escan_handler(struct wl_priv *wl,
 			wl_notify_escan_complete(wl, ndev, true);
 			mutex_unlock(&wl->usr_sync);
 		}
+		/* reset scan_timeout num */
+		scan_timeout_num = 0;
 	}
 	else {
 		WL_ERR(("unexpected Escan Event %d : abort\n", status));
@@ -6097,6 +6160,18 @@ static s32 wl_init_priv(struct wl_priv *wl)
 	wl_init_prof(wl, ndev);
 	wl_link_down(wl);
 	DNGL_FUNC(dhd_cfg80211_init, (wl));
+<<<<<<< HEAD
+=======
+
+	return err;
+
+wl_init_priv_fail2:
+	wl_destroy_event_handler(wl);
+wl_init_priv_fail1:
+	wl_deinit_priv_mem(wl);
+wl_init_priv_fail:
+	wl_flush_eq(wl);
+>>>>>>> 02e84ca... drivers: net: wifi: bcmdhd: update to One V source
 
 	return err;
 
@@ -6128,6 +6203,7 @@ static s32 wl_cfg80211_attach_p2p(void)
 	struct wl_priv *wl = wlcfg_drv_priv;
 
 	WL_TRACE(("Enter \n"));
+<<<<<<< HEAD
 
 	if (wl_cfgp2p_register_ndev(wl) < 0) {
 		WL_ERR(("%s: P2P attach failed. \n", __func__));
@@ -6157,6 +6233,37 @@ static s32  wl_cfg80211_detach_p2p(void)
 
 	return 0;
 }
+=======
+
+	if (wl_cfgp2p_register_ndev(wl) < 0) {
+		WL_ERR(("%s: P2P attach failed. \n", __func__));
+		return -ENODEV;
+	}
+
+	return 0;
+}
+
+static s32  wl_cfg80211_detach_p2p(void)
+{
+	struct wl_priv *wl = wlcfg_drv_priv;
+	struct wireless_dev *wdev = wl->p2p_wdev;
+
+	WL_DBG(("Enter \n"));
+	if (!wdev || !wl) {
+		WL_ERR(("Invalid Ptr\n"));
+		return -EINVAL;
+	}
+
+	wl_cfgp2p_unregister_ndev(wl);
+
+	wl->p2p_wdev = NULL;
+	wl->p2p_net = NULL;
+	WL_DBG(("Freeing 0x%08x \n", (unsigned int)wdev));
+	kfree(wdev);
+
+	return 0;
+}
+>>>>>>> 02e84ca... drivers: net: wifi: bcmdhd: update to One V source
 #endif /* defined(WLP2P) && (ENABLE_P2P_INTERFACE) */
 
 s32 wl_cfg80211_attach_post(struct net_device *ndev)
@@ -7186,6 +7293,7 @@ err_out:
 }
 
 struct device *wl_cfg80211_get_parent_dev(void)
+<<<<<<< HEAD
 {
 	return cfg80211_parent_dev;
 }
@@ -7205,4 +7313,139 @@ static void get_primary_mac(struct wl_priv *wl, struct ether_addr *mac)
 	wldev_iovar_getbuf_bsscfg(wl_to_prmry_ndev(wl), "cur_etheraddr", NULL,
 		0, wl->ioctl_buf, WLC_IOCTL_MAXLEN, 0, &wl->ioctl_buf_sync);
 	memcpy(mac->octet, wl->ioctl_buf, ETHER_ADDR_LEN);
+=======
+{
+	return cfg80211_parent_dev;
+}
+
+void wl_cfg80211_set_parent_dev(void *dev)
+{
+	cfg80211_parent_dev = dev;
+}
+
+static void wl_cfg80211_clear_parent_dev(void)
+{
+	cfg80211_parent_dev = NULL;
+}
+
+static void get_primary_mac(struct wl_priv *wl, struct ether_addr *mac)
+{
+	wldev_iovar_getbuf_bsscfg(wl_to_prmry_ndev(wl), "cur_etheraddr", NULL,
+		0, wl->ioctl_buf, WLC_IOCTL_MAXLEN, 0, &wl->ioctl_buf_sync);
+	memcpy(mac->octet, wl->ioctl_buf, ETHER_ADDR_LEN);
+}
+
+
+#define PRVAL(name)\
+	if (cnt.name != cnt_old.name)\
+		pbuf += sprintf(pbuf, "%s %d ", #name, dtoh32(cnt.name)-dtoh32(cnt_old.name))
+#define PRNL()		pbuf += sprintf(pbuf, "\n")
+#define PRD11VAL(name)\
+	if (cnt.name != cnt_old.name)\
+		pbuf += sprintf(pbuf, "d11_%s %d ", #name, dtoh32(cnt.name)-dtoh32(cnt_old.name))
+static wl_cnt_t cnt_old;
+static int wl_dump_counters(struct net_device *dev)
+{
+	wl_cnt_t cnt;
+	uint i;
+	char *pbuf;
+	char *counter_buf = NULL;
+	uint len;
+	char tmp;
+	int ret = 0;
+
+	counter_buf = kmalloc(1536, GFP_KERNEL);
+	if (!counter_buf) {
+		printf("no enough mem!\n");
+		return -ENOMEM;
+	}
+
+	pbuf = counter_buf;
+
+	ret = wldev_iovar_getbuf(dev, "counters", "", 0, pbuf, 1536, NULL);
+
+	if (ret) {
+		printf("get counters failed %d\n", ret);
+		return -1;
+	}
+
+	memcpy(&cnt, pbuf, sizeof(cnt));
+	cnt.version = dtoh16(cnt.version);
+	cnt.length = dtoh16(cnt.length);
+
+	/* PR49085: makes  wl compable with older driver */
+	if (cnt.version > WL_CNT_T_VERSION) {
+		printf("\tIncorrect version of counters struct: expected %d; got %d\n",
+			WL_CNT_T_VERSION, cnt.version);
+		return -1;
+	} else if (cnt.version != WL_CNT_T_VERSION) {
+		printf("\tIncorrect version of counters struct: expected %d; got %d\n",
+			WL_CNT_T_VERSION, cnt.version);
+		printf("\tDisplayed values may be incorrect\n");
+	}
+
+	/* summary stat counter line */
+	PRVAL(txframe); PRVAL(txbyte); PRVAL(txretrans); PRVAL(txerror);
+	PRVAL(rxframe); PRVAL(rxbyte); PRVAL(rxerror); PRNL();
+
+	PRVAL(txprshort); PRVAL(txdmawar); PRVAL(txnobuf); PRVAL(txnoassoc);
+	PRVAL(txchit); PRVAL(txcmiss); PRNL();
+
+	PRVAL(reset); PRVAL(txserr); PRVAL(txphyerr); PRVAL(txphycrs);
+	PRVAL(txfail); PRVAL(tbtt); PRNL();
+
+	PRD11VAL(txfrag); PRD11VAL(txmulti); PRD11VAL(txretry); PRD11VAL(txretrie); PRNL();
+	PRD11VAL(txrts); PRD11VAL(txnocts); PRD11VAL(txnoack); PRD11VAL(txfrmsnt); PRNL();
+
+	PRVAL(rxcrc); PRVAL(rxnobuf); PRVAL(rxnondata); PRVAL(rxbadds);
+	PRVAL(rxbadcm); PRVAL(rxdup); PRVAL(rxfragerr); PRNL();
+
+	PRVAL(rxrunt); PRVAL(rxgiant); PRVAL(rxnoscb); PRVAL(rxbadproto);
+	PRVAL(rxbadsrcmac); PRNL();
+
+	PRD11VAL(rxfrag); PRD11VAL(rxmulti); PRD11VAL(rxundec);	PRNL();
+
+	PRVAL(rxctl); PRVAL(rxbadda); PRVAL(rxfilter); PRNL();
+
+	pbuf += sprintf(pbuf, "rxuflo: ");
+	for (i = 0; i < NFIFO; i++)
+		pbuf += sprintf(pbuf, "%d ", dtoh32(cnt.rxuflo[i]));
+	PRNL();
+	PRVAL(txallfrm); PRVAL(txrtsfrm); PRVAL(txctsfrm); PRVAL(txackfrm); PRNL();
+	PRVAL(txdnlfrm); PRVAL(txbcnfrm); PRVAL(txtplunfl); PRVAL(txphyerr); PRNL();
+	pbuf += sprintf(pbuf, "txfunfl: ");
+	for (i = 0; i < NFIFO; i++)
+		pbuf += sprintf(pbuf, "%d ", dtoh32(cnt.txfunfl[i]));
+	PRNL();
+
+	if (cnt.version >= 4) {
+		/* per-rate receive counters */
+		PRVAL(rx1mbps); PRVAL(rx2mbps); PRVAL(rx5mbps5); PRNL();
+		PRVAL(rx6mbps); PRVAL(rx9mbps); PRVAL(rx11mbps); PRNL();
+		PRVAL(rx12mbps); PRVAL(rx18mbps); PRVAL(rx24mbps); PRNL();
+		PRVAL(rx36mbps); PRVAL(rx48mbps); PRVAL(rx54mbps); PRNL();
+	}
+
+	if (cnt.version >= 5) {
+		PRVAL(pktengrxducast); PRVAL(pktengrxdmcast); PRNL();
+	}
+
+	printf("\n\n==============================start collect diff counter==========================\n");
+	pbuf = counter_buf;
+	len = strlen(counter_buf);
+	for (i = 0; i < len; i++) {
+		if (counter_buf[i] == '\n') {
+			tmp = counter_buf[i+1];
+			counter_buf[i+1] = '\0';
+			printk(pbuf);
+			counter_buf[i+1] = tmp;
+			pbuf = &counter_buf[i+1];
+		}
+	}
+	printf("==============================end collect diff counter==========================\n");
+
+	memcpy(&cnt_old, &cnt, sizeof(wl_cnt_t));
+	kfree(counter_buf);
+	return 0;
+>>>>>>> 02e84ca... drivers: net: wifi: bcmdhd: update to One V source
 }

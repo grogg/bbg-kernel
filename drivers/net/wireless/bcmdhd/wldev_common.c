@@ -369,7 +369,12 @@ int wldev_set_country(
 		return error;
 	}
 	dhd_bus_country_set(dev, &cspec);
+<<<<<<< HEAD
 	WLDEV_ERROR(("%s: set country for %s as %s rev %d\n",
 		__FUNCTION__, country_code, cspec.ccode, cspec.rev));
+=======
+	printk(KERN_INFO "[WLAN] %s: set country for %s as %s rev %d\n",
+		__func__, country_code, cspec.ccode, cspec.rev);
+>>>>>>> 02e84ca... drivers: net: wifi: bcmdhd: update to One V source
 	return 0;
 }

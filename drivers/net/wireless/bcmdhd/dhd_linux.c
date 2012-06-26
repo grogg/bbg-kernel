@@ -1276,6 +1276,9 @@ dhd_op_if(dhd_if_t *ifp)
 				wl_cfg80211_notify_ifdel(ifp->net);
 			}
 #endif
+			/*HTC_CSP_START*/
+			msleep(300);
+			/*HTC_CSP_END*/
 			netif_stop_queue(ifp->net);
 			unregister_netdev(ifp->net);
 			ret = DHD_DEL_IF;	/* Make sure the free_netdev() is called */
@@ -1682,20 +1685,24 @@ dhd_txflowcontrol(dhd_pub_t *dhdp, int ifidx, bool state)
 		for (i = 0; i < DHD_MAX_IFS; i++) {
 			if (dhd->iflist[i]) {
 				net = dhd->iflist[i]->net;
-				if (state == ON)
-					netif_stop_queue(net);
-				else
-					netif_wake_queue(net);
+				if (net) {
+					if (state == ON)
+						netif_stop_queue(net);
+					else
+						netif_wake_queue(net);
+				}
 			}
 		}
 	}
 	else {
 		if (dhd->iflist[ifidx]) {
 			net = dhd->iflist[ifidx]->net;
-			if (state == ON)
-				netif_stop_queue(net);
-			else
-				netif_wake_queue(net);
+			if (net) {
+				if (state == ON)
+					netif_stop_queue(net);
+				else
+					netif_wake_queue(net);
+			}
 		}
 	}
 }
@@ -3786,6 +3793,7 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 		bcm_mkiovar("apsta", (char *)&apsta, 4, iovbuf, sizeof(iovbuf));
 		dhd_wl_ioctl_cmd(dhd, WLC_SET_VAR, iovbuf, sizeof(iovbuf), TRUE, 0);
 #endif /* !defined(AP) && !defined(WLP2P) */
+<<<<<<< HEAD
 
 		/* Disable legacy power save modes */
 		power_mode = PM_OFF;
@@ -3797,6 +3805,19 @@ int ht_wsec_restrict = WLC_HT_TKIP_RESTRICT | WLC_HT_WEP_RESTRICT;
 		dhd_arp_offload_enable(dhd, FALSE);
 #endif /* ARP_OFFLOAD_SUPPORT */
 
+=======
+
+		/* Disable legacy power save modes */
+		power_mode = PM_OFF;
+		dhd_wl_ioctl_cmd(dhd, WLC_SET_PM, (char *)&power_mode, sizeof(power_mode), TRUE, 0);
+
+#ifdef ARP_OFFLOAD_SUPPORT
+		/* Disable ARP offload */
+		dhd_arp_offload_set(dhd, 0);
+		dhd_arp_offload_enable(dhd, FALSE);
+#endif /* ARP_OFFLOAD_SUPPORT */
+
+>>>>>>> 02e84ca... drivers: net: wifi: bcmdhd: update to One V source
 	} else {
 		/* DHD_ERROR(("DHD WiFi HDMI is NOT enabled\n")); */
 	}
