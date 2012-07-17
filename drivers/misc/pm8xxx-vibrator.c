@@ -161,6 +161,7 @@ static void pm8xxx_vib_enable(struct timed_output_dev *dev, int value)
 	struct pm8xxx_vib *vib = container_of(dev, struct pm8xxx_vib,
 					 timed_dev);
 
+<<<<<<< HEAD
 	VIB_INFO_LOG("%s vibrate period: %d msec\n",__func__,value);
 
 	if ((value == 20) || (value == 21)) {
@@ -183,6 +184,33 @@ retry:
 			      ktime_set(value / 1000, (value % 1000) * 1000000),
 			      HRTIMER_MODE_REL);
 	}
+=======
+	if (strcmp(current->parent->comm, "init") != 0) {
+
+        	/* Sense 4 haptic feedback fix */
+        	if ((value == 20) || (value == 21))
+        		value = 40;
+
+        	VIB_INFO_LOG("%s vibrate period: %d msec\n",__func__,value);
+retry:
+
+        	if (hrtimer_try_to_cancel(&vib->vib_timer) < 0) {
+        		cpu_relax();
+        		goto retry;
+        	}
+
+        	if (value == 0)
+        		pm8xxx_vib_set_off(vib);
+        	else {
+        		value = (value > vib->pdata->max_timeout_ms ?
+        				 vib->pdata->max_timeout_ms : value);
+        		pm8xxx_vib_set_on(vib);
+        		hrtimer_start(&vib->vib_timer,
+        			      ktime_set(value / 1000, (value % 1000) * 1000000),
+        			      HRTIMER_MODE_REL);
+        	}
+        }
+>>>>>>> fc4016b... update to 3.33 source from HTCDev
 }
 
 static void pm8xxx_vib_update(struct work_struct *work)

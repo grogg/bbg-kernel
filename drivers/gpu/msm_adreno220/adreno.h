@@ -96,6 +96,19 @@ struct adreno_gpudev {
 
 extern struct adreno_gpudev adreno_a2xx_gpudev;
 extern struct adreno_gpudev adreno_a3xx_gpudev;
+<<<<<<< HEAD
+=======
+
+/* A2XX register sets defined in adreno_a2xx.c */
+extern const unsigned int a200_registers[];
+extern const unsigned int a220_registers[];
+extern const unsigned int a200_registers_count;
+extern const unsigned int a220_registers_count;
+
+/* A3XX register set defined in adreno_a3xx.c */
+extern const unsigned int a3xx_registers[];
+extern const unsigned int a3xx_registers_count;
+>>>>>>> fc4016b... update to 3.33 source from HTCDev
 
 /* A2XX register sets defined in adreno_a2xx.c */
 extern const unsigned int a200_registers[];
