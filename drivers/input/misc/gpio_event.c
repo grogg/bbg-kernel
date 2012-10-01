@@ -169,28 +169,12 @@ static int gpio_event_probe(struct platform_device *pdev)
 					event_info->name : event_info->names[i];
 		input_dev->event = gpio_input_event;
 		ip->input_devs->dev[i] = input_dev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		/* Sweep2unlock */
-=======
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
->>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
-=======
-#ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
->>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 		if (!strcmp(input_dev->name, "pyramid-keypad")) {
-			sweep2unlock_setdev(input_dev);
-			printk(KERN_INFO "[sweep2unlock]: set device %s\n", input_dev->name);
+			sweep2wake_setdev(input_dev);
+			printk(KERN_INFO "[sweep2wake]: set device %s\n", input_dev->name);
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		/* Sweep2unlock */
-=======
 #endif
->>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
-=======
-#endif
->>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 	}
 	ip->input_devs->count = dev_count;
 	ip->info = event_info;

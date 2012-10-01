@@ -22,11 +22,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
  * $Id: siutils.h 275703 2011-08-04 20:20:27Z $
-=======
- * $Id: siutils.h,v 13.251.2.10 2011-02-04 05:06:32 Exp $
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 
@@ -217,7 +213,6 @@ extern int si_corepciid(si_t *sih, uint func, uint16 *pcivendor, uint16 *pcidevi
 #define si_eci(sih) 0
 #define si_eci_init(sih) (0)
 #define si_eci_notify_bt(sih, type, val)  (0)
-<<<<<<< HEAD
 #define si_seci(sih) 0
 static INLINE void * si_seci_init(si_t *sih, uint8 use_seci) {return NULL;}
 #define si_seci_down(sih) do { } while (0)
@@ -246,10 +241,6 @@ extern int si_cis_source(si_t *sih);
 extern int si_otp_fabid(si_t *sih, uint16 *fabid, bool rw);
 extern uint16 si_fabid(si_t *sih);
 
-=======
-
-
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 extern int si_devpath(si_t *sih, char *path, int size);
 

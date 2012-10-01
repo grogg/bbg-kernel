@@ -22,11 +22,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
  * $Id: siutils.c 279502 2011-08-24 20:46:27Z $
-=======
- * $Id: siutils.c,v 1.813.2.36 2011-02-10 23:43:55 Exp $
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 #include <typedefs.h>
@@ -48,7 +44,6 @@
 #include <bcmsdpcm.h>
 #include <hndpmu.h>
 
-<<<<<<< HEAD
 #if !defined(BCM_BOOTLOADER) && defined(SAVERESTORE)
 #include <saverestore.h>
 #endif
@@ -57,10 +52,6 @@
 
 int bcm_chip_is_4330b1 = 0;
 int bcm_chip_is_4330 = 0;
-=======
-#include "siutils_priv.h"
-
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 /* local prototypes */
 static si_info_t *si_doattach(si_info_t *sii, uint devid, osl_t *osh, void *regs,
                               uint bustype, void *sdh, char **vars, uint *varsz);
@@ -119,16 +110,12 @@ si_kattach(osl_t *osh)
 	if (!ksii_attached) {
 		void *regs;
 		regs = REG_MAP(SI_ENUM_BASE, SI_CORE_SIZE);
-<<<<<<< HEAD
 #ifdef HTC_KlocWork
 		if(!osh){
 			SI_ERROR(("[HTCKW] si_kattach: osh is NULL\n"));
 			return NULL;
 		}
 #endif
-=======
-
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		if (si_doattach(&ksii, BCM4710_DEVICE_ID, osh, regs,
 		                SI_BUS, NULL,
 		                osh != SI_OSH ? &ksii.vars : NULL,
@@ -210,16 +197,12 @@ si_buscore_setup(si_info_t *sii, chipcregs_t *cc, uint bustype, uint32 savewin,
 
 	cc = si_setcoreidx(&sii->pub, SI_CC_IDX);
 	ASSERT((uintptr)cc);
-<<<<<<< HEAD
 #ifdef HTC_KlocWork
     if(cc == NULL){
         SI_ERROR(("[HTCKW] si_buscore_setup: cc is NULL\n"));
         return FALSE;
     }
 #endif
-=======
-
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	/* get chipcommon rev */
 	sii->pub.ccrev = (int)si_corerev(&sii->pub);
 
@@ -385,29 +368,23 @@ si_doattach(si_info_t *sii, uint devid, osl_t *osh, void *regs,
 	 *   If we add other chiptypes (or if we need to support old sdio hosts w/o chipcommon),
 	 *   some way of recognizing them needs to be added here.
 	 */
-<<<<<<< HEAD
 #ifdef HTC_KlocWork
     if (cc == NULL) {
         SI_ERROR(("[HTCKW] si_doattach: cc is NULL-1\n"));
         return NULL;
     }
 #endif
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	w = R_REG(osh, &cc->chipid);
 	sih->socitype = (w & CID_TYPE_MASK) >> CID_TYPE_SHIFT;
 	/* Might as wll fill in chip id rev & pkg */
 	sih->chip = w & CID_ID_MASK;
 	sih->chiprev = (w & CID_REV_MASK) >> CID_REV_SHIFT;
-<<<<<<< HEAD
 	if (sih->chip == BCM4330_CHIP_ID) {
 		printf("sih->chiprev = %d\n", sih->chiprev);
 		bcm_chip_is_4330 = 1;
 		if (sih->chiprev == 3)
 			bcm_chip_is_4330b1 = 1;
 	}
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	sih->chippkg = (w & CID_PKG_MASK) >> CID_PKG_SHIFT;
 	if (CHIPID(sih->chip) == BCM4322_CHIP_ID && (((sih->chipst & CST4322_SPROM_OTP_SEL_MASK)
 		>> CST4322_SPROM_OTP_SEL_SHIFT) == (CST4322_OTP_PRESENT |
@@ -475,15 +452,12 @@ si_doattach(si_info_t *sii, uint devid, osl_t *osh, void *regs,
 
 		if (sii->pub.ccrev >= 20) {
 			cc = (chipcregs_t *)si_setcore(sih, CC_CORE_ID, 0);
-<<<<<<< HEAD
 #ifdef HTC_KlocWork
     if (cc == NULL) {
         SI_ERROR(("[HTCKW] si_doattach: cc is NULL-2\n"));
         return NULL;
     }
 #endif
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			ASSERT(cc != NULL);
 			W_REG(osh, &cc->gpiopullup, 0);
 			W_REG(osh, &cc->gpiopulldown, 0);
@@ -492,13 +466,10 @@ si_doattach(si_info_t *sii, uint devid, osl_t *osh, void *regs,
 
 
 
-<<<<<<< HEAD
 #if !defined(BCM_BOOTLOADER) && defined(SAVERESTORE)
 	sr_save_restore_init(sih);
 #endif /* !defined(BCM_BOOTLOADER) && defined(SAVERESTORE) */
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	return (sii);
 
@@ -1160,7 +1131,6 @@ si_watchdog_ms(si_t *sih, uint32 ms)
 
 
 
-<<<<<<< HEAD
 /* return the slow clock source - LPO, XTAL, or PCI */
 static uint
 si_slowclk_src(si_info_t *sii)
@@ -1288,8 +1258,6 @@ si_clkctl_init(si_t *sih)
 }
 
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 /* change logical "focus" to the gpio core for optimized access */
 void *
 si_gpiosetcore(si_t *sih)
@@ -1879,16 +1847,12 @@ si_btcgpiowar(si_t *sih)
 
 	cc = (chipcregs_t *)si_setcore(sih, CC_CORE_ID, 0);
 	ASSERT(cc != NULL);
-<<<<<<< HEAD
 #ifdef HTC_KlocWork
 		if (cc == NULL) {
 			SI_ERROR(("[HTCKW] si_btcgpiowar: cc is NULL-1\n"));
 			return;
 		}
 #endif
-=======
-
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	W_REG(sii->osh, &cc->uart0mcr, R_REG(sii->osh, &cc->uart0mcr) | 0x04);
 
 	/* restore the original index */
@@ -1924,7 +1888,6 @@ si_deviceremoved(si_t *sih)
 	}
 	return FALSE;
 }
-<<<<<<< HEAD
 
 bool
 si_is_sprom_available(si_t *sih)
@@ -1990,5 +1953,3 @@ si_is_sprom_available(si_t *sih)
 		return TRUE;
 	}
 }
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd

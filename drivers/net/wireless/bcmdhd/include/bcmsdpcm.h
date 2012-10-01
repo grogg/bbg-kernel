@@ -22,11 +22,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
  * $Id: bcmsdpcm.h 275703 2011-08-04 20:20:27Z $
-=======
- * $Id: bcmsdpcm.h,v 13.4.90.2 2010-05-12 04:14:25 Exp $
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 #ifndef	_bcmsdpcm_h_

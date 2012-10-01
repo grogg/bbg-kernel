@@ -30,10 +30,7 @@
 #include <linux/kernel.h>
 #include <linux/kthread.h>
 #include <linux/netdevice.h>
-<<<<<<< HEAD
 #include <linux/etherdevice.h>
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #include <linux/types.h>
 #include <linux/string.h>
 #include <linux/timer.h>
@@ -43,34 +40,18 @@
 #include <bcmutils.h>
 #include <bcmendian.h>
 #include <proto/ethernet.h>
-<<<<<<< HEAD
-=======
-#include <dngl_stats.h>
-#include <dhd.h>
-#include <dhdioctl.h>
-#include <wlioctl.h>
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #include <wl_cfg80211.h>
 #include <wl_cfgp2p.h>
 #include <wldev_common.h>
-<<<<<<< HEAD
 #include <wl_android.h>
 
 static s8 scanparambuf[WLC_IOCTL_SMLEN];
-=======
-
-
-static s8 ioctlbuf[WLC_IOCTL_MAXLEN];
-static s8 scanparambuf[WLC_IOCTL_SMLEN];
-static s8 *smbuf = ioctlbuf;
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 static bool
 wl_cfgp2p_has_ie(u8 *ie, u8 **tlvs, u32 *tlvs_len, const u8 *oui, u32 oui_len, u8 type);
 
 static s32
-<<<<<<< HEAD
 wl_cfgp2p_vndr_ie(struct wl_priv *wl, struct net_device *ndev, s32 bssidx, s32 pktflag,
             s8 *oui, s32 ie_id, s8 *data, s32 data_len, s32 delete);
 
@@ -87,10 +68,6 @@ static const struct net_device_ops wl_cfgp2p_if_ops = {
 };
 
 
-=======
-wl_cfgp2p_vndr_ie(struct net_device *ndev, s32 bssidx, s32 pktflag,
-            s8 *oui, s32 ie_id, s8 *data, s32 data_len, s32 delete);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 /*
  *  Initialize variables related to P2P
  *
@@ -142,16 +119,10 @@ wl_cfgp2p_init_priv(struct wl_priv *wl)
 void
 wl_cfgp2p_deinit_priv(struct wl_priv *wl)
 {
-<<<<<<< HEAD
 	CFGP2P_DBG(("In\n"));
 
 	if (wl->p2p) {
 		kfree(wl->p2p);
-=======
-	if (wl->p2p) {
-		kfree(wl->p2p);
-		wl->p2p = NULL;
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 	wl->p2p_supported = 0;
 }
@@ -181,11 +152,7 @@ wl_cfgp2p_set_firm_p2p(struct wl_priv *wl)
 	 * firmware for P2P device address
 	 */
 	ret = wldev_iovar_setbuf_bsscfg(ndev, "p2p_da_override", &null_eth_addr,
-<<<<<<< HEAD
 		sizeof(null_eth_addr), wl->ioctl_buf, WLC_IOCTL_MAXLEN, 0, &wl->ioctl_buf_sync);
-=======
-	            sizeof(null_eth_addr), ioctlbuf, sizeof(ioctlbuf), 0);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (ret && ret != BCME_UNSUPPORTED) {
 		CFGP2P_ERR(("failed to update device address\n"));
 	}
@@ -218,11 +185,7 @@ wl_cfgp2p_ifadd(struct wl_priv *wl, struct ether_addr *mac, u8 if_type,
 	        (chspec & WL_CHANSPEC_CHAN_MASK) >> WL_CHANSPEC_CHAN_SHIFT));
 
 	err = wldev_iovar_setbuf(ndev, "p2p_ifadd", &ifreq, sizeof(ifreq),
-<<<<<<< HEAD
 		wl->ioctl_buf, WLC_IOCTL_MAXLEN, &wl->ioctl_buf_sync);
-=======
-		ioctlbuf, sizeof(ioctlbuf));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return err;
 }
 
@@ -241,15 +204,9 @@ wl_cfgp2p_ifdel(struct wl_priv *wl, struct ether_addr *mac)
 	    netdev->ifindex, mac->octet[0], mac->octet[1], mac->octet[2],
 	    mac->octet[3], mac->octet[4], mac->octet[5]));
 	ret = wldev_iovar_setbuf(netdev, "p2p_ifdel", mac, sizeof(*mac),
-<<<<<<< HEAD
 		wl->ioctl_buf, WLC_IOCTL_MAXLEN, &wl->ioctl_buf_sync);
 	if (unlikely(ret < 0)) {
 		printf("'wl p2p_ifdel' error %d\n", ret);
-=======
-		ioctlbuf, sizeof(ioctlbuf));
-	if (unlikely(ret < 0)) {
-		printk("'wl p2p_ifdel' error %d\n", ret);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 	return ret;
 }
@@ -278,17 +235,10 @@ wl_cfgp2p_ifchange(struct wl_priv *wl, struct ether_addr *mac, u8 if_type,
 		(chspec & WL_CHANSPEC_CHAN_MASK) >> WL_CHANSPEC_CHAN_SHIFT));
 
 	err = wldev_iovar_setbuf(netdev, "p2p_ifupd", &ifreq, sizeof(ifreq),
-<<<<<<< HEAD
 		wl->ioctl_buf, WLC_IOCTL_MAXLEN, &wl->ioctl_buf_sync);
 
 	if (unlikely(err < 0)) {
 		printf("'wl p2p_ifupd' error %d\n", err);
-=======
-		ioctlbuf, sizeof(ioctlbuf));
-
-	if (unlikely(err < 0)) {
-		printk("'wl p2p_ifupd' error %d\n", err);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 	return err;
 }
@@ -311,13 +261,8 @@ wl_cfgp2p_ifidx(struct wl_priv *wl, struct ether_addr *mac, s32 *index)
 	    mac->octet[0], mac->octet[1], mac->octet[2],
 	    mac->octet[3], mac->octet[4], mac->octet[5]));
 
-<<<<<<< HEAD
 	ret = wldev_iovar_getbuf_bsscfg(dev, "p2p_if", mac, sizeof(*mac), getbuf,
 		sizeof(getbuf), wl_to_p2p_bss_bssidx(wl, P2PAPI_BSSCFG_PRIMARY), NULL);
-=======
-	ret = wldev_iovar_getbuf_bsscfg(dev, "p2p_if", mac, sizeof(*mac),
-	            getbuf, sizeof(getbuf), wl_to_p2p_bss_bssidx(wl, P2PAPI_BSSCFG_PRIMARY));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	if (ret == 0) {
 		memcpy(index, getbuf, sizeof(index));
@@ -327,11 +272,7 @@ wl_cfgp2p_ifidx(struct wl_priv *wl, struct ether_addr *mac, s32 *index)
 	return ret;
 }
 
-<<<<<<< HEAD
 static s32
-=======
-s32
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 wl_cfgp2p_set_discovery(struct wl_priv *wl, s32 on)
 {
 	s32 ret = BCME_OK;
@@ -380,22 +321,14 @@ wl_cfgp2p_set_p2p_mode(struct wl_priv *wl, u8 mode, u32 channel, u16 listen_ms, 
 	discovery_mode.chspec = CH20MHZ_CHSPEC(channel);
 	discovery_mode.dwell = listen_ms;
 	ret = wldev_iovar_setbuf_bsscfg(dev, "p2p_state", &discovery_mode,
-<<<<<<< HEAD
 		sizeof(discovery_mode), wl->ioctl_buf, WLC_IOCTL_MAXLEN,
 		bssidx, &wl->ioctl_buf_sync);
-=======
-	            sizeof(discovery_mode), ioctlbuf, sizeof(ioctlbuf), bssidx);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	return ret;
 }
 
 /* Get the index of the P2P Discovery BSS */
-<<<<<<< HEAD
 static s32
-=======
-s32
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 wl_cfgp2p_get_disc_idx(struct wl_priv *wl, s32 *index)
 {
 	s32 ret;
@@ -459,11 +392,7 @@ wl_cfgp2p_init_discovery(struct wl_priv *wl)
  * @wl        : wl_private data
  * Returns 0 if succes
  */
-<<<<<<< HEAD
 static s32
-=======
-s32
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 wl_cfgp2p_deinit_discovery(struct wl_priv *wl)
 {
 	s32 ret = BCME_OK;
@@ -501,12 +430,8 @@ wl_cfgp2p_deinit_discovery(struct wl_priv *wl)
  * Returns 0 if success.
  */
 s32
-<<<<<<< HEAD
 wl_cfgp2p_enable_discovery(struct wl_priv *wl, struct net_device *dev,
 	const u8 *ie, u32 ie_len)
-=======
-wl_cfgp2p_enable_discovery(struct wl_priv *wl, struct net_device *dev, const u8 *ie, u32 ie_len)
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 {
 	s32 ret = BCME_OK;
 	if (wl_get_p2p_status(wl, DISCOVERY_ON)) {
@@ -598,15 +523,9 @@ wl_cfgp2p_escan(struct wl_priv *wl, struct net_device *dev, u16 active,
 	wl_escan_params_t *eparams;
 	wlc_ssid_t ssid;
 	/* Scan parameters */
-<<<<<<< HEAD
 #define P2PAPI_SCAN_NPROBES 2
 #define P2PAPI_SCAN_DWELL_TIME_MS 50
 #define P2PAPI_SCAN_SOCIAL_DWELL_TIME_MS 40
-=======
-#define P2PAPI_SCAN_NPROBES 4
-#define P2PAPI_SCAN_DWELL_TIME_MS 80
-#define P2PAPI_SCAN_SOCIAL_DWELL_TIME_MS 100
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define P2PAPI_SCAN_HOME_TIME_MS 10
 	struct net_device *pri_dev = wl_to_p2p_bss_ndev(wl, P2PAPI_BSSCFG_PRIMARY);
 	wl_set_p2p_status(wl, SCANNING);
@@ -615,12 +534,9 @@ wl_cfgp2p_escan(struct wl_priv *wl, struct net_device *dev, u16 active,
 	    OFFSETOF(wl_escan_params_t, params)) +
 		num_chans * sizeof(eparams->params.channel_list[0]);
 
-<<<<<<< HEAD
 #ifdef HTC_KlocWork
 	memset(&ssid, 0, sizeof(ssid));
 #endif
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	memsize = sizeof(wl_p2p_scan_t) + eparams_size;
 	memblk = scanparambuf;
 	if (memsize > sizeof(scanparambuf)) {
@@ -629,11 +545,7 @@ wl_cfgp2p_escan(struct wl_priv *wl, struct net_device *dev, u16 active,
 		return -1;
 	}
 	memset(memblk, 0, memsize);
-<<<<<<< HEAD
 	memset(wl->ioctl_buf, 0, WLC_IOCTL_MAXLEN);
-=======
-	memset(ioctlbuf, 0, sizeof(ioctlbuf));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (search_state == WL_P2P_DISC_ST_SEARCH) {
 		/*
 		 * If we in SEARCH STATE, we don't need to set SSID explictly
@@ -672,11 +584,7 @@ wl_cfgp2p_escan(struct wl_priv *wl, struct net_device *dev, u16 active,
 
 	eparams->params.nprobes = htod32(P2PAPI_SCAN_NPROBES);
 	eparams->params.home_time = htod32(P2PAPI_SCAN_HOME_TIME_MS);
-<<<<<<< HEAD
 	if (wl_get_drv_status_all(wl, CONNECTED))
-=======
-	if (wl_get_drv_status(wl, CONNECTED))
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		eparams->params.active_time = htod32(-1);
 	else if (num_chans == 3)
 		eparams->params.active_time = htod32(P2PAPI_SCAN_SOCIAL_DWELL_TIME_MS);
@@ -687,17 +595,8 @@ wl_cfgp2p_escan(struct wl_priv *wl, struct net_device *dev, u16 active,
 	    (num_chans & WL_SCAN_PARAMS_COUNT_MASK));
 
 	for (i = 0; i < num_chans; i++) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		eparams->params.channel_list[i] = htodchanspec(channels[i]);
-=======
 		if (i <= (sizeof(eparams->params.channel_list) / sizeof(int)))
 			eparams->params.channel_list[i] = htodchanspec(channels[i]);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
-=======
-		if (i <= (sizeof(eparams->params.channel_list) / sizeof(int)))
-			eparams->params.channel_list[i] = htodchanspec(channels[i]);
->>>>>>> d1b4149... drivers: bcmdhd: fix array subscript is above array bounds in wl_cfgp2p.c:759
 	}
 	eparams->version = htod32(ESCAN_REQ_VERSION);
 	eparams->action =  htod16(action);
@@ -712,7 +611,6 @@ wl_cfgp2p_escan(struct wl_priv *wl, struct net_device *dev, u16 active,
 	CFGP2P_INFO(("\n"));
 
 	ret = wldev_iovar_setbuf_bsscfg(pri_dev, "p2p_scan",
-<<<<<<< HEAD
 		memblk, memsize, wl->ioctl_buf, WLC_IOCTL_MAXLEN, bssidx, &wl->ioctl_buf_sync);
 	return ret;
 }
@@ -761,11 +659,6 @@ exit:
 	return ret;
 }
 
-=======
-	            memblk, memsize, smbuf, sizeof(ioctlbuf), bssidx);
-	return ret;
-}
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 /* Check whether pointed-to IE looks like WPA. */
 #define wl_cfgp2p_is_wpa_ie(ie, tlvs, len)	wl_cfgp2p_has_ie(ie, tlvs, len, \
 		(const uint8 *)WPS_OUI, WPS_OUI_LEN, WPA_OUI_TYPE)
@@ -787,10 +680,7 @@ exit:
  * Returns 0 if success.
  */
 
-<<<<<<< HEAD
 extern int bcm_add_ie_reverse;
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 s32
 wl_cfgp2p_set_management_ie(struct wl_priv *wl, struct net_device *ndev, s32 bssidx,
     s32 pktflag, const u8 *vndr_ie, u32 vndr_ie_len)
@@ -805,18 +695,12 @@ wl_cfgp2p_set_management_ie(struct wl_priv *wl, struct net_device *ndev, s32 bss
 	u32 *mgmt_ie_len = 0;
 	u8 ie_id, ie_len;
 	u8 delete = 0;
-<<<<<<< HEAD
 	u32 p2pie_pos[2] = {0};
 	u32 p2pie_count = 0;
 	s32 i = 0;
 #define IE_TYPE(type, bsstype) (wl_to_p2p_bss_saved_ie(wl, bsstype).p2p_ ## type ## _ie)
 #define IE_TYPE_LEN(type, bsstype) (wl_to_p2p_bss_saved_ie(wl, bsstype).p2p_ ## type ## _ie_len)
 	if (p2p_is_on(wl) && bssidx != -1) {
-=======
-#define IE_TYPE(type, bsstype) (wl_to_p2p_bss_saved_ie(wl, bsstype).p2p_ ## type ## _ie)
-#define IE_TYPE_LEN(type, bsstype) (wl_to_p2p_bss_saved_ie(wl, bsstype).p2p_ ## type ## _ie_len)
-	if (wl->p2p_supported && p2p_on(wl) && bssidx != -1) {
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		if (bssidx == P2PAPI_BSSCFG_PRIMARY)
 			bssidx =  wl_to_p2p_bss_bssidx(wl, P2PAPI_BSSCFG_DEVICE);
 		switch (pktflag) {
@@ -851,11 +735,7 @@ wl_cfgp2p_set_management_ie(struct wl_priv *wl, struct net_device *ndev, s32 bss
 				CFGP2P_ERR(("not suitable type\n"));
 				return -1;
 		}
-<<<<<<< HEAD
 	} else if (wl_get_mode_by_netdev(wl, ndev) == WL_MODE_AP) {
-=======
-	} else if (get_mode_by_netdev(wl, ndev) == WL_MODE_AP) {
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		switch (pktflag) {
 			case VNDR_IE_PRBRSP_FLAG :
 				mgmt_ie_buf = wl->ap_info->probe_res_ie;
@@ -874,11 +754,7 @@ wl_cfgp2p_set_management_ie(struct wl_priv *wl, struct net_device *ndev, s32 bss
 				return -1;
 		}
 		bssidx = 0;
-<<<<<<< HEAD
 	} else if (bssidx == -1 && wl_get_mode_by_netdev(wl, ndev) == WL_MODE_BSS) {
-=======
-	} else if (bssidx == -1 && get_mode_by_netdev(wl, ndev) == WL_MODE_BSS) {
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		switch (pktflag) {
 			case VNDR_IE_PRBREQ_FLAG :
 				mgmt_ie_buf = wl->sta_info->probe_req_ie;
@@ -924,14 +800,9 @@ wl_cfgp2p_set_management_ie(struct wl_priv *wl, struct net_device *ndev, s32 bss
 					CFGP2P_INFO(("DELELED ID : %d, Len : %d , OUI :"
 						"%02x:%02x:%02x\n", ie_id, ie_len, ie_buf[pos],
 						ie_buf[pos+1], ie_buf[pos+2]));
-<<<<<<< HEAD
 					ret = wl_cfgp2p_vndr_ie(wl, ndev, bssidx, pktflag,
 						ie_buf+pos, VNDR_SPEC_ELEMENT_ID, ie_buf+pos+3,
 						ie_len-3, delete);
-=======
-					ret = wl_cfgp2p_vndr_ie(ndev, bssidx, pktflag, ie_buf+pos,
-					    VNDR_SPEC_ELEMENT_ID, ie_buf+pos+3, ie_len-3, delete);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 				}
 				pos += ie_len;
 			}
@@ -955,7 +826,6 @@ wl_cfgp2p_set_management_ie(struct wl_priv *wl, struct net_device *ndev, s32 bss
 					CFGP2P_INFO(("ADDED ID : %d, Len : %d , OUI :"
 						"%02x:%02x:%02x\n", ie_id, ie_len, ie_buf[pos],
 						ie_buf[pos+1], ie_buf[pos+2]));
-<<<<<<< HEAD
 					if ((bcm_add_ie_reverse)&&(wl_cfgp2p_is_p2p_ie(&ie_buf[pos-2], NULL, 0))) {
 						if (p2pie_count >= 2) {
 							CFGP2P_ERR(("more than 2 p2p ie set, ignore!\n"));
@@ -981,13 +851,6 @@ wl_cfgp2p_set_management_ie(struct wl_priv *wl, struct net_device *ndev, s32 bss
 					}
 				}
 			}
-=======
-					ret = wl_cfgp2p_vndr_ie(ndev, bssidx, pktflag, ie_buf+pos,
-					    VNDR_SPEC_ELEMENT_ID, ie_buf+pos+3, ie_len-3, delete);
-				}
-				pos += ie_len;
-			}
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		}
 	}
 #undef IE_TYPE
@@ -1090,11 +953,7 @@ wl_cfgp2p_find_p2pie(u8 *parse, u32 len)
 }
 
 static s32
-<<<<<<< HEAD
 wl_cfgp2p_vndr_ie(struct wl_priv *wl, struct net_device *ndev, s32 bssidx, s32 pktflag,
-=======
-wl_cfgp2p_vndr_ie(struct net_device *ndev, s32 bssidx, s32 pktflag,
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
             s8 *oui, s32 ie_id, s8 *data, s32 data_len, s32 delete)
 {
 	s32 err = BCME_OK;
@@ -1136,11 +995,7 @@ wl_cfgp2p_vndr_ie(struct net_device *ndev, s32 bssidx, s32 pktflag,
 	memcpy(ie_setbuf->vndr_ie_buffer.vndr_ie_list[0].vndr_ie_data.oui, oui, 3);
 	memcpy(ie_setbuf->vndr_ie_buffer.vndr_ie_list[0].vndr_ie_data.data, data, data_len);
 	err = wldev_iovar_setbuf_bsscfg(ndev, "vndr_ie", ie_setbuf, buf_len,
-<<<<<<< HEAD
 		wl->ioctl_buf, WLC_IOCTL_MAXLEN, bssidx, &wl->ioctl_buf_sync);
-=======
-		ioctlbuf, sizeof(ioctlbuf), bssidx);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	CFGP2P_INFO(("vndr_ie iovar returns %d\n", err));
 	kfree(ie_setbuf);
@@ -1195,11 +1050,7 @@ wl_cfgp2p_listen_complete(struct wl_priv *wl, struct net_device *ndev,
 			del_timer_sync(&wl->p2p->listen_timer);
 			spin_unlock_bh(&wl->p2p->timer_lock);
 		}
-<<<<<<< HEAD
 		cfg80211_remain_on_channel_expired(ndev, wl->last_roc_id, &wl->remain_on_chan,
-=======
-		cfg80211_remain_on_channel_expired(ndev, wl->cache_cookie, &wl->remain_on_chan,
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		    wl->remain_on_chan_type, GFP_KERNEL);
 	} else
 		wl_clr_p2p_status(wl, LISTEN_EXPIRED);
@@ -1328,11 +1179,7 @@ wl_cfgp2p_action_tx_complete(struct wl_priv *wl, struct net_device *ndev,
 			wl_set_p2p_status(wl, ACTION_TX_NOACK);
 			CFGP2P_ERR(("WLC_E_ACTION_FRAME_COMPLETE : NO ACK\n"));
 		}
-<<<<<<< HEAD
 		wake_up_interruptible(&wl->netif_change_event);
-=======
-		wake_up_interruptible(&wl->dongle_event_wait);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	} else {
 		CFGP2P_INFO((" WLC_E_ACTION_FRAME_OFFCHAN_COMPLETE is received,"
 					"status : %d\n", status));
@@ -1365,24 +1212,15 @@ wl_cfgp2p_tx_action_frame(struct wl_priv *wl, struct net_device *dev,
 	if (bssidx == P2PAPI_BSSCFG_PRIMARY)
 		bssidx =  wl_to_p2p_bss_bssidx(wl, P2PAPI_BSSCFG_DEVICE);
 
-<<<<<<< HEAD
 	ret = wldev_iovar_setbuf_bsscfg(dev, "actframe", af_params, sizeof(*af_params),
 		wl->ioctl_buf, WLC_IOCTL_MAXLEN, bssidx, &wl->ioctl_buf_sync);
-=======
-	ret = wldev_iovar_setbuf_bsscfg(dev, "actframe",
-	           af_params, sizeof(*af_params), ioctlbuf, sizeof(ioctlbuf), bssidx);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	if (ret < 0) {
 
 		CFGP2P_ERR((" sending action frame is failed\n"));
 		goto exit;
 	}
-<<<<<<< HEAD
 	timeout = wait_event_interruptible_timeout(wl->netif_change_event,
-=======
-	timeout = wait_event_interruptible_timeout(wl->dongle_event_wait,
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	(wl_get_p2p_status(wl, ACTION_TX_COMPLETED) || wl_get_p2p_status(wl, ACTION_TX_NOACK)),
 	msecs_to_jiffies(MAX_WAIT_TIME));
 
@@ -1491,11 +1329,7 @@ wl_cfgp2p_bss_isup(struct net_device *ndev, int bsscfg_idx)
 	/* Check if the BSS is up */
 	*(int*)getbuf = -1;
 	result = wldev_iovar_getbuf_bsscfg(ndev, "bss", &bsscfg_idx,
-<<<<<<< HEAD
 		sizeof(bsscfg_idx), getbuf, sizeof(getbuf), 0, NULL);
-=======
-	                    sizeof(bsscfg_idx), getbuf, sizeof(getbuf), 0);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (result != 0) {
 		CFGP2P_ERR(("'wl bss -C %d' failed: %d\n", bsscfg_idx, result));
 		CFGP2P_ERR(("NOTE: this ioctl error is normal "
@@ -1512,11 +1346,7 @@ wl_cfgp2p_bss_isup(struct net_device *ndev, int bsscfg_idx)
 
 /* Bring up or down a BSS */
 s32
-<<<<<<< HEAD
 wl_cfgp2p_bss(struct wl_priv *wl, struct net_device *ndev, s32 bsscfg_idx, s32 up)
-=======
-wl_cfgp2p_bss(struct net_device *ndev, s32 bsscfg_idx, s32 up)
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 {
 	s32 ret = BCME_OK;
 	s32 val = up ? 1 : 0;
@@ -1530,11 +1360,7 @@ wl_cfgp2p_bss(struct net_device *ndev, s32 bsscfg_idx, s32 up)
 	bss_setbuf.val = htod32(val);
 	CFGP2P_INFO(("---wl bss -C %d %s\n", bsscfg_idx, up ? "up" : "down"));
 	ret = wldev_iovar_setbuf(ndev, "bss", &bss_setbuf, sizeof(bss_setbuf),
-<<<<<<< HEAD
 		wl->ioctl_buf, WLC_IOCTL_MAXLEN, &wl->ioctl_buf_sync);
-=======
-		ioctlbuf, sizeof(ioctlbuf));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	if (ret != 0) {
 		CFGP2P_ERR(("'bss %d' failed with %d\n", up, ret));
@@ -1563,10 +1389,6 @@ wl_cfgp2p_supported(struct wl_priv *wl, struct net_device *ndev)
 	}
 	return p2p_supported;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 /* Cleanup P2P resources */
 s32
 wl_cfgp2p_down(struct wl_priv *wl)
@@ -1576,13 +1398,8 @@ wl_cfgp2p_down(struct wl_priv *wl)
 	wl_cfgp2p_deinit_priv(wl);
 	return 0;
 }
-<<<<<<< HEAD
 s32
 wl_cfgp2p_set_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf, int len)
-=======
-
-s32 wl_cfgp2p_set_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf, int len)
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 {
 	s32 ret = -1;
 	int count, start, duration;
@@ -1598,11 +1415,7 @@ s32 wl_cfgp2p_set_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf
 
 		sscanf(buf, "%d %d %d", &count, &start, &duration);
 		CFGP2P_DBG(("set_p2p_noa count %d start %d duration %d\n",
-<<<<<<< HEAD
 			count, start, duration));
-=======
-				count, start, duration));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		if (count != -1)
 			wl->p2p->noa.desc[0].count = count;
 
@@ -1646,12 +1459,8 @@ s32 wl_cfgp2p_set_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf
 		dongle_noa.desc[0].interval = htod32(wl->p2p->noa.desc[0].interval*1000);
 
 		ret = wldev_iovar_setbuf(wl_to_p2p_bss_ndev(wl, P2PAPI_BSSCFG_CONNECTION),
-<<<<<<< HEAD
 			"p2p_noa", &dongle_noa, sizeof(dongle_noa), wl->ioctl_buf, WLC_IOCTL_MAXLEN,
 			&wl->ioctl_buf_sync);
-=======
-			"p2p_noa", &dongle_noa, sizeof(dongle_noa), ioctlbuf, sizeof(ioctlbuf));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 		if (ret < 0) {
 			CFGP2P_ERR(("fw set p2p_noa failed %d\n", ret));
@@ -1662,7 +1471,6 @@ s32 wl_cfgp2p_set_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf
 	}
 	return ret;
 }
-<<<<<<< HEAD
 s32
 wl_cfgp2p_get_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf, int buf_len)
 {
@@ -1674,14 +1482,6 @@ wl_cfgp2p_get_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf, in
 #else
 	char _buf[200];
 #endif
-=======
-
-s32 wl_cfgp2p_get_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf, int buf_len)
-{
-	wifi_p2p_noa_desc_t *noa_desc;
-	int len = 0, i;
-	char _buf[200];
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	CFGP2P_DBG((" Enter\n"));
 	buf[0] = '\0';
@@ -1718,13 +1518,8 @@ s32 wl_cfgp2p_get_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf
 	}
 	return len * 2;
 }
-<<<<<<< HEAD
 s32
 wl_cfgp2p_set_p2p_ps(struct wl_priv *wl, struct net_device *ndev, char* buf, int len)
-=======
-
-s32 wl_cfgp2p_set_p2p_ps(struct wl_priv *wl, struct net_device *ndev, char* buf, int len)
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 {
 	int ps, ctw;
 	int ret = -1;
@@ -1742,35 +1537,21 @@ s32 wl_cfgp2p_set_p2p_ps(struct wl_priv *wl, struct net_device *ndev, char* buf,
 			wl->p2p->ops.ops = ps;
 			ret = wldev_iovar_setbuf(wl_to_p2p_bss_ndev(wl, P2PAPI_BSSCFG_CONNECTION),
 				"p2p_ops", &wl->p2p->ops, sizeof(wl->p2p->ops),
-<<<<<<< HEAD
 				wl->ioctl_buf, WLC_IOCTL_MAXLEN, &wl->ioctl_buf_sync);
-=======
-				ioctlbuf, sizeof(ioctlbuf));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			if (ret < 0) {
 				CFGP2P_ERR(("fw set p2p_ops failed %d\n", ret));
 			}
 		}
 
-<<<<<<< HEAD
 		if ((legacy_ps != -1) && ((legacy_ps == PM_MAX) || (legacy_ps == PM_OFF))) {
 			ret = wldev_ioctl(wl_to_p2p_bss_ndev(wl, P2PAPI_BSSCFG_CONNECTION),
 				WLC_SET_PM, &legacy_ps, sizeof(legacy_ps), true);
-=======
-		if (legacy_ps != -1) {
-			s32 pm = legacy_ps ? PM_MAX : PM_OFF;
-			ret = wldev_ioctl(wl_to_p2p_bss_ndev(wl, P2PAPI_BSSCFG_CONNECTION),
-				WLC_SET_PM, &pm, sizeof(pm), true);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			if (unlikely(ret)) {
 				CFGP2P_ERR(("error (%d)\n", ret));
 			}
 		}
-<<<<<<< HEAD
 		else
 			CFGP2P_ERR(("ilegal setting\n"));
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 	else {
 		CFGP2P_ERR(("ERROR: set_p2p_ps in non-p2p mode\n"));
@@ -1778,7 +1559,6 @@ s32 wl_cfgp2p_set_p2p_ps(struct wl_priv *wl, struct net_device *ndev, char* buf,
 	}
 	return ret;
 }
-<<<<<<< HEAD
 
 u8 *
 wl_cfgp2p_retreive_p2pattrib(void *buf, u8 element_id)
@@ -2006,5 +1786,3 @@ static int wl_cfgp2p_if_stop(struct net_device *net)
 	CFGP2P_DBG(("Do Nothing \n"));
 	return 0;
 }
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd

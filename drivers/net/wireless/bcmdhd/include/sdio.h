@@ -22,11 +22,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
  * $Id: sdio.h 275703 2011-08-04 20:20:27Z $
-=======
- * $Id: sdio.h,v 13.27.14.1 2010-09-07 13:37:45 Exp $
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 #ifndef	_SDIO_H
@@ -370,11 +366,7 @@ typedef volatile struct {
  *  SDIO Commands and responses
  *
  *  I/O only commands are:
-<<<<<<< HEAD
  *      CMD0, CMD3, CMD5, CMD7, CMD14, CMD15, CMD52, CMD53
-=======
- *      CMD0, CMD3, CMD5, CMD7, CMD15, CMD52, CMD53
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  * ------------------------------------------------
  */
 
@@ -420,10 +412,7 @@ typedef volatile struct {
 
 #define CMD7_RCA_M		BITFIELD_MASK(16)
 #define CMD7_RCA_S		16
-<<<<<<< HEAD
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define CMD14_RCA_M		BITFIELD_MASK(16)
 #define CMD14_RCA_S		16
 #define CMD14_SLEEP_M		BITFIELD_MASK(1)

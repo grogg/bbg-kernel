@@ -21,11 +21,7 @@
  *
  * Fundamental constants relating to IP Protocol
  *
-<<<<<<< HEAD
  * $Id: bcmip.h,v 9.19 2009-11-10 20:08:33 $
-=======
- * $Id: bcmip.h,v 9.19 2009-11-10 20:08:33 Exp $
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 

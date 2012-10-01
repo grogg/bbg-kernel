@@ -21,11 +21,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
  * $Id: dhd_common.c 288105 2011-10-06 01:58:02Z $
-=======
- * $Id: dhd_common.c 290546 2011-10-19 01:55:21Z $
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 #include <typedefs.h>
 #include <osl.h>
@@ -95,12 +91,9 @@ extern int dhd_change_mtu(dhd_pub_t *dhd, int new_mtu, int ifidx);
 bool ap_cfg_running = FALSE;
 bool ap_fw_loaded = FALSE;
 
-<<<<<<< HEAD
 #if defined(KEEP_ALIVE)
 int dhd_keep_alive_onoff(dhd_pub_t *dhd);
 #endif /* KEEP_ALIVE */
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #ifdef DHD_DEBUG
 const char dhd_version[] = "Dongle Host Driver, version " EPI_VERSION_STR "\nCompiled on "
@@ -200,7 +193,6 @@ dhd_common_init(osl_t *osh)
 
 #ifdef CONFIG_BCMDHD_FW_PATH
 	bcm_strncpy_s(fw_path, sizeof(fw_path), CONFIG_BCMDHD_FW_PATH, MOD_PARAM_PATHLEN-1);
-<<<<<<< HEAD
 #else /* CONFIG_BCM4329_FW_PATH */
 	fw_path[0] = '\0';
 #endif /* CONFIG_BCM4329_FW_PATH */
@@ -209,16 +201,6 @@ dhd_common_init(osl_t *osh)
 #else /* CONFIG_BCM4329_NVRAM_PATH */
 	nv_path[0] = '\0';
 #endif /* CONFIG_BCM4329_NVRAM_PATH */
-=======
-#else /* CONFIG_BCMDHD_FW_PATH */
-	fw_path[0] = '\0';
-#endif /* CONFIG_BCMDHD_FW_PATH */
-#ifdef CONFIG_BCMDHD_NVRAM_PATH
-	bcm_strncpy_s(nv_path, sizeof(nv_path), CONFIG_BCMDHD_NVRAM_PATH, MOD_PARAM_PATHLEN-1);
-#else /* CONFIG_BCMDHD_NVRAM_PATH */
-	nv_path[0] = '\0';
-#endif /* CONFIG_BCMDHD_NVRAM_PATH */
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #ifdef SOFTAP
 	fw_path2[0] = '\0';
 #endif
@@ -589,29 +571,21 @@ dhd_prec_enq(dhd_pub_t *dhdp, struct pktq *q, void *pkt, int prec)
 			return FALSE;		/* refuse newer (incoming) packet */
 		/* Evict packet according to discard policy */
 		p = discard_oldest ? pktq_pdeq(q, eprec) : pktq_pdeq_tail(q, eprec);
-<<<<<<< HEAD
 		if (p == NULL) {
 			DHD_ERROR(("%s: pktq_penq() failed, oldest %d.",
 				__FUNCTION__, discard_oldest));
 			ASSERT(p);
 		}
-=======
-		ASSERT(p);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 		PKTFREE(dhdp->osh, p, TRUE);
 	}
 
 	/* Enqueue */
 	p = pktq_penq(q, prec, pkt);
-<<<<<<< HEAD
 	if (p == NULL) {
 		DHD_ERROR(("%s: pktq_penq() failed.", __FUNCTION__));
 		ASSERT(p);
 	}
-=======
-	ASSERT(p);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	return TRUE;
 }
@@ -1194,11 +1168,7 @@ dhd_print_buf(void *pbuf, int len, int bytes_per_line)
 #define strtoul(nptr, endptr, base) bcm_strtoul((nptr), (endptr), (base))
 
 /* Convert user's input in hex pattern to byte-size mask */
-<<<<<<< HEAD
 int
-=======
-static int
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 wl_pattern_atoh(char *src, char *dst)
 {
 	int i;
@@ -1222,7 +1192,6 @@ wl_pattern_atoh(char *src, char *dst)
 	return i;
 }
 
-<<<<<<< HEAD
 #ifdef CUSTOMER_HW2
 /* HTC_CSP_START */
 extern bool hasDLNA;
@@ -1332,8 +1301,6 @@ int dhd_set_pktfilter(dhd_pub_t * dhd, int add, int id, int offset, char *mask, 
 }
 #endif
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 void
 dhd_pktfilter_offload_enable(dhd_pub_t * dhd, char *arg, int enable, int master_mode)
 {
@@ -1641,11 +1608,7 @@ dhd_arp_get_arp_hostip_table(dhd_pub_t *dhd, void *buf, int buflen)
 		return -1;
 
 	iov_len = bcm_mkiovar("arp_hostip", 0, 0, buf, buflen);
-<<<<<<< HEAD
 	retcode = dhd_wl_ioctl_cmd(dhd, WLC_GET_VAR, buf, buflen, FALSE, 0);
-=======
-	retcode = dhd_wl_ioctl_cmd(dhd, WLC_GET_VAR, buf, buflen, TRUE, 0);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	if (retcode) {
 		DHD_TRACE(("%s: ioctl WLC_GET_VAR error %d\n",
@@ -1669,11 +1632,8 @@ dhd_arp_get_arp_hostip_table(dhd_pub_t *dhd, void *buf, int buflen)
 }
 #endif /* ARP_OFFLOAD_SUPPORT  */
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 /* send up locally generated event */
 void
 dhd_sendup_event_common(dhd_pub_t *dhdp, wl_event_msg_t *event, void *data)
@@ -1976,7 +1936,6 @@ bool dhd_check_ap_wfd_mode_set(dhd_pub_t *dhd)
 		return FALSE;
 }
 
-<<<<<<< HEAD
 bool dhd_check_ap_mode_set(dhd_pub_t *dhd)
 {
 #ifdef WL_CFG80211
@@ -1987,8 +1946,6 @@ bool dhd_check_ap_mode_set(dhd_pub_t *dhd)
 		return FALSE;
 }
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #ifdef PNO_SUPPORT
 int
 dhd_pno_clean(dhd_pub_t *dhd)
@@ -2038,11 +1995,7 @@ dhd_pno_enable(dhd_pub_t *dhd, int pfn_enabled)
 
 	if ((pfn_enabled) && (dhd_is_associated(dhd, NULL) == TRUE)) {
 		DHD_ERROR(("%s pno is NOT enable : called in assoc mode , ignore\n", __FUNCTION__));
-<<<<<<< HEAD
 		//return ret;
-=======
-		return ret;
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 
 	/* Enable/disable PNO */
@@ -2077,7 +2030,6 @@ dhd_pno_set(dhd_pub_t *dhd, wlc_ssid_t* ssids_local, int nssid, ushort scan_fr,
 
 	DHD_TRACE(("%s nssid=%d nchan=%d\n", __FUNCTION__, nssid, scan_fr));
 
-<<<<<<< HEAD
 	if ((!dhd) || (!ssids_local)) {
 		DHD_ERROR(("%s error exit\n", __FUNCTION__));
 #ifdef HTC_KlocWork
@@ -2085,11 +2037,6 @@ dhd_pno_set(dhd_pub_t *dhd, wlc_ssid_t* ssids_local, int nssid, ushort scan_fr,
 #else
 		err = -1;
 #endif
-=======
-	if ((!dhd) && (!ssids_local)) {
-		DHD_ERROR(("%s error exit\n", __FUNCTION__));
-		err = -1;
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 
 	if (dhd_check_ap_wfd_mode_set(dhd) == TRUE)
@@ -2210,13 +2157,10 @@ int dhd_keep_alive_onoff(dhd_pub_t *dhd)
 	int					str_len;
 	int res 				= -1;
 
-<<<<<<< HEAD
 #ifdef HTC_KlocWork
 	memset(&mkeep_alive_pkt, 0, sizeof(mkeep_alive_pkt));
 #endif
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (dhd_check_ap_wfd_mode_set(dhd) == TRUE)
 		return (res);
 
@@ -2235,11 +2179,7 @@ int dhd_keep_alive_onoff(dhd_pub_t *dhd)
 	mkeep_alive_pkt.keep_alive_id = 0;
 	mkeep_alive_pkt.len_bytes = 0;
 	buf_len += WL_MKEEP_ALIVE_FIXED_LEN;
-<<<<<<< HEAD
 	/* Keep-alive attributes are set in local	variable (mkeep_alive_pkt), and
-=======
-	/* Keep-alive attributes are set in local variable (mkeep_alive_pkt), and
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	 * then memcpy'ed into buffer (mkeep_alive_pktp) since there is no
 	 * guarantee that the buffer is properly aligned.
 	 */
@@ -2259,15 +2199,11 @@ int
 wl_iw_parse_data_tlv(char** list_str, void *dst, int dst_size, const char token,
                      int input_size, int *bytes_left)
 {
-<<<<<<< HEAD
 #ifdef HTC_KlocWork
 	char* str = NULL;
 #else
 	char* str = *list_str;
 #endif
-=======
-	char* str = *list_str;
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	uint16 short_temp;
 	uint32 int_temp;
 
@@ -2275,13 +2211,9 @@ wl_iw_parse_data_tlv(char** list_str, void *dst, int dst_size, const char token,
 		DHD_ERROR(("%s error paramters\n", __FUNCTION__));
 		return -1;
 	}
-<<<<<<< HEAD
 #ifdef HTC_KlocWork
 	str = *list_str;
 #endif
-=======
-
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	/* Clean all dest bytes */
 	memset(dst, 0, dst_size);
 	while (*bytes_left > 0) {
@@ -2322,28 +2254,20 @@ int
 wl_iw_parse_channel_list_tlv(char** list_str, uint16* channel_list,
                              int channel_num, int *bytes_left)
 {
-<<<<<<< HEAD
 #ifdef HTC_KlocWork
 	char* str = NULL;
 #else
 	char* str = *list_str;
 #endif
-=======
-	char* str = *list_str;
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	int idx = 0;
 
 	if ((list_str == NULL) || (*list_str == NULL) ||(bytes_left == NULL) || (*bytes_left < 0)) {
 		DHD_ERROR(("%s error paramters\n", __FUNCTION__));
 		return -1;
 	}
-<<<<<<< HEAD
 #ifdef HTC_KlocWork
 	str = *list_str;
 #endif
-=======
-
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	while (*bytes_left > 0) {
 
 		if (str[0] != CSCAN_TLV_TYPE_CHANNEL_IE) {
@@ -2382,28 +2306,20 @@ wl_iw_parse_channel_list_tlv(char** list_str, uint16* channel_list,
 int
 wl_iw_parse_ssid_list_tlv(char** list_str, wlc_ssid_t* ssid, int max, int *bytes_left)
 {
-<<<<<<< HEAD
 #ifdef HTC_KlocWork
 	char* str = NULL;
 #else
 	char* str = *list_str;
 #endif
-=======
-	char* str =  *list_str;
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	int idx = 0;
 
 	if ((list_str == NULL) || (*list_str == NULL) || (*bytes_left < 0)) {
 		DHD_ERROR(("%s error paramters\n", __FUNCTION__));
 		return -1;
 	}
-<<<<<<< HEAD
 #ifdef HTC_KlocWork
 	str = *list_str;
 #endif
-=======
-
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	while (*bytes_left > 0) {
 
 		if (str[0] != CSCAN_TLV_TYPE_SSID_IE) {
@@ -2495,15 +2411,11 @@ wl_iw_parse_ssid_list(char** list_str, wlc_ssid_t* ssid, int idx, int max)
 			ssid[idx].SSID_len = 0;
 
 		if (idx < max) {
-<<<<<<< HEAD
 #ifdef HTC_KlocWork
             bcm_strncpy_s((char*)ssid[idx].SSID, sizeof(ssid[idx].SSID), str, DOT11_MAX_SSID_LEN);
 #else
             bcm_strcpy_s((char*)ssid[idx].SSID, sizeof(ssid[idx].SSID), str);
 #endif
-=======
-			bcm_strcpy_s((char*)ssid[idx].SSID, sizeof(ssid[idx].SSID), str);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			ssid[idx].SSID_len = strlen(str);
 		}
 		idx++;

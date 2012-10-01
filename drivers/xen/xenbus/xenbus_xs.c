@@ -801,15 +801,6 @@ static int process_msg(void)
 		goto out;
 	}
 
-<<<<<<< HEAD
-=======
-	if (msg->hdr.len > XENSTORE_PAYLOAD_MAX) {
-		kfree(msg);
-		err = -EINVAL;
-		goto out;
-	}
-
->>>>>>> 3d0ff5c... patch: pyramid wwe updates
 	body = kmalloc(msg->hdr.len + 1, GFP_NOIO | __GFP_HIGH);
 	if (body == NULL) {
 		kfree(msg);

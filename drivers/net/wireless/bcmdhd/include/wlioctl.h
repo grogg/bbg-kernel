@@ -24,11 +24,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
  * $Id: wlioctl.h 287802 2011-10-04 22:44:46Z $
-=======
- * $Id: wlioctl.h,v 1.767.2.38 2011-02-01 23:04:28 Exp $
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 
@@ -69,13 +65,8 @@ typedef struct wl_action_frame {
 
 typedef struct ssid_info
 {
-<<<<<<< HEAD
 	uint8		ssid_len;	
 	uint8		ssid[32];	
-=======
-	uint8		ssid_len;
-	uint8		ssid[32];
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 } ssid_info_t;
 
 typedef struct wl_af_params {
@@ -200,10 +191,7 @@ typedef struct wlc_ssid {
 #define WL_SCANFLAGS_PROHIBITED 0x04    
 
 #define WL_SCAN_PARAMS_SSID_MAX 	10
-<<<<<<< HEAD
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 typedef struct wl_scan_params {
 	wlc_ssid_t ssid;        
 	struct ether_addr bssid;    
@@ -568,15 +556,11 @@ typedef enum sup_auth_status {
 #define CRYPTO_ALGO_AES_OCB_MSDU    5
 #define CRYPTO_ALGO_AES_OCB_MPDU    6
 #define CRYPTO_ALGO_NALG        7
-<<<<<<< HEAD
 
 #ifdef BCMWAPI_WPI
 #define CRYPTO_ALGO_SMS4        11
 #endif /* BCMWAPI_WPI */
 #define CRYPTO_ALGO_PMK			12	
-=======
-#define CRYPTO_ALGO_PMK			12
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #define WSEC_GEN_MIC_ERROR  0x0001
 #define WSEC_GEN_REPLAY     0x0002
@@ -628,12 +612,9 @@ typedef struct {
 #define WSEC_SWFLAG     0x0008
 #define SES_OW_ENABLED      0x0040  
 
-<<<<<<< HEAD
 #ifdef BCMWAPI_WPI
 #define SMS4_ENABLED        0x0100
 #endif /* BCMWAPI_WPI */
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #define WPA_AUTH_DISABLED   0x0000  
 #define WPA_AUTH_NONE       0x0001  
@@ -644,7 +625,6 @@ typedef struct {
 #define WPA2_AUTH_PSK       0x0080  
 #define BRCM_AUTH_PSK           0x0100  
 #define BRCM_AUTH_DPT       0x0200  
-<<<<<<< HEAD
 #ifdef BCMWAPI_WAI
 #define WPA_AUTH_WAPI           0x0400
 #define WAPI_AUTH_NONE      WPA_AUTH_NONE   /* none (IBSS) */
@@ -654,11 +634,6 @@ typedef struct {
 #define WPA2_AUTH_MFP           0x1000  
 #define WPA2_AUTH_TPK		0x2000 	
 #define WPA2_AUTH_FT		0x4000 	
-=======
-#define WPA2_AUTH_MFP           0x1000
-#define WPA2_AUTH_TPK		0x2000
-#define WPA2_AUTH_FT		0x4000
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 
 #define MAXPMKID        16
@@ -688,20 +663,12 @@ typedef struct wl_assoc_info {
 	uint32      resp_len;
 	uint32      flags;
 	struct dot11_assoc_req req;
-<<<<<<< HEAD
 	struct ether_addr reassoc_bssid;	
-=======
-	struct ether_addr reassoc_bssid;
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	struct dot11_assoc_resp resp;
 } wl_assoc_info_t;
 
 
-<<<<<<< HEAD
 #define WLC_ASSOC_REQ_IS_REASSOC 0x01	
-=======
-#define WLC_ASSOC_REQ_IS_REASSOC 0x01
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 
 typedef struct {
@@ -1339,14 +1306,11 @@ typedef struct wl_po {
 #define WL_CHAN_FREQ_RANGE_5GMH_5BAND    7
 #define WL_CHAN_FREQ_RANGE_5GH_5BAND     8
 
-<<<<<<< HEAD
 #define WL_CHAN_FREQ_RANGE_5G_BAND0     1
 #define WL_CHAN_FREQ_RANGE_5G_BAND1     2
 #define WL_CHAN_FREQ_RANGE_5G_BAND2     3
 #define WL_CHAN_FREQ_RANGE_5G_BAND3     4
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #define WLC_PHY_TYPE_A      0
 #define WLC_PHY_TYPE_B      1
@@ -1418,11 +1382,7 @@ typedef struct wl_po {
 #define PM_MAX  1
 #define PM_FAST 2
 
-<<<<<<< HEAD
 #define LISTEN_INTERVAL			10
-=======
-#define LISTEN_INTERVAL		10
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #define INTERFERE_OVRRIDE_OFF   -1  
 #define INTERFERE_NONE  0   
@@ -1605,11 +1565,7 @@ typedef struct wl_sampledata {
 #define WL_JOIN_PREF_WPA    2   
 #define WL_JOIN_PREF_BAND   3   
 #define WL_JOIN_PREF_RSSI_DELTA 4   
-<<<<<<< HEAD
 #define WL_JOIN_PREF_TRANS_PREF	5	
-=======
-#define WL_JOIN_PREF_TRANS_PREF	5
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 
 #define WLJP_BAND_ASSOC_PREF    255 
@@ -1860,7 +1816,6 @@ struct wl_msglevel2 {
 };
 
 typedef struct wl_mkeep_alive_pkt {
-<<<<<<< HEAD
 	uint16	version; 
 	uint16	length; 
 	uint32	period_msec;
@@ -1874,19 +1829,6 @@ typedef struct wl_mkeep_alive_pkt {
 #define WL_MKEEP_ALIVE_PRECISION	500
 
 
-=======
-	uint16	version;
-	uint16	length;
-	uint32	period_msec;
-	uint16	len_bytes;
-	uint8	keep_alive_id;
-	uint8	data[1];
-} wl_mkeep_alive_pkt_t;
-
-#define WL_MKEEP_ALIVE_VERSION          1
-#define WL_MKEEP_ALIVE_FIXED_LEN        OFFSETOF(wl_mkeep_alive_pkt_t, data)
-#define WL_MKEEP_ALIVE_PRECISION        500
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #define WLC_ROAM_TRIGGER_DEFAULT    0 
 #define WLC_ROAM_TRIGGER_BANDWIDTH  1 
@@ -1976,11 +1918,7 @@ typedef struct wl_pfn_param {
 	uint8 mscan; 
 	uint8 repeat; 
 	uint8 exp; 
-<<<<<<< HEAD
 	int32 slow_freq; 
-=======
-	int32 slow_freq;
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 } wl_pfn_param_t;
 
 typedef struct wl_pfn_bssid {
@@ -2507,7 +2445,6 @@ typedef struct assertlog_results {
 #define LOGRRC_FIX_LEN  8
 #define IOBUF_ALLOWED_NUM_OF_LOGREC(type, len) ((len - LOGRRC_FIX_LEN)/sizeof(type))
 
-<<<<<<< HEAD
 #ifdef BCMWAPI_WAI
 #define IV_LEN 16 /* XXX, same as SMS4_WPI_PN_LEN */
 struct wapi_sta_msg_t
@@ -2522,8 +2459,6 @@ struct wapi_sta_msg_t
 	uint8   wie[256];
 };
 #endif /* BCMWAPI_WAI */
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 
 
@@ -2854,7 +2789,6 @@ enum {
 	SPATIAL_MODE_MAX_IDX
 };
 
-<<<<<<< HEAD
 #ifdef SOFTAP
 #define SSID_LEN	33
 #define SEC_LEN		16
@@ -2894,6 +2828,4 @@ struct mac_list_set {
 #endif
 
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif 

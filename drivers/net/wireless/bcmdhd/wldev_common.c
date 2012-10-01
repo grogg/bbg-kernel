@@ -24,21 +24,13 @@
  * $Id: wldev_common.c,v 1.1.4.1.2.14 2011-02-09 01:40:07 $
  */
 
-<<<<<<< HEAD
 #include <osl.h>
 #include <linux/kernel.h>
 #include <linux/kthread.h>
-=======
-#include <linux/module.h>
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #include <linux/netdevice.h>
 
 #include <wldev_common.h>
 #include <bcmutils.h>
-<<<<<<< HEAD
-=======
-#include <dhd_dbg.h>
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #define htod32(i) i
 #define htod16(i) i
@@ -46,7 +38,6 @@
 #define dtoh16(i) i
 #define htodchanspec(i) i
 #define dtohchanspec(i) i
-<<<<<<< HEAD
 
 #define	WLDEV_ERROR(args)						\
 	do {										\
@@ -54,8 +45,6 @@
 		printk args;							\
 	} while (0)
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 extern int dhd_ioctl_entry_local(struct net_device *net, wl_ioctl_t *ioc, int cmd);
 
 s32 wldev_ioctl(
@@ -64,16 +53,12 @@ s32 wldev_ioctl(
 	s32 ret = 0;
 	struct wl_ioctl ioc;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	memset(&ioc, 0, sizeof(ioc));
 	ioc.cmd = cmd;
 	ioc.buf = arg;
 	ioc.len = len;
 	ioc.set = set;
-<<<<<<< HEAD
 #if 0
 	if (arg != NULL) {
 		WLDEV_ERROR(("iovar:%s ioc->len%d cmd->%d type->%s\n",
@@ -83,10 +68,6 @@ s32 wldev_ioctl(
 	ret = dhd_ioctl_entry_local(dev, &ioc, cmd);
 
 
-=======
-
-	ret = dhd_ioctl_entry_local(dev, &ioc, cmd);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return ret;
 }
 
@@ -106,7 +87,6 @@ static s32 wldev_mkiovar(
 
 s32 wldev_iovar_getbuf(
 	struct net_device *dev, s8 *iovar_name,
-<<<<<<< HEAD
 	void *param, s32 paramlen, void *buf, s32 buflen, struct mutex* buf_sync)
 {
 	s32 ret = 0;
@@ -118,22 +98,12 @@ s32 wldev_iovar_getbuf(
 	ret = wldev_ioctl(dev, WLC_GET_VAR, buf, buflen, FALSE);
 	if (buf_sync)
 		mutex_unlock(buf_sync);
-=======
-	void *param, s32 paramlen, void *buf, s32 buflen)
-{
-	s32 ret = 0;
-	s32 iovar_len = 0;
-
-	iovar_len = wldev_mkiovar(iovar_name, param, paramlen, buf, buflen);
-	ret = wldev_ioctl(dev, WLC_GET_VAR, buf, buflen, FALSE);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return ret;
 }
 
 
 s32 wldev_iovar_setbuf(
 	struct net_device *dev, s8 *iovar_name,
-<<<<<<< HEAD
 	void *param, s32 paramlen, void *buf, s32 buflen, struct mutex* buf_sync)
 {
 	s32 ret = 0;
@@ -145,15 +115,6 @@ s32 wldev_iovar_setbuf(
 	ret = wldev_ioctl(dev, WLC_SET_VAR, buf, iovar_len, TRUE);
 	if (buf_sync)
 		mutex_unlock(buf_sync);
-=======
-	void *param, s32 paramlen, void *buf, s32 buflen)
-{
-	s32 ret = 0;
-	s32 iovar_len;
-
-	iovar_len = wldev_mkiovar(iovar_name, param, paramlen, buf, buflen);
-	ret = wldev_ioctl(dev, WLC_SET_VAR, buf, iovar_len, TRUE);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return ret;
 }
 
@@ -165,11 +126,7 @@ s32 wldev_iovar_setint(
 	val = htod32(val);
 	memset(iovar_buf, 0, sizeof(iovar_buf));
 	return wldev_iovar_setbuf(dev, iovar, &val, sizeof(val), iovar_buf,
-<<<<<<< HEAD
 		sizeof(iovar_buf), NULL);
-=======
-		sizeof(iovar_buf));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 }
 
 
@@ -181,11 +138,7 @@ s32 wldev_iovar_getint(
 
 	memset(iovar_buf, 0, sizeof(iovar_buf));
 	err = wldev_iovar_getbuf(dev, iovar, pval, sizeof(*pval), iovar_buf,
-<<<<<<< HEAD
 		sizeof(iovar_buf), NULL);
-=======
-		sizeof(iovar_buf));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (err == 0)
 	{
 		memcpy(pval, iovar_buf, sizeof(*pval));
@@ -219,11 +172,7 @@ s32 wldev_mkiovar_bsscfg(
 
 	if (buflen < 0 || iolen > (u32)buflen)
 	{
-<<<<<<< HEAD
 		WLDEV_ERROR(("%s: buffer is too short\n", __FUNCTION__));
-=======
-		DHD_ERROR(("%s: buffer is too short\n", __FUNCTION__));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		return BCME_BUFTOOSHORT;
 	}
 
@@ -249,7 +198,6 @@ s32 wldev_mkiovar_bsscfg(
 	return iolen;
 
 }
-<<<<<<< HEAD
 s32 wldev_iovar_getbuf_bsscfg(
 	struct net_device *dev, s8 *iovar_name,
 	void *param, s32 paramlen, void *buf, s32 buflen, s32 bsscfg_idx, struct mutex* buf_sync)
@@ -264,25 +212,12 @@ s32 wldev_iovar_getbuf_bsscfg(
 	if (buf_sync) {
 		mutex_unlock(buf_sync);
 	}
-=======
-
-s32 wldev_iovar_getbuf_bsscfg(
-	struct net_device *dev, s8 *iovar_name,
-	void *param, s32 paramlen, void *buf, s32 buflen, s32 bsscfg_idx)
-{
-	s32 ret = 0;
-	s32 iovar_len = 0;
-
-	iovar_len = wldev_mkiovar_bsscfg(iovar_name, param, paramlen, buf, buflen, bsscfg_idx);
-	ret = wldev_ioctl(dev, WLC_GET_VAR, buf, buflen, FALSE);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return ret;
 
 }
 
 s32 wldev_iovar_setbuf_bsscfg(
 	struct net_device *dev, s8 *iovar_name,
-<<<<<<< HEAD
 	void *param, s32 paramlen, void *buf, s32 buflen, s32 bsscfg_idx, struct mutex* buf_sync)
 {
 	s32 ret = 0;
@@ -296,15 +231,6 @@ s32 wldev_iovar_setbuf_bsscfg(
 	if (buf_sync) {
 		mutex_unlock(buf_sync);
 	}
-=======
-	void *param, s32 paramlen, void *buf, s32 buflen, s32 bsscfg_idx)
-{
-	s32 ret = 0;
-	s32 iovar_len;
-
-	iovar_len = wldev_mkiovar_bsscfg(iovar_name, param, paramlen, buf, buflen, bsscfg_idx);
-	ret = wldev_ioctl(dev, WLC_SET_VAR, buf, iovar_len, TRUE);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return ret;
 }
 
@@ -316,11 +242,7 @@ s32 wldev_iovar_setint_bsscfg(
 	val = htod32(val);
 	memset(iovar_buf, 0, sizeof(iovar_buf));
 	return wldev_iovar_setbuf_bsscfg(dev, iovar, &val, sizeof(val), iovar_buf,
-<<<<<<< HEAD
 		sizeof(iovar_buf), bssidx, NULL);
-=======
-		sizeof(iovar_buf), bssidx);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 }
 
 
@@ -332,11 +254,7 @@ s32 wldev_iovar_getint_bsscfg(
 
 	memset(iovar_buf, 0, sizeof(iovar_buf));
 	err = wldev_iovar_getbuf_bsscfg(dev, iovar, pval, sizeof(*pval), iovar_buf,
-<<<<<<< HEAD
 		sizeof(iovar_buf), bssidx, NULL);
-=======
-		sizeof(iovar_buf), bssidx);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (err == 0)
 	{
 		memcpy(pval, iovar_buf, sizeof(*pval));
@@ -425,26 +343,16 @@ int wldev_set_country(
 		return error;
 
 	error = wldev_iovar_getbuf(dev, "country", &cspec, sizeof(cspec),
-<<<<<<< HEAD
 		smbuf, sizeof(smbuf), NULL);
 	if (error < 0)
 		WLDEV_ERROR(("%s: get country failed = %d\n", __FUNCTION__, error));
-=======
-		smbuf, sizeof(smbuf));
-	if (error < 0)
-		DHD_ERROR(("%s: get country failed = %d\n", __FUNCTION__, error));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	if ((error < 0) ||
 	    (strncmp(country_code, smbuf, WLC_CNTRY_BUF_SZ) != 0)) {
 		bzero(&scbval, sizeof(scb_val_t));
 		error = wldev_ioctl(dev, WLC_DISASSOC, &scbval, sizeof(scb_val_t), 1);
 		if (error < 0) {
-<<<<<<< HEAD
 			WLDEV_ERROR(("%s: set country failed due to Disassoc error %d\n",
-=======
-			DHD_ERROR(("%s: set country failed due to Disassoc error %d\n",
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 				__FUNCTION__, error));
 			return error;
 		}
@@ -454,30 +362,14 @@ int wldev_set_country(
 	memcpy(cspec.ccode, country_code, WLC_CNTRY_BUF_SZ);
 	get_customized_country_code((char *)&cspec.country_abbrev, &cspec);
 	error = wldev_iovar_setbuf(dev, "country", &cspec, sizeof(cspec),
-<<<<<<< HEAD
 		smbuf, sizeof(smbuf), NULL);
 	if (error < 0) {
 		WLDEV_ERROR(("%s: set country for %s as %s rev %d failed\n",
-=======
-		smbuf, sizeof(smbuf));
-	if (error < 0) {
-		DHD_ERROR(("%s: set country for %s as %s rev %d failed\n",
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			__FUNCTION__, country_code, cspec.ccode, cspec.rev));
 		return error;
 	}
 	dhd_bus_country_set(dev, &cspec);
-<<<<<<< HEAD
-<<<<<<< HEAD
 	WLDEV_ERROR(("%s: set country for %s as %s rev %d\n",
 		__FUNCTION__, country_code, cspec.ccode, cspec.rev));
-=======
-	printk(KERN_INFO "[WLAN] %s: set country for %s as %s rev %d\n",
-		__func__, country_code, cspec.ccode, cspec.rev);
->>>>>>> 02e84ca... drivers: net: wifi: bcmdhd: update to One V source
-=======
-	DHD_INFO(("%s: set country for %s as %s rev %d\n",
-		__FUNCTION__, country_code, cspec.ccode, cspec.rev));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return 0;
 }

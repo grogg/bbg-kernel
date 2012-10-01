@@ -2,21 +2,13 @@
  * Linux cfg80211 driver - Android related functions
  *
  * Copyright (C) 1999-2011, Broadcom Corporation
-<<<<<<< HEAD
  * 
-=======
- *
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  *         Unless you and Broadcom execute a separate written software license
  * agreement governing use of this software, this software is licensed to you
  * under the terms of the GNU General Public License version 2 (the "GPL"),
  * available at http://www.broadcom.com/licenses/GPLv2.php, with the
  * following added to such license:
-<<<<<<< HEAD
  * 
-=======
- *
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  *      As a special exception, the copyright holders of this software give you
  * permission to link this software with independent modules, and to copy and
  * distribute the resulting executable under terms of your choice, provided that
@@ -24,11 +16,7 @@
  * the license of that module.  An independent module is a module which is not
  * derived from this software.  The special exception does not apply to any
  * modifications of the software.
-<<<<<<< HEAD
  * 
-=======
- *
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  *      Notwithstanding the above, under no circumstances may you combine this
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
@@ -48,14 +36,11 @@
 #include <dngl_stats.h>
 #include <dhd.h>
 #include <bcmsdbus.h>
-<<<<<<< HEAD
 /* HTC_CSP_START */
 #ifdef CONFIG_PERFLOCK
 #include <mach/perflock.h>
 #endif
 /* HTC_CSP_END */
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #ifdef WL_CFG80211
 #include <wl_cfg80211.h>
 #endif
@@ -73,25 +58,16 @@
  * so they can be updated easily in the future (if needed)
  */
 
-<<<<<<< HEAD
 #define CMD_START			"START"
 #define CMD_STOP			"STOP"
 #define CMD_SCAN_ACTIVE			"SCAN-ACTIVE"
 #define CMD_SCAN_PASSIVE		"SCAN-PASSIVE"
 #define CMD_RSSI			"RSSI"
-=======
-#define CMD_START				"START"
-#define CMD_STOP				"STOP"
-#define CMD_SCAN_ACTIVE			"SCAN-ACTIVE"
-#define CMD_SCAN_PASSIVE		"SCAN-PASSIVE"
-#define CMD_RSSI				"RSSI"
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define CMD_LINKSPEED			"LINKSPEED"
 #define CMD_RXFILTER_START		"RXFILTER-START"
 #define CMD_RXFILTER_STOP		"RXFILTER-STOP"
 #define CMD_RXFILTER_ADD		"RXFILTER-ADD"
 #define CMD_RXFILTER_REMOVE		"RXFILTER-REMOVE"
-<<<<<<< HEAD
 #define CMD_BTCOEXSCAN_START		"BTCOEXSCAN-START"
 #define CMD_BTCOEXSCAN_STOP		"BTCOEXSCAN-STOP"
 #define CMD_BTCOEXMODE			"BTCOEXMODE"
@@ -126,32 +102,13 @@
 #define CMD_SETPROJECT		"SET_PROJECT"
 #define CMD_GATEWAYADD		"GATEWAY-ADD"
 /* HTC_CSP_END */
-=======
-#define CMD_BTCOEXSCAN_START	"BTCOEXSCAN-START"
-#define CMD_BTCOEXSCAN_STOP		"BTCOEXSCAN-STOP"
-#define CMD_BTCOEXMODE			"BTCOEXMODE"
-#define CMD_SETSUSPENDOPT		"SETSUSPENDOPT"
-#define CMD_P2P_DEV_ADDR		"P2P_DEV_ADDR"
-#define CMD_SETFWPATH			"SETFWPATH"
-#define CMD_SETBAND				"SETBAND"
-#define CMD_GETBAND				"GETBAND"
-#define CMD_COUNTRY				"COUNTRY"
-#define CMD_P2P_SET_NOA			"P2P_SET_NOA"
-#define CMD_P2P_GET_NOA			"P2P_GET_NOA"
-#define CMD_P2P_SET_PS			"P2P_SET_PS"
-#define CMD_SET_AP_WPS_P2P_IE	"SET_AP_WPS_P2P_IE"
-
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #ifdef PNO_SUPPORT
 #define CMD_PNOSSIDCLR_SET	"PNOSSIDCLR"
 #define CMD_PNOSETUP_SET	"PNOSETUP "
 #define CMD_PNOENABLE_SET	"PNOFORCE"
 #define CMD_PNODEBUG_SET	"PNODEBUG"
-<<<<<<< HEAD
 #define CMD_PFN_REMOVE		"PFN_REMOVE"
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 #define PNO_TLV_PREFIX			'S'
 #define PNO_TLV_VERSION			'1'
@@ -162,12 +119,9 @@
 #define PNO_TLV_FREQ_REPEAT		'R'
 #define PNO_TLV_FREQ_EXPO_MAX		'M'
 
-<<<<<<< HEAD
 /* HTC specific command */
 #define CMD_GET_AUTO_CHANNEL	"AUTOCHANNELGET"
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 typedef struct cmd_tlv {
 	char prefix;
 	char version;
@@ -182,10 +136,7 @@ typedef struct android_wifi_priv_cmd {
 	int total_len;
 } android_wifi_priv_cmd;
 
-<<<<<<< HEAD
 #define htod32(i) i
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 /**
  * Extern function declarations (TODO: move them to dhd_linux.h)
  */
@@ -193,10 +144,7 @@ void dhd_customer_gpio_wlan_ctrl(int onoff);
 uint dhd_dev_reset(struct net_device *dev, uint8 flag);
 void dhd_dev_init_ioctl(struct net_device *dev);
 #ifdef WL_CFG80211
-<<<<<<< HEAD
 int wl_cfg80211_get_mac_addr(struct net_device *net, struct ether_addr *mac_addr);
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 int wl_cfg80211_get_p2p_dev_addr(struct net_device *net, struct ether_addr *p2pdev_addr);
 int wl_cfg80211_set_btcoex_dhcp(struct net_device *dev, char *command);
 #else
@@ -208,14 +156,11 @@ int wl_cfg80211_get_p2p_noa(struct net_device *net, char* buf, int len)
 { return 0; }
 int wl_cfg80211_set_p2p_ps(struct net_device *net, char* buf, int len)
 { return 0; }
-<<<<<<< HEAD
 int wl_cfg80211_set_mpc(struct net_device *net, char* buf, int len)
 { return 0; }
 int wl_cfg80211_deauth_sta(struct net_device *net, char* buf, int len)
 { return 0; }
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif
 extern int dhd_os_check_if_up(void *dhdp);
 extern void *bcmsdh_get_drvdata(void);
@@ -234,10 +179,7 @@ extern char iface_name[IFNAMSIZ];
  * wl_android_wifi_on
  */
 static int g_wifi_on = TRUE;
-<<<<<<< HEAD
 int block_ap_event = 0;
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 /**
  * Local (static) function definitions
@@ -259,7 +201,6 @@ static int wl_android_get_link_speed(struct net_device *net, char *command, int 
 	return bytes_written;
 }
 
-<<<<<<< HEAD
 /* HTC_CSP_START */
 /* traffic indicate parameters */
 /* framework will obtain RSSI every 3000 ms*/
@@ -324,8 +265,6 @@ static void wl_android_traffic_monitor(struct net_device *dev)
 }
 /* HTC_CSP_END */
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 static int wl_android_get_rssi(struct net_device *net, char *command, int total_len)
 {
 	wlc_ssid_t ssid = {0};
@@ -341,23 +280,16 @@ static int wl_android_get_rssi(struct net_device *net, char *command, int total_
 	if (error)
 		return -1;
 	if ((ssid.SSID_len == 0) || (ssid.SSID_len > DOT11_MAX_SSID_LEN)) {
-<<<<<<< HEAD
 		DHD_TRACE(("%s: wldev_get_ssid failed\n", __FUNCTION__));
-=======
-		DHD_ERROR(("%s: wldev_get_ssid failed\n", __FUNCTION__));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	} else {
 		memcpy(command, ssid.SSID, ssid.SSID_len);
 		bytes_written = ssid.SSID_len;
 	}
 	bytes_written += snprintf(&command[bytes_written], total_len, " rssi %d", rssi);
 	DHD_INFO(("%s: command result is %s (%d)\n", __FUNCTION__, command, bytes_written));
-<<<<<<< HEAD
 /* HTC_CSP_START */
 	wl_android_traffic_monitor(net);
 /* HTC_CSP_END */
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return bytes_written;
 }
 
@@ -396,7 +328,6 @@ static int wl_android_get_band(struct net_device *dev, char *command, int total_
 	return bytes_written;
 }
 
-<<<<<<< HEAD
 #if 0
 static int wl_android_set_active_scan(struct net_device *dev, char *command, int total_len)
 {
@@ -776,11 +707,7 @@ static int wl_android_set_ap_mac_list(struct net_device *dev, void *buf)
 				android_ap_black_list.ea[i].octet[3], android_ap_black_list.ea[i].octet[4], android_ap_black_list.ea[i].octet[5]);
 
 		/* deauth if there is associated station not in list */
-<<<<<<< HEAD
-		assoc_maclist->count = 8;
-=======
 		assoc_maclist->count = 10;
->>>>>>> 02e84ca... drivers: net: wifi: bcmdhd: update to One V source
 		wldev_ioctl(dev, WLC_GET_ASSOCLIST, assoc_maclist, 256, 0);
 		if (assoc_maclist->count) {
 			int j;
@@ -805,8 +732,6 @@ static int wl_android_set_ap_mac_list(struct net_device *dev, void *buf)
 }
 
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #ifdef PNO_SUPPORT
 static int wl_android_set_pno_setup(struct net_device *dev, char *command, int total_len)
 {
@@ -848,10 +773,7 @@ static int wl_android_set_pno_setup(struct net_device *dev, char *command, int t
 		goto exit_proc;
 	}
 
-<<<<<<< HEAD
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #ifdef PNO_SET_DEBUG
 	memcpy(command, pno_in_example, sizeof(pno_in_example));
 	for (i = 0; i < sizeof(pno_in_example); i++)
@@ -917,7 +839,6 @@ static int wl_android_set_pno_setup(struct net_device *dev, char *command, int t
 exit_proc:
 	return res;
 }
-<<<<<<< HEAD
 
 static int wl_android_del_pfn(struct net_device *dev, char *command, int total_len)
 {
@@ -969,10 +890,6 @@ static int wl_android_get_mac_addr(struct net_device *ndev, char *command, int t
 }
 #endif
 
-=======
-#endif /* PNO_SUPPORT */
-
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 static int wl_android_get_p2p_dev_addr(struct net_device *ndev, char *command, int total_len)
 {
 	int ret;
@@ -985,7 +902,6 @@ static int wl_android_get_p2p_dev_addr(struct net_device *ndev, char *command, i
 	return bytes_written;
 }
 
-<<<<<<< HEAD
 /* HTC_CSP_START */
 extern int dhdcdc_wifiLock;
 extern char project_type[33];
@@ -1530,8 +1446,6 @@ fail :
 }
 /* HTC_CSP_END */
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 /**
  * Global function definitions (declared in wl_android.h)
  */
@@ -1540,21 +1454,12 @@ int wl_android_wifi_on(struct net_device *dev)
 {
 	int ret = 0;
 
-<<<<<<< HEAD
 	printf("%s in\n", __FUNCTION__);
-=======
-	printk("%s in\n", __FUNCTION__);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (!dev) {
 		DHD_ERROR(("%s: dev is null\n", __FUNCTION__));
 		return -EINVAL;
 	}
-<<<<<<< HEAD
 	mutex_lock(&wl_wifionoff_mutex);
-=======
-
-	dhd_net_if_lock(dev);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (!g_wifi_on) {
 		dhd_customer_gpio_wlan_ctrl(WLAN_RESET_ON);
 		sdioh_start(NULL, 0);
@@ -1564,11 +1469,7 @@ int wl_android_wifi_on(struct net_device *dev)
 			dhd_dev_init_ioctl(dev);
 		g_wifi_on = 1;
 	}
-<<<<<<< HEAD
 	mutex_unlock(&wl_wifionoff_mutex);
-=======
-	dhd_net_if_unlock(dev);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 	return ret;
 }
@@ -1577,16 +1478,11 @@ int wl_android_wifi_off(struct net_device *dev)
 {
 	int ret = 0;
 
-<<<<<<< HEAD
 	printf("%s in\n", __FUNCTION__);
-=======
-	printk("%s in\n", __FUNCTION__);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (!dev) {
 		DHD_TRACE(("%s: dev is null\n", __FUNCTION__));
 		return -EINVAL;
 	}
-<<<<<<< HEAD
 	mutex_lock(&wl_wifionoff_mutex);
 	/* HTC_WIFI_START */
 	if (dhd_APUP) {
@@ -1595,27 +1491,14 @@ int wl_android_wifi_off(struct net_device *dev)
 		wl_iw_send_priv_event(dev, "AP_DOWN");
 	}
 	/* HTC_WIFI_END */
-=======
-
-	dhd_net_if_lock(dev);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (g_wifi_on) {
 		ret = dhd_dev_reset(dev, TRUE);
 		sdioh_stop(NULL);
 		dhd_customer_gpio_wlan_ctrl(WLAN_RESET_OFF);
 		g_wifi_on = 0;
 	}
-<<<<<<< HEAD
 
 	mutex_unlock(&wl_wifionoff_mutex);
-<<<<<<< HEAD
-	bcm_mdelay(500);
-=======
->>>>>>> 02e84ca... drivers: net: wifi: bcmdhd: update to One V source
-=======
-	dhd_net_if_unlock(dev);
-
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return ret;
 }
 
@@ -1642,11 +1525,8 @@ int wl_android_priv_cmd(struct net_device *net, struct ifreq *ifr, int cmd)
 	int bytes_written = 0;
 	android_wifi_priv_cmd priv_cmd;
 
-<<<<<<< HEAD
     struct dd_pkt_filter_s *data;
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	net_os_wake_lock(net);
 
 	if (!ifr->ifr_data) {
@@ -1690,17 +1570,10 @@ int wl_android_priv_cmd(struct net_device *net, struct ifreq *ifr, int cmd)
 		bytes_written = wl_android_wifi_off(net);
 	}
 	else if (strnicmp(command, CMD_SCAN_ACTIVE, strlen(CMD_SCAN_ACTIVE)) == 0) {
-<<<<<<< HEAD
 		/* bytes_written = wl_android_set_active_scan(net, command, priv_cmd.total_len); */
 	}
 	else if (strnicmp(command, CMD_SCAN_PASSIVE, strlen(CMD_SCAN_PASSIVE)) == 0) {
 		/* bytes_written = wl_android_set_passive_scan(net, command, priv_cmd.total_len); */
-=======
-		/* TBD: SCAN-ACTIVE */
-	}
-	else if (strnicmp(command, CMD_SCAN_PASSIVE, strlen(CMD_SCAN_PASSIVE)) == 0) {
-		/* TBD: SCAN-PASSIVE */
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 	else if (strnicmp(command, CMD_RSSI, strlen(CMD_RSSI)) == 0) {
 		bytes_written = wl_android_get_rssi(net, command, priv_cmd.total_len);
@@ -1709,7 +1582,6 @@ int wl_android_priv_cmd(struct net_device *net, struct ifreq *ifr, int cmd)
 		bytes_written = wl_android_get_link_speed(net, command, priv_cmd.total_len);
 	}
 	else if (strnicmp(command, CMD_RXFILTER_START, strlen(CMD_RXFILTER_START)) == 0) {
-<<<<<<< HEAD
 		/* HTC_CSP_START*/
 		snprintf(command, 3, "OK");
 		bytes_written = strlen("OK");
@@ -1758,20 +1630,6 @@ int wl_android_priv_cmd(struct net_device *net, struct ifreq *ifr, int cmd)
 		bytes_written = net_os_rxfilter_add_remove(net, FALSE, filter_num);
 		*/
 		/*HTC_CSP_END*/
-=======
-		bytes_written = net_os_set_packet_filter(net, 1);
-	}
-	else if (strnicmp(command, CMD_RXFILTER_STOP, strlen(CMD_RXFILTER_STOP)) == 0) {
-		bytes_written = net_os_set_packet_filter(net, 0);
-	}
-	else if (strnicmp(command, CMD_RXFILTER_ADD, strlen(CMD_RXFILTER_ADD)) == 0) {
-		int filter_num = *(command + strlen(CMD_RXFILTER_ADD) + 1) - '0';
-		bytes_written = net_os_rxfilter_add_remove(net, TRUE, filter_num);
-	}
-	else if (strnicmp(command, CMD_RXFILTER_REMOVE, strlen(CMD_RXFILTER_REMOVE)) == 0) {
-		int filter_num = *(command + strlen(CMD_RXFILTER_REMOVE) + 1) - '0';
-		bytes_written = net_os_rxfilter_add_remove(net, FALSE, filter_num);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	}
 	else if (strnicmp(command, CMD_BTCOEXSCAN_START, strlen(CMD_BTCOEXSCAN_START)) == 0) {
 		/* TBD: BTCOEXSCAN-START */
@@ -1816,14 +1674,11 @@ int wl_android_priv_cmd(struct net_device *net, struct ifreq *ifr, int cmd)
 		bytes_written = dhd_dev_pno_enable(net, pfn_enabled);
 	}
 #endif
-<<<<<<< HEAD
 #ifdef WL_CFG80211
 	else if (strnicmp(command, CMD_MAC_ADDR, strlen(CMD_MAC_ADDR)) == 0) {
 		bytes_written = wl_android_get_mac_addr(net, command, priv_cmd.total_len);
 	}
 #endif
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	else if (strnicmp(command, CMD_P2P_DEV_ADDR, strlen(CMD_P2P_DEV_ADDR)) == 0) {
 		bytes_written = wl_android_get_p2p_dev_addr(net, command, priv_cmd.total_len);
 	}
@@ -1846,7 +1701,6 @@ int wl_android_priv_cmd(struct net_device *net, struct ifreq *ifr, int cmd)
 		int skip = strlen(CMD_SET_AP_WPS_P2P_IE) + 3;
 		bytes_written = wl_cfg80211_set_wps_p2p_ie(net, command + skip,
 			priv_cmd.total_len - skip, *(command + skip - 2) - '0');
-<<<<<<< HEAD
 	} else if (strnicmp(command, CMD_P2P_SET_MPC, strlen(CMD_P2P_SET_MPC)) == 0) {
 		int skip = strlen(CMD_P2P_SET_MPC) + 1;
 		bytes_written = wl_cfg80211_set_mpc(net, command + skip,
@@ -1923,17 +1777,6 @@ int wl_android_priv_cmd(struct net_device *net, struct ifreq *ifr, int cmd)
 	if (bytes_written >= 0) {
 		if (bytes_written == 0)
 			command[0] = '\0';
-=======
-	}
-#endif /* WL_CFG80211 */
-	else {
-		DHD_ERROR(("Unknown PRIVATE command %s - ignored\n", command));
-		snprintf(command, 3, "OK");
-		bytes_written = strlen("OK");
-	}
-
-	if (bytes_written > 0) {
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 		if (bytes_written > priv_cmd.total_len) {
 			DHD_ERROR(("%s: bytes_written = %d\n", __FUNCTION__, bytes_written));
 			bytes_written = priv_cmd.total_len;
@@ -1972,14 +1815,11 @@ int wl_android_init(void)
 		bcm_strncpy_s(iface_name, IFNAMSIZ, "wlan", IFNAMSIZ);
 	}
 #endif /* CUSTOMER_HW2 */
-<<<<<<< HEAD
 
 /*HTC_CSP_START*/
 	mutex_init(&wl_wificall_mutex);
 	mutex_init(&wl_wifionoff_mutex);
 /*HTC_CSP_END*/
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return ret;
 }
 
@@ -1990,40 +1830,14 @@ int wl_android_exit(void)
 	return ret;
 }
 
-<<<<<<< HEAD
 void wl_android_post_init(void)
 {
-=======
-int wl_android_post_init(void)
-{
-	struct net_device *ndev;
-	int ret = 0;
-	char buf[IFNAMSIZ];
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (!dhd_download_fw_on_driverload) {
 		/* Call customer gpio to turn off power with WL_REG_ON signal */
 		dhd_customer_gpio_wlan_ctrl(WLAN_RESET_OFF);
 		g_wifi_on = 0;
-<<<<<<< HEAD
 	}
 }
-=======
-	} else {
-		memset(buf, 0, IFNAMSIZ);
-#ifdef CUSTOMER_HW2
-		snprintf(buf, IFNAMSIZ, "%s%d", iface_name, 0);
-#else
-		snprintf(buf, IFNAMSIZ, "%s%d", "eth", 0);
-#endif
-		if ((ndev = dev_get_by_name (&init_net, buf)) != NULL) {
-			dhd_dev_init_ioctl(ndev);
-			dev_put(ndev);
-		}
-	}
-	return ret;
-}
-
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 /**
  * Functions for Android WiFi card detection
  */
@@ -2110,11 +1924,7 @@ int wifi_set_power(int on, unsigned long msec)
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 35))
 int wifi_get_mac_addr(unsigned char *buf)
 {
-<<<<<<< HEAD
 	DHD_DEFAULT(("%s\n", __FUNCTION__));
-=======
-	DHD_ERROR(("%s\n", __FUNCTION__));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (!buf)
 		return -EINVAL;
 	if (wifi_control_data && wifi_control_data->get_mac_addr) {
@@ -2139,11 +1949,7 @@ void *wifi_get_country_code(char *ccode)
 
 static int wifi_set_carddetect(int on)
 {
-<<<<<<< HEAD
 	DHD_DEFAULT(("%s = %d\n", __FUNCTION__, on));
-=======
-	DHD_ERROR(("%s = %d\n", __FUNCTION__, on));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	if (wifi_control_data && wifi_control_data->set_carddetect) {
 		wifi_control_data->set_carddetect(on);
 	}
@@ -2155,11 +1961,7 @@ static int wifi_probe(struct platform_device *pdev)
 	struct wifi_platform_data *wifi_ctrl =
 		(struct wifi_platform_data *)(pdev->dev.platform_data);
 
-<<<<<<< HEAD
 	DHD_DEFAULT(("## %s\n", __FUNCTION__));
-=======
-	DHD_ERROR(("## %s\n", __FUNCTION__));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	wifi_irqres = platform_get_resource_byname(pdev, IORESOURCE_IRQ, "bcmdhd_wlan_irq");
 	if (wifi_irqres == NULL)
 		wifi_irqres = platform_get_resource_byname(pdev,
@@ -2178,21 +1980,14 @@ static int wifi_remove(struct platform_device *pdev)
 	struct wifi_platform_data *wifi_ctrl =
 		(struct wifi_platform_data *)(pdev->dev.platform_data);
 
-<<<<<<< HEAD
 	DHD_DEFAULT(("## %s\n", __FUNCTION__));
-=======
-	DHD_ERROR(("## %s\n", __FUNCTION__));
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	wifi_control_data = wifi_ctrl;
 
 	wifi_set_power(0, 0);	/* Power Off */
 	wifi_set_carddetect(0);	/* CardDetect (1->0) */
 
 	up(&wifi_control_sem);
-<<<<<<< HEAD
 	DHD_DEFAULT(("## %s leave\n", __FUNCTION__));
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return 0;
 }
 
@@ -2201,11 +1996,7 @@ static int wifi_suspend(struct platform_device *pdev, pm_message_t state)
 	DHD_TRACE(("##> %s\n", __FUNCTION__));
 #if (LINUX_VERSION_CODE <= KERNEL_VERSION(2, 6, 39)) && defined(OOB_INTR_ONLY)
 	bcmsdh_oob_intr_set(0);
-<<<<<<< HEAD
 #endif /* (OOB_INTR_ONLY) */
-=======
-#endif
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return 0;
 }
 
@@ -2215,11 +2006,7 @@ static int wifi_resume(struct platform_device *pdev)
 #if (LINUX_VERSION_CODE <= KERNEL_VERSION(2, 6, 39)) && defined(OOB_INTR_ONLY)
 	if (dhd_os_check_if_up(bcmsdh_get_drvdata()))
 		bcmsdh_oob_intr_set(1);
-<<<<<<< HEAD
 #endif /* (OOB_INTR_ONLY) */
-=======
-#endif
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	return 0;
 }
 

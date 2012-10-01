@@ -21,11 +21,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
  * $Id: dhd_linux_sched.c 279742 2011-08-25 17:24:48Z $
-=======
- * $Id: dhd_linux_sched.c,v 1.3 2009-04-10 04:14:49 Exp $
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 #include <linux/kernel.h>
 #include <linux/module.h>

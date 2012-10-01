@@ -840,12 +840,6 @@ static struct usb_device_id id_table_combined [] = {
 		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
 	{ USB_DEVICE(ST_VID, ST_STMCLT1030_PID),
 		.driver_info = (kernel_ulong_t)&ftdi_stmclite_quirk },
-<<<<<<< HEAD
-=======
-	{ USB_DEVICE(FTDI_VID, FTDI_DISTORTEC_JTAG_LOCK_PICK_PID),
-		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
-	{ USB_DEVICE(FTDI_VID, FTDI_LUMEL_PD12_PID) },
->>>>>>> 3d0ff5c... patch: pyramid wwe updates
 	{ },					/* Optional parameter entry */
 	{ }					/* Terminating entry */
 };

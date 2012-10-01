@@ -21,11 +21,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
  * $Id: bcmdefs.h 279291 2011-08-23 23:10:02Z $
-=======
- * $Id: bcmdefs.h,v 13.68.2.8 2011-01-08 04:04:19 Exp $
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 
@@ -34,7 +30,6 @@
 
 
 
-<<<<<<< HEAD
 
 #define BCM_REFERENCE(data)	((void)(data))
 
@@ -55,14 +50,6 @@
 #define BCMOVERLAY1DATA(_sym)	_sym
 #define BCMOVERLAY1FN(_fn)	_fn
 #define BCMOVERLAYERRFN(_fn)	_fn
-=======
-#define bcmreclaimed 		0
-#define _data	_data
-#define _fn	_fn
-#define _data	_data
-#define _fn		_fn
-#define _fn	_fn
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define CONST	const
 #define BCMFASTPATH
 
@@ -70,7 +57,6 @@
 
 
 #define _data	_data
-<<<<<<< HEAD
 #define BCMROMDAT_NAME(_data)	_data
 #define _fn		_fn
 #define _fn	_fn
@@ -95,11 +81,6 @@
 #define BCMINITOVERLAYFN(_ovly, _fn)		_fn
 #define BCMUNINITOVERLAYFN(_ovly, _fn)		_fn
 
-=======
-#define _fn		_fn
-#define _fn	_fn
-#define STATIC	static
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 
 #define	SI_BUS			0	

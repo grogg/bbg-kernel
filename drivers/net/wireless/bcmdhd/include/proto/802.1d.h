@@ -21,11 +21,7 @@
  *
  * Fundamental types and constants relating to 802.1D
  *
-<<<<<<< HEAD
  * $Id: 802.1d.h,v 9.3 2007-04-10 21:33:06 $
-=======
- * $Id: 802.1d.h,v 9.3 2007-04-10 21:33:06 Exp $
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 

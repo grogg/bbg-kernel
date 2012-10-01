@@ -19,6 +19,7 @@
 #include <linux/types.h>
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 #include <linux/input.h>
+#include <linux/leds-pm8058.h>
 #endif
 
 #define CYPRESS_TMA_NAME "CY8CTMA340"
@@ -45,25 +46,11 @@ struct cy8c_i2c_platform_data {
 	uint16_t filter_level[4];
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern void sweep2unlock_setdev(struct input_dev * input_device);
-=======
-=======
->>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 /* Sweep2Wake */
 extern void sweep2wake_setdev(struct input_dev * input_device);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 extern void sweep2wake_setleddev(struct led_classdev * led_dev);
->>>>>>> 1d34c7f... sweep2wake: enable dynamic button_backlight
-=======
-extern void sweep2wake_setleddev(struct led_classdev * led_dev);
->>>>>>> 1d34c7f... sweep2wake: enable dynamic button_backlight
 #endif
 
->>>>>>> b66ea6d... sweep2wake: Add Kconfig entry
 #endif
 

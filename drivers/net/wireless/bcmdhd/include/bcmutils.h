@@ -21,11 +21,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
  * $Id: bcmutils.h 275703 2011-08-04 20:20:27Z $
-=======
- * $Id: bcmutils.h,v 13.236.2.16 2011-01-26 00:45:06 Exp $
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 
@@ -334,12 +330,9 @@ extern char *bcm_ip_ntoa(struct ipv4_addr *ia, char *buf);
 
 extern void bcm_mdelay(uint ms);
 
-<<<<<<< HEAD
 #define NVRAM_RECLAIM_CHECK(name)
 
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 extern char *getvar(char *vars, const char *name);
 extern int getintvar(char *vars, const char *name);
 extern int getintvararray(char *vars, const char *name, int index);

@@ -43,18 +43,11 @@ typedef enum {
 } p2p_bsscfg_type_t;
 
 #define IE_MAX_LEN 300
-<<<<<<< HEAD
 #define IE_MAX_LEN_PROB_RESP 768
 /* Structure to hold all saved P2P and WPS IEs for a BSSCFG */
 struct p2p_saved_ie {
 	u8  p2p_probe_req_ie[IE_MAX_LEN];
 	u8  p2p_probe_res_ie[IE_MAX_LEN_PROB_RESP];
-=======
-/* Structure to hold all saved P2P and WPS IEs for a BSSCFG */
-struct p2p_saved_ie {
-	u8  p2p_probe_req_ie[IE_MAX_LEN];
-	u8  p2p_probe_res_ie[IE_MAX_LEN];
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 	u8  p2p_assoc_req_ie[IE_MAX_LEN];
 	u8  p2p_assoc_res_ie[IE_MAX_LEN];
 	u8  p2p_beacon_ie[IE_MAX_LEN];
@@ -115,15 +108,7 @@ enum wl_cfgp2p_status {
 									&(wl)->p2p->status))
 #define wl_clr_p2p_status(wl, stat) ((!(wl)->p2p_supported) ? 0 : clear_bit(WLP2P_STATUS_ ## stat, \
 									&(wl)->p2p->status))
-<<<<<<< HEAD
-<<<<<<< HEAD
 #define wl_chg_p2p_status(wl, stat) ((!(wl)->p2p_supported) ? 0: change_bit(WLP2P_STATUS_ ## stat, \
-=======
-#define wl_chg_p2p_status(wl, stat) ((!(wl)->p2p_supported) ? 0 : change_bit(WLP2P_STATUS_ ## stat, \
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
-=======
-#define wl_chg_p2p_status(wl, stat) ((!(wl)->p2p_supported) ? 0 : change_bit(WLP2P_STATUS_ ## stat, \
->>>>>>> 57a4dc4... bcmdhd: just fix a space fail :) came up when merging cherry picks.
 									&(wl)->p2p->status))
 #define p2p_on(wl) ((wl)->p2p->on)
 #define p2p_scan(wl) ((wl)->p2p->scan)
@@ -137,33 +122,21 @@ enum wl_cfgp2p_status {
 #define CFGP2P_ERR(args)									\
 	do {										\
 		if (wl_dbg_level & WL_DBG_ERR) {				\
-<<<<<<< HEAD
 			printf(KERN_ERR "CFGP2P-ERROR) %s : ", __func__);	\
-=======
-			printk(KERN_ERR "CFGP2P-ERROR) %s : ", __func__);	\
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			printk args;						\
 		}									\
 	} while (0)
 #define	CFGP2P_INFO(args)									\
 	do {										\
 		if (wl_dbg_level & WL_DBG_INFO) {				\
-<<<<<<< HEAD
 			printf(KERN_ERR "CFGP2P-INFO) %s : ", __func__);	\
-=======
-			printk(KERN_ERR "CFGP2P-INFO) %s : ", __func__);	\
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			printk args;						\
 		}									\
 	} while (0)
 #define	CFGP2P_DBG(args)								\
 	do {									\
 		if (wl_dbg_level & WL_DBG_DBG) {			\
-<<<<<<< HEAD
 			printf(KERN_ERR "CFGP2P-DEBUG) %s :", __func__);	\
-=======
-			printk(KERN_ERR "CFGP2P-DEBUG) %s :", __func__);	\
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 			printk args;							\
 		}									\
 	} while (0)
@@ -200,13 +173,10 @@ wl_cfgp2p_escan(struct wl_priv *wl, struct net_device *dev, u16 active, u32 num_
 	u16 *channels,
 	s32 search_state, u16 action, u32 bssidx);
 
-<<<<<<< HEAD
 extern s32
 wl_cfgp2p_act_frm_search(struct wl_priv *wl, struct net_device *ndev,
 	s32 bssidx, s32 channel);
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 extern wpa_ie_fixed_t *
 wl_cfgp2p_find_wpaie(u8 *parse, u32 len);
 
@@ -252,11 +222,7 @@ extern bool
 wl_cfgp2p_bss_isup(struct net_device *ndev, int bsscfg_idx);
 
 extern s32
-<<<<<<< HEAD
 wl_cfgp2p_bss(struct wl_priv *wl, struct net_device *ndev, s32 bsscfg_idx, s32 up);
-=======
-wl_cfgp2p_bss(struct net_device *ndev, s32 bsscfg_idx, s32 up);
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 
 
 extern s32
@@ -274,7 +240,6 @@ wl_cfgp2p_get_p2p_noa(struct wl_priv *wl, struct net_device *ndev, char* buf, in
 extern s32
 wl_cfgp2p_set_p2p_ps(struct wl_priv *wl, struct net_device *ndev, char* buf, int len);
 
-<<<<<<< HEAD
 extern u8 *
 wl_cfgp2p_retreive_p2pattrib(void *buf, u8 element_id);
 
@@ -287,21 +252,15 @@ wl_cfgp2p_register_ndev(struct wl_priv *wl);
 extern s32
 wl_cfgp2p_unregister_ndev(struct wl_priv *wl);
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 /* WiFi Direct */
 #define SOCIAL_CHAN_1 1
 #define SOCIAL_CHAN_2 6
 #define SOCIAL_CHAN_3 11
-<<<<<<< HEAD
 #define SOCIAL_CHAN_CNT 3
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define WL_P2P_WILDCARD_SSID "DIRECT-"
 #define WL_P2P_WILDCARD_SSID_LEN 7
 #define WL_P2P_INTERFACE_PREFIX "p2p"
 #define WL_P2P_TEMP_CHAN "11"
-<<<<<<< HEAD
 #define IS_PUB_ACT_FRAME(category) ((category == P2P_PUB_AF_CATEGORY))
 #define IS_P2P_ACTION(categry, action) (IS_PUB_ACT_FRAME(category) && (action == P2P_PUB_AF_ACTION))
 #define IS_GAS_REQ(category, action) (IS_PUB_ACT_FRAME(category) && \
@@ -312,7 +271,5 @@ wl_cfgp2p_unregister_ndev(struct wl_priv *wl);
 						(subtype == P2P_PAF_INVITE_REQ) || \
 						(subtype == P2P_PAF_PROVDIS_REQ)))
 #define IS_P2P_SOCIAL(ch) ((ch == SOCIAL_CHAN_1) || (ch == SOCIAL_CHAN_2) || (ch == SOCIAL_CHAN_3))
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #define IS_P2P_SSID(ssid) (memcmp(ssid, WL_P2P_WILDCARD_SSID, WL_P2P_WILDCARD_SSID_LEN) == 0)
 #endif				/* _wl_cfgp2p_h_ */

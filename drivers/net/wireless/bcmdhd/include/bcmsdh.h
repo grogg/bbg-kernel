@@ -23,11 +23,7 @@
  * software in any way with any other Broadcom software provided under a license
  * other than the GPL, without Broadcom's express prior written consent.
  *
-<<<<<<< HEAD
  * $Id: bcmsdh.h 275703 2011-08-04 20:20:27Z $
-=======
- * $Id: bcmsdh.h,v 13.46.52.3 2010-10-19 00:41:44 Exp $
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
  */
 
 #ifndef	_bcmsdh_h_
@@ -212,7 +208,6 @@ extern uint32 bcmsdh_cur_sbwad(void *sdh);
 extern void bcmsdh_chipinfo(void *sdh, uint32 chip, uint32 chiprev);
 
 
-<<<<<<< HEAD
 extern int bcmsdh_sleep(void *sdh, bool enab);
 
 /* GPIO support */
@@ -221,6 +216,4 @@ extern bool bcmsdh_gpioin(void *sd, uint32 gpio);
 extern int bcmsdh_gpioouten(void *sd, uint32 gpio);
 extern int bcmsdh_gpioout(void *sd, uint32 gpio, bool enab);
 
-=======
->>>>>>> e3ae78c... drivers: net: wireless: add bcmdhd
 #endif	/* _bcmsdh_h_ */

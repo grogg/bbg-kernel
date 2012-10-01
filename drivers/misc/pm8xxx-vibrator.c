@@ -124,7 +124,6 @@ static int pm8xxx_vib_write_u8(struct pm8xxx_vib *vib,
 static int pm8xxx_vib_set_on(struct pm8xxx_vib *vib)
 {
 	int rc;
-<<<<<<< HEAD
 	u8 val1;
 	val1 = vib->reg_vib_drv;
 	val1 &= ~VIB_DRV_SEL_MASK;
@@ -139,39 +138,6 @@ static int pm8xxx_vib_set_on(struct pm8xxx_vib *vib)
 	VIB_INFO_LOG("%s - \n", __func__);
 	return rc;
 }
-=======
-	u8 val;
-
-		val = vib->reg_vib_drv;
-		val |= ((vib->level << VIB_DRV_SEL_SHIFT) & VIB_DRV_SEL_MASK);
-		rc = pm8xxx_vib_write_u8(vib, val, VIB_DRV);
-		if (rc < 0) {
-			VIB_ERR_LOG("pm8xxx_vib_write_u8 failed \n");
-			return rc;
-		}
-		printk(KERN_INFO "[ATS][set_vibration][successful]\n");
-		vib->reg_vib_drv = val;
-		__dump_vib_regs(vib, "vib_set_end");
-
-	return rc;
-}
-
-static int pm8xxx_vib_set_off(struct pm8xxx_vib *vib)
-{
-	int rc;
-	u8 val;
-
-
-		val = vib->reg_vib_drv;
-		val &= ~VIB_DRV_SEL_MASK;
-		rc = pm8xxx_vib_write_u8(vib, val, VIB_DRV);
-		if (rc < 0) {
-			VIB_ERR_LOG("pmic8058_vib_write_u8 failed\n");
-			return rc;
-		}
-		vib->reg_vib_drv = val;
-		__dump_vib_regs(vib, "vib_set_end");
->>>>>>> 3d0ff5c... patch: pyramid wwe updates
 
 static int pm8xxx_vib_set_off(struct pm8xxx_vib *vib)
 {
@@ -194,16 +160,7 @@ static void pm8xxx_vib_enable(struct timed_output_dev *dev, int value)
 {
 	struct pm8xxx_vib *vib = container_of(dev, struct pm8xxx_vib,
 					 timed_dev);
-<<<<<<< HEAD
-=======
 
-	/* Sense 4 haptic feedback fix */
-	if ((value == 20) || (value == 21))
-		value = 40;
->>>>>>> 3d0ff5c... patch: pyramid wwe updates
-
-<<<<<<< HEAD
-<<<<<<< HEAD
 	VIB_INFO_LOG("%s vibrate period: %d msec\n",__func__,value);
 
 	if ((value == 20) || (value == 21)) {
@@ -211,7 +168,6 @@ static void pm8xxx_vib_enable(struct timed_output_dev *dev, int value)
 	}
 retry:
 
-<<<<<<< HEAD
 	if (hrtimer_try_to_cancel(&vib->vib_timer) < 0) {
 		cpu_relax();
 		goto retry;
@@ -226,60 +182,7 @@ retry:
 		hrtimer_start(&vib->vib_timer,
 			      ktime_set(value / 1000, (value % 1000) * 1000000),
 			      HRTIMER_MODE_REL);
-=======
-	retry:
-
-		if (hrtimer_try_to_cancel(&vib->vib_timer) < 0) {
-			cpu_relax();
-			goto retry;
-		}
-		VIB_INFO_LOG(" pm8xxx_vib_enable, %s(parent:%s): vibrates %d msec\n",
-						current->comm, current->parent->comm, value);
-
-		if (value == 0)
-			pm8xxx_vib_set_off(vib);
-		else {
-			value = (value > vib->pdata->max_timeout_ms ?
-					 vib->pdata->max_timeout_ms : value);
-			pm8xxx_vib_set_on(vib);
-			hrtimer_start(&vib->vib_timer,
-				      ktime_set(value / 1000, (value % 1000) * 1000000),
-				      HRTIMER_MODE_REL);
-		}
->>>>>>> 3d0ff5c... patch: pyramid wwe updates
 	}
-=======
-=======
->>>>>>> fc4016b... update to 3.33 source from HTCDev
-	if (strcmp(current->parent->comm, "init") != 0) {
-
-        	/* Sense 4 haptic feedback fix */
-        	if ((value == 20) || (value == 21))
-        		value = 40;
-
-        	VIB_INFO_LOG("%s vibrate period: %d msec\n",__func__,value);
-retry:
-
-        	if (hrtimer_try_to_cancel(&vib->vib_timer) < 0) {
-        		cpu_relax();
-        		goto retry;
-        	}
-
-        	if (value == 0)
-        		pm8xxx_vib_set_off(vib);
-        	else {
-        		value = (value > vib->pdata->max_timeout_ms ?
-        				 vib->pdata->max_timeout_ms : value);
-        		pm8xxx_vib_set_on(vib);
-        		hrtimer_start(&vib->vib_timer,
-        			      ktime_set(value / 1000, (value % 1000) * 1000000),
-        			      HRTIMER_MODE_REL);
-        	}
-        }
-<<<<<<< HEAD
->>>>>>> fc4016b... update to 3.33 source from HTCDev
-=======
->>>>>>> fc4016b... update to 3.33 source from HTCDev
 }
 
 static void pm8xxx_vib_update(struct work_struct *work)
@@ -306,15 +209,9 @@ static enum hrtimer_restart pm8xxx_vib_timer_func(struct hrtimer *timer)
 {
 	struct pm8xxx_vib *vib = container_of(timer, struct pm8xxx_vib,
 							 vib_timer);
-<<<<<<< HEAD
 	VIB_INFO_LOG("%s \n",__func__);
 	pm8xxx_vib_set_off(vib);
 	/* schedule_work(&vib->work); */
-=======
-	VIB_INFO_LOG("%s\n", __func__);
-
-	schedule_work(&vib->work);
->>>>>>> 3d0ff5c... patch: pyramid wwe updates
 
 	return HRTIMER_NORESTART;
 }
