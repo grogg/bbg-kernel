@@ -213,6 +213,11 @@ EXPORT_SYMBOL(vfs_fsync_range);
  */
 int vfs_fsync(struct file *file, int datasync)
 {
+#ifdef CONFIG_FSYNC_CONTROL
+	if (!fsynccontrol_fsync_enabled)
+	return 0;
+#endif
+
 	return vfs_fsync_range(file, 0, LLONG_MAX, datasync);
 }
 EXPORT_SYMBOL(vfs_fsync);
@@ -221,6 +226,11 @@ static int do_fsync(unsigned int fd, int datasync)
 {
 	struct file *file;
 	int ret = -EBADF;
+
+#ifdef CONFIG_FSYNC_CONTROL
+	if (!fsynccontrol_fsync_enabled)
+		return 0;
+#endif
 
 	file = fget(fd);
 	if (file) {
@@ -232,8 +242,6 @@ static int do_fsync(unsigned int fd, int datasync)
 
 SYSCALL_DEFINE1(fsync, unsigned int, fd)
 {
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_FSYNC_CONTROL
 	if (!fsynccontrol_fsync_enabled)
 	    return 0;
@@ -243,14 +251,11 @@ SYSCALL_DEFINE1(fsync, unsigned int, fd)
 	if (!early_suspend_active)
 		return 0;
 #endif
->>>>>>> b560f8e... fs/dyn_sync_cntrl: dynamic sync control
 	return do_fsync(fd, 0);
 }
 
 SYSCALL_DEFINE1(fdatasync, unsigned int, fd)
 {
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_FSYNC_CONTROL
 	if (!fsynccontrol_fsync_enabled)
 	    return 0;
@@ -260,7 +265,6 @@ SYSCALL_DEFINE1(fdatasync, unsigned int, fd)
 	if (!early_suspend_active)
 		return 0;
 #endif
->>>>>>> b560f8e... fs/dyn_sync_cntrl: dynamic sync control
 	return do_fsync(fd, 1);
 }
 
@@ -343,6 +347,11 @@ SYSCALL_DEFINE(sync_file_range)(int fd, loff_t offset, loff_t nbytes,
 	loff_t endbyte;			/* inclusive */
 	int fput_needed;
 	umode_t i_mode;
+
+#ifdef CONFIG_FSYNC_CONTROL
+	if(!fsynccontrol_fsync_enabled)
+		return 0;
+#endif
 
 	ret = -EINVAL;
 	if (flags & ~VALID_FLAGS)
