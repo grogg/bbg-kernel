@@ -89,14 +89,12 @@ static void set_cpu_work(struct work_struct *work)
 }
 #endif
 
-<<<<<<< HEAD
 
 #ifdef CONFIG_CPU_FREQ_GOV_INTELLIDEMAND
 extern bool lmf_screen_state;
 #endif
 
-=======
->>>>>>> fc8e236... board/cpufreq: add early suspend/late resume drivers
+
 static void msm_cpu_early_suspend(struct early_suspend *h)
 {
 	unsigned int cur;
@@ -116,17 +114,14 @@ static void msm_cpu_early_suspend(struct early_suspend *h)
 		}
 
 		/* disable 2nd core as well since screen is off */
-<<<<<<< HEAD
 		if (cpu == 0 && num_online_cpus() > 1) {
 #ifdef CONFIG_CPU_FREQ_GOV_INTELLIDEMAND
 			lmf_screen_state = false;
 #endif
 			cpu_down(1);
 		}
-=======
 		if (cpu == 0 && num_online_cpus() > 1)
 			cpu_down(1);
->>>>>>> fc8e236... board/cpufreq: add early suspend/late resume drivers
 		mutex_unlock(&per_cpu(cpufreq_suspend, cpu).suspend_mutex);
 	}
 }
@@ -152,17 +147,14 @@ static void msm_cpu_late_resume(struct early_suspend *h)
 		}
 
 		/* re-enable 2nd core */
-<<<<<<< HEAD
 		if (num_online_cpus() < 2 && cpu == 0) {
 #ifdef CONFIG_CPU_FREQ_GOV_INTELLIDEMAND
 			lmf_screen_state = true;
 #endif
 			cpu_up(1);
 			}
-=======
 		if (num_online_cpus() < 2 && cpu == 0)
 			cpu_up(1);
->>>>>>> fc8e236... board/cpufreq: add early suspend/late resume drivers
 		mutex_unlock(&per_cpu(cpufreq_suspend, cpu).suspend_mutex);
 	}
 }
@@ -173,10 +165,7 @@ static struct early_suspend msm_cpu_early_suspend_handler = {
 	.resume = msm_cpu_late_resume,
 };
 
-<<<<<<< HEAD
 
-=======
->>>>>>> fc8e236... board/cpufreq: add early suspend/late resume drivers
 static int msm_cpufreq_target(struct cpufreq_policy *policy,
 				unsigned int target_freq,
 				unsigned int relation)
