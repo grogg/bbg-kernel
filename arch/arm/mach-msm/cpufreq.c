@@ -85,8 +85,7 @@ static void set_cpu_work(struct work_struct *work)
 }
 #endif
 
-<<<<<<< HEAD
-=======
+
 #ifdef CONFIG_CPU_FREQ_GOV_INTELLIDEMAND
 extern bool lmf_screen_state;
 #endif
@@ -157,7 +156,7 @@ static struct early_suspend msm_cpu_early_suspend_handler = {
 	.resume = msm_cpu_late_resume,
 };
 
->>>>>>> 2f82dc8... cpufreq: Intellidemand - enable smart core management while screen on
+
 static int msm_cpufreq_target(struct cpufreq_policy *policy,
 				unsigned int target_freq,
 				unsigned int relation)
