@@ -147,6 +147,7 @@ int set_two_phase_freq_badass(int cpufreq);
 int set_three_phase_freq_badass(int cpufreq);
 #endif
 
+
 /* Macros assume PMIC GPIOs start at 0 */
 #define PM8058_GPIO_BASE			NR_MSM_GPIOS
 #define PM8058_GPIO_PM_TO_SYS(pm_gpio)		(pm_gpio + PM8058_GPIO_BASE)
@@ -6213,27 +6214,17 @@ static void __init msm8x60_init(struct msm_board_data *board_data)
 
 #ifdef CONFIG_CPU_FREQ_GOV_ONDEMAND_2_PHASE
 	set_two_phase_freq(1134000);
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifdef CONFIG_CPU_FREQ_GOV_INTELLIDEMAND
-	id_set_two_phase_freq(1134000);
-#endif
-=======
-#elif defined(CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE)
-=======
 #endif
 
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE
->>>>>>> 114383f... badass: fixup setting initial 2phase freq
-	set_two_phase_freq_badass(CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE_FREQ);
+  set_two_phase_freq_badass(CONFIG_CPU_FREQ_GOV_BADASS_2_PHASE_FREQ);
 #endif
+
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE
-<<<<<<< HEAD
-	set_three_phase_freq_badass(1134000);
->>>>>>> 310fe50... cpufreq: initial badass commit
-=======
-	set_three_phase_freq_badass(CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE_FREQ);
->>>>>>> 419786a... badass: make 2/3 phase frequencies configurable in the config
+  set_three_phase_freq_badass(CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE_FREQ);
+#ifdef CONFIG_CPU_FREQ_GOV_INTELLIDEMAND
+	id_set_two_phase_freq(1134000);
+#endif
 #endif
 
 	msm8x60_init_tlmm();

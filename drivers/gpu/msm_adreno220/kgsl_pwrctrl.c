@@ -29,13 +29,12 @@
 #define UPDATE_BUSY_VAL		1000000
 #define UPDATE_BUSY		50
 
-<<<<<<< HEAD
-#ifdef CONFIG_SEC_LIMIT_MAX_FREQ
-#define LMF_BROWSER_THRESHOLD	500000
-=======
 #ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
 extern bool gpu_busy_state;
->>>>>>> 2795e80... badass: add gpucontrol / gpubusy bypass
+#endif
+
+#ifdef CONFIG_SEC_LIMIT_MAX_FREQ
+#define LMF_BROWSER_THRESHOLD	500000
 #endif
 
 struct clk_pair {
@@ -329,19 +328,10 @@ static void kgsl_pwrctrl_busy_time(struct kgsl_device *device, bool on_time)
 {
 	struct kgsl_busy *b = &device->pwrctrl.busy;
 	int elapsed;
-<<<<<<< HEAD
-<<<<<<< HEAD
 #ifdef CONFIG_SEC_LIMIT_MAX_FREQ
 	struct kgsl_pwrctrl *pwr;
 #endif
 
-=======
-#ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
-	struct kgsl_pwrctrl *pwr_ctrl;
-#endif
->>>>>>> 2795e80... badass: add gpucontrol / gpubusy bypass
-=======
->>>>>>> e72457f... badass: redesign gpubusy bypass/gpu control
 	if (b->start.tv_sec == 0)
 		do_gettimeofday(&(b->start));
 	do_gettimeofday(&(b->stop));
@@ -360,7 +350,13 @@ static void kgsl_pwrctrl_busy_time(struct kgsl_device *device, bool on_time)
 	}
 	do_gettimeofday(&(b->start));
 
-<<<<<<< HEAD
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
+    if (on_time)
+    gpu_busy_state = true;
+    else
+    gpu_busy_state = false;
+#endif
+
 #ifdef CONFIG_SEC_LIMIT_MAX_FREQ
 	pwr = &device->pwrctrl;
 
@@ -371,17 +367,7 @@ static void kgsl_pwrctrl_busy_time(struct kgsl_device *device, bool on_time)
 			lmf_browser_state = false;
 		else
 			lmf_browser_state = true;
-=======
-#ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
-	if (on_time)
-		gpu_busy_state = true;
-	else
-		gpu_busy_state = false;
-<<<<<<< HEAD
->>>>>>> 2795e80... badass: add gpucontrol / gpubusy bypass
 	}
-=======
->>>>>>> e72457f... badass: redesign gpubusy bypass/gpu control
 #endif
 }
 
