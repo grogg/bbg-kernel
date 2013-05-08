@@ -21,7 +21,6 @@
 #include <linux/cpu.h>
 
 #define DEF_TEMP_SENSOR      0
-<<<<<<< HEAD
 
 //max thermal limit
 #define DEF_ALLOWED_MAX_HIGH 76
@@ -37,11 +36,9 @@
 
 //Sampling interval
 #define DEF_THERMAL_CHECK_MS 1000
-=======
 #define DEF_THERMAL_CHECK_MS 1250
 #define DEF_ALLOWED_MAX_HIGH 70
 #define DEF_ALLOWED_MAX_FREQ 810000
->>>>>>> 6a2a63e... Revert "drivers/thermal: raise default throttle temperature to 75 C"
 
 static int enabled;
 
