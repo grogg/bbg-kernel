@@ -32,17 +32,9 @@
 #include <linux/hrtimer.h>
 #include <linux/delay.h>
 
-<<<<<<< HEAD
-#define DEBUG 0
-
-#define MPDEC_TAG                       "[MPDEC]: "
-#define MSM_MPDEC_STARTDELAY            20000
-#define MSM_MPDEC_DELAY                 100
-=======
 #define MPDEC_TAG                       "[MPDEC]: "
 #define MSM_MPDEC_STARTDELAY            70000
 #define MSM_MPDEC_DELAY                 500
->>>>>>> parent of 4709bd3... Added new mpdecision by Show-p1984
 #define MSM_MPDEC_PAUSE                 10000
 #define MSM_MPDEC_IDLE_FREQ             486000
 
@@ -70,28 +62,12 @@ static struct msm_mpdec_tuners {
 	unsigned int pause;
 	bool scroff_single_core;
 	unsigned long int idle_freq;
-<<<<<<< HEAD
-        unsigned int max_cpus;
-        unsigned int min_cpus;
-=======
->>>>>>> parent of 4709bd3... Added new mpdecision by Show-p1984
 } msm_mpdec_tuners_ins = {
 	.startdelay = MSM_MPDEC_STARTDELAY,
 	.delay = MSM_MPDEC_DELAY,
 	.pause = MSM_MPDEC_PAUSE,
 	.scroff_single_core = true,
 	.idle_freq = MSM_MPDEC_IDLE_FREQ,
-<<<<<<< HEAD
-        .max_cpus = CONFIG_NR_CPUS,
-        .min_cpus = 1,
-};
-
-static unsigned int NwNs_Threshold[8] = {12, 0, 25, 20, 32, 28, 0, 35};
-static unsigned int TwTs_Threshold[8] = {140, 0, 140, 190, 140, 190, 0, 190};
-
-extern unsigned int get_rq_info(void);
-extern unsigned long acpuclk_get_rate(int);
-=======
 };
 
 static unsigned int NwNs_Threshold[4] = {35, 0, 0, 5};
@@ -99,7 +75,6 @@ static unsigned int TwTs_Threshold[4] = {250, 0, 0, 250};
 
 extern unsigned int get_rq_info(void);
 extern unsigned long acpuclk_8x60_get_rate(int);
->>>>>>> parent of 4709bd3... Added new mpdecision by Show-p1984
 
 unsigned int state = MSM_MPDEC_IDLE;
 bool was_paused = false;
@@ -138,26 +113,17 @@ static int mp_decision(void)
 		if ((nr_cpu_online < 2) && (rq_depth >= NwNs_Threshold[index])) {
 			if (total_time >= TwTs_Threshold[index]) {
 				new_state = MSM_MPDEC_UP;
-<<<<<<< HEAD
-                                if (get_slowest_cpu_rate() <=  msm_mpdec_tuners_ins.idle_freq)
-=======
                                 if (acpuclk_8x60_get_rate((CONFIG_NR_CPUS - 2)) <=
                                     msm_mpdec_tuners_ins.idle_freq)
->>>>>>> parent of 4709bd3... Added new mpdecision by Show-p1984
                                         new_state = MSM_MPDEC_IDLE;
 			}
 		} else if (rq_depth <= NwNs_Threshold[index+1]) {
 			if (total_time >= TwTs_Threshold[index+1] ) {
 				new_state = MSM_MPDEC_DOWN;
-<<<<<<< HEAD
-                                if (get_slowest_cpu_rate() > msm_mpdec_tuners_ins.idle_freq)
-			                new_state = MSM_MPDEC_IDLE;
-=======
                                 if (cpu_online((CONFIG_NR_CPUS - 1)))
 		                        if (acpuclk_8x60_get_rate((CONFIG_NR_CPUS - 1)) >
                                             msm_mpdec_tuners_ins.idle_freq)
 			                        new_state = MSM_MPDEC_IDLE;
->>>>>>> parent of 4709bd3... Added new mpdecision by Show-p1984
 			}
 		} else {
 			new_state = MSM_MPDEC_IDLE;
@@ -307,6 +273,12 @@ show_one(delay, delay);
 show_one(pause, pause);
 show_one(scroff_single_core, scroff_single_core);
 
+static ssize_t show_idle_freq (struct kobject *kobj, struct attribute *attr,
+                                   char *buf)
+{
+	return sprintf(buf, "%lu\n", msm_mpdec_tuners_ins.idle_freq);
+}
+
 static ssize_t show_enabled(struct kobject *a, struct attribute *b,
 				   char *buf)
 {
@@ -393,23 +365,14 @@ static ssize_t store_pause(struct kobject *a, struct attribute *b,
 }
 
 static ssize_t store_idle_freq(struct kobject *a, struct attribute *b,
-<<<<<<< HEAD
-					const char *buf, size_t count)
-=======
 				   const char *buf, size_t count)
->>>>>>> parent of 4709bd3... Added new mpdecision by Show-p1984
 {
 	long unsigned int input;
 	int ret;
 	ret = sscanf(buf, "%lu", &input);
 	if (ret != 1)
 		return -EINVAL;
-<<<<<<< HEAD
-
-	msm_mpdec_tuners_ins.idle_freq = input;
-=======
 	msm_mpdec_tuners_ins.idle_freq = acpu_check_khz_value(input);
->>>>>>> parent of 4709bd3... Added new mpdecision by Show-p1984
 
 	return count;
 }
@@ -547,11 +510,6 @@ define_one_global_rw(delay);
 define_one_global_rw(pause);
 define_one_global_rw(scroff_single_core);
 define_one_global_rw(idle_freq);
-<<<<<<< HEAD
-define_one_global_rw(min_cpus);
-define_one_global_rw(max_cpus);
-=======
->>>>>>> parent of 4709bd3... Added new mpdecision by Show-p1984
 define_one_global_rw(enabled);
 define_one_global_rw(nwns_threshold_up);
 define_one_global_rw(nwns_threshold_down);
@@ -564,11 +522,6 @@ static struct attribute *msm_mpdec_attributes[] = {
 	&pause.attr,
 	&scroff_single_core.attr,
 	&idle_freq.attr,
-<<<<<<< HEAD
-        &min_cpus.attr,
-        &max_cpus.attr,
-=======
->>>>>>> parent of 4709bd3... Added new mpdecision by Show-p1984
 	&enabled.attr,
 	&nwns_threshold_up.attr,
 	&nwns_threshold_down.attr,
