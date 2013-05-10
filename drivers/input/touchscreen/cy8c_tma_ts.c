@@ -78,7 +78,7 @@ static int cy8c_reset_baseline(void);
 static DEFINE_MUTEX(cy8c_mutex);
 
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
-int s2w_switch = 2;
+int s2w_switch = 1;
 bool scr_suspended = false, exec_count = true;
 bool scr_on_touch = false, led_exec_count = false, barrier[2] = {false, false};
 static struct input_dev * sweep2wake_pwrdev;
@@ -90,10 +90,10 @@ static int __init cy8c_read_s2w_cmdline(char *s2w)
 {
 	if (strcmp(s2w, "2") == 0) {
 		printk(KERN_INFO "[cmdline_s2w]: Sweep2Wake enabled. (No button backlight) | s2w='%s'", s2w);
-		s2w_switch = 1;
+		s2w_switch = 2;
 	} else if (strcmp(s2w, "1") == 0) {
 		printk(KERN_INFO "[cmdline_s2w]: Sweep2Wake enabled. | s2w='%s'", s2w);
-		s2w_switch = 2;
+		s2w_switch = 1;
 	} else if (strcmp(s2w, "0") == 0) {
 		printk(KERN_INFO "[cmdline_s2w]: Sweep2Wake disabled. | s2w='%s'", s2w);
 		s2w_switch = 0;
@@ -1119,7 +1119,7 @@ static irqreturn_t cy8c_ts_irq_thread(int irq, void *ptr)
 #ifdef CONFIG_TOUCHSCREEN_CYPRESS_SWEEP2WAKE
 		 /* if finger released, reset count & barriers */
 		if ((((ts->finger_count > 0)?1:0) == 0) && (s2w_switch > 0)) {
-			if ((s2w_switch != 1) &&
+			if ((s2w_switch != 2) &&
 			    (scr_suspended == true) &&
 			    (led_exec_count == false) &&
 			    (ts->suspend == 1) &&
