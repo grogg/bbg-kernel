@@ -5519,7 +5519,7 @@ dhdsdio_probe_attach(struct dhd_bus *bus, osl_t *osh, void *sdh, void *regsva,
 	/* si_attach() will provide an SI handle and scan the backplane */
 	if (!(bus->sih = si_attach((uint)devid, osh, regsva, DHD_BUS, sdh,
 	                           &bus->vars, &bus->varsz))) {
-		DHD_ERROR(("%s: si_attach failed!\n", __FUNCTION__));
+		DHD_ERROR(("%s: si_attach failed!\n", __func__));
 		goto fail;
 	}
 
