@@ -834,9 +834,14 @@ static cycle_t logarithmic_accumulation(cycle_t offset, int shift)
 
 	timekeeper.xtime_nsec += timekeeper.xtime_interval << shift;
 	while (timekeeper.xtime_nsec >= nsecps) {
+		int leap;
 		timekeeper.xtime_nsec -= nsecps;
 		xtime.tv_sec++;
-		second_overflow();
+		leap = second_overflow(xtime.tv_sec);
+		xtime.tv_sec += leap;
+		wall_to_monotonic.tv_sec -= leap;
+		if (leap)
+			clock_was_set_delayed();
 	}
 
 	/* Accumulate raw time */
@@ -942,9 +947,14 @@ static void update_wall_time(void)
 	 * xtime.tv_nsec isn't larger then NSEC_PER_SEC
 	 */
 	if (unlikely(xtime.tv_nsec >= NSEC_PER_SEC)) {
+		int leap;
 		xtime.tv_nsec -= NSEC_PER_SEC;
 		xtime.tv_sec++;
-		second_overflow();
+		leap = second_overflow(xtime.tv_sec);
+		xtime.tv_sec += leap;
+		wall_to_monotonic.tv_sec -= leap;
+		if (leap)
+			clock_was_set_delayed();
 	}
 
 	/* check to see if there is a new clocksource to use */
