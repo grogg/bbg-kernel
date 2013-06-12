@@ -27,11 +27,11 @@
 #define DEF_ALLOWED_MAX_FREQ 384000
 
 //mid thermal limit
-#define DEF_ALLOWED_MID_HIGH 72
+#define DEF_ALLOWED_MID_HIGH 65
 #define DEF_ALLOWED_MID_FREQ 648000
 
 //low thermal limit
-#define DEF_ALLOWED_LOW_HIGH 70
+#define DEF_ALLOWED_LOW_HIGH 55
 #define DEF_ALLOWED_LOW_FREQ 972000
 
 //Sampling interval
@@ -67,11 +67,11 @@ static struct msm_thermal_tuners {
 	.allowed_max_freq = DEF_ALLOWED_MAX_FREQ,
 
 	.allowed_mid_high = DEF_ALLOWED_MID_HIGH,
-	.allowed_mid_low = (DEF_ALLOWED_MID_HIGH - 5),
+	.allowed_mid_low = (DEF_ALLOWED_MID_HIGH - 3),
 	.allowed_mid_freq = DEF_ALLOWED_MID_FREQ,
 
 	.allowed_low_high = DEF_ALLOWED_LOW_HIGH,
-	.allowed_low_low = (DEF_ALLOWED_LOW_HIGH - 6),
+	.allowed_low_low = (DEF_ALLOWED_LOW_HIGH - 3),
 	.allowed_low_freq = DEF_ALLOWED_LOW_FREQ,
 
 	.check_interval_ms = DEF_THERMAL_CHECK_MS,
